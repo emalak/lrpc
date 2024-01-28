@@ -1,0 +1,118 @@
+syntax = "proto3";
+package landmark.storage;
+option go_package = "./landmark_storage";
+
+message GetLandmarkRequest {
+  string landmarkId = 1;
+  string userId = 2;
+}
+message GetLandmarkResponse {
+  string id = 1;
+  bool liked = 2;
+  float rating = 4;
+}
+
+message AddLandmarkRequest {
+  string id = 1;
+}
+message AddLandmarkResponse{
+}
+
+message LikeLandmarkRequest {
+  string userId = 1;
+  string landmarkId = 2;
+}
+message LikeLandmarkResponse{
+}
+
+message DislikeLandmarkRequest {
+  string userId = 1;
+  string landmarkId = 2;
+}
+message DislikeLandmarkResponse{
+}
+
+message GetLikesRequest{
+  string landmarkId = 1;
+}
+message GetLikesResponse{
+  int64 likes = 1;
+}
+
+message ViewLandmarkRequest {
+  string userId = 1;
+  string landmarkId = 2;
+}
+message ViewLandmarkResponse{
+}
+
+message RecommendLandmarksRequest{
+  string userId = 1;
+  int64 amount = 2;
+}
+message RecommendLandmarksResponse{
+  repeated string ids = 1;
+}
+
+message GetRandomFeedRequest{
+  int64 count = 1;
+}
+message GetRandomFeedResponse{
+  repeated string ids = 2;
+}
+
+message AddUserRequest{
+  string userId = 1;
+}
+message AddUserResponse{
+}
+
+message CreateCommentRequest{
+  string parentId = 1;
+  string authorId = 2;
+  string text = 3;
+  repeated string attachments = 4;
+  int32 rating = 5;
+
+}
+message CreateCommentResponse{
+}
+
+message Comment{
+  string id = 1;
+  string userId = 2;
+  int64 grade = 3;
+  repeated string attachments = 4;
+  string text = 5;
+  string replyId = 6;
+  int64 timestamp = 7;
+}
+message GetCommentsRequest{
+  string landmarkId = 1;
+}
+message GetCommentsResponse{
+  repeated Comment comments = 1;
+}
+
+message GetProfileCommentsRequest{
+  string userId = 1;
+  int32 limit = 2;
+}
+message GetProfileCommentsResponse{
+  repeated Comment comments = 1;
+}
+
+service StorageService{
+  rpc GetLandmark(GetLandmarkRequest) returns (GetLandmarkResponse) {}
+  rpc AddLandmark(AddLandmarkRequest) returns (AddLandmarkResponse) {}
+  rpc LikeLandmark(LikeLandmarkRequest) returns (LikeLandmarkResponse) {}
+  rpc DislikeLandmark(DislikeLandmarkRequest) returns (DislikeLandmarkResponse) {}
+  rpc GetLikes(GetLikesRequest) returns (GetLikesResponse) {}
+  rpc ViewLandmark(ViewLandmarkRequest) returns (ViewLandmarkResponse) {}
+  rpc RecommendLandmarks(RecommendLandmarksRequest) returns (RecommendLandmarksResponse) {}
+  rpc GetRandomFeed(GetRandomFeedRequest) returns (GetRandomFeedResponse) {}
+  rpc AddUser(AddUserRequest) returns (AddUserResponse) {}
+  rpc CreateComment(CreateCommentRequest) returns (CreateCommentResponse) {}
+  rpc GetComments(GetCommentsRequest) returns (GetCommentsResponse) {}
+  rpc GetProfileComments(GetProfileCommentsRequest) returns (GetProfileCommentsResponse) {}
+}
