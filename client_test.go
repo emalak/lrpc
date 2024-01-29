@@ -532,3 +532,57 @@ func TestGetProfileComments(t *testing.T) {
 		})
 	}
 }
+
+func TestGetFeed(t *testing.T) {
+	// Setup context and client
+	ctx := context.Background()
+	client, err := New(ctx, Settings{
+		FeedOpts:    &FeedOptions{Address: "localhost:8081"},
+		StorageOpts: nil,
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Test variables
+	const (
+		validUserId = "2e9ee190-217c-4f92-aea4-b8086501fbb2" // Example valid user ID
+		validAmount = 10                                     // Example valid amount
+	)
+
+	// Test on correct data
+	feed, err := client.GetFeed(ctx, validUserId, validAmount)
+	if err != nil {
+		t.Fatal(err)
+	}
+	fmt.Println(feed)
+
+	// Test on invalid userId
+	_, err = client.GetFeed(ctx, "invalidId", validAmount)
+	if err == nil {
+		t.Fatal("Expected an error for invalid userId, got nil")
+	}
+	fmt.Println(err)
+
+	// Test on negative amount
+	_, err = client.GetFeed(ctx, validUserId, -1)
+	if err == nil {
+		t.Fatal("Expected an error for negative amount, got nil")
+	}
+	fmt.Println(err)
+
+	// Test on zero amount
+	_, err = client.GetFeed(ctx, validUserId, 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Test on excessively large amount
+	// Assuming there's a maximum limit, adjust the value accordingly
+	_, err = client.GetFeed(ctx, validUserId, 1000)
+	if err == nil {
+		t.Fatal("Expected an error for excessively large amount, got nil")
+	}
+	fmt.Println(err)
+
+}

@@ -173,8 +173,5 @@ func (c *Client) GetFeed(ctx context.Context, userId string, amount int) ([]stri
 	if err != nil {
 		return nil, err
 	}
-	if res.LandmarkIds != nil || len(res.LandmarkIds) == 0 {
-		return nil, err
-	}
 	return res.LandmarkIds, nil
 }
