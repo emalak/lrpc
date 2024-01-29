@@ -1,10 +1,10 @@
-module lrpc
+module github.com/oppositemc/lrpc
 
-go 1.21
+go 1.21.5
 
 require (
 	google.golang.org/grpc v1.61.0
-	google.golang.org/protobuf v1.31.0
+	google.golang.org/protobuf v1.32.0
 )
 
 require (
