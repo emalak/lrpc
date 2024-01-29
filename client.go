@@ -9,7 +9,6 @@ import (
 )
 
 type Settings struct {
-	RPCTimeout  time.Duration
 	FeedOpts    *FeedOptions
 	StorageOpts *StorageOptions
 }
@@ -38,7 +37,7 @@ func newFeed(ctx context.Context, s Settings) (*Feed, error) {
 		s.FeedOpts.Address,
 		grpc.WithBlock(),
 		grpc.WithInsecure(),
-		grpc.WithTimeout(s.RPCTimeout))
+		grpc.WithTimeout(time.Second*5))
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +64,7 @@ func newStorage(ctx context.Context, s Settings) (*Storage, error) {
 		s.StorageOpts.Address,
 		grpc.WithBlock(),
 		grpc.WithInsecure(),
-		grpc.WithTimeout(s.RPCTimeout))
+		grpc.WithTimeout(time.Second*5))
 	if err != nil {
 		return nil, err
 	}
@@ -84,14 +83,18 @@ func (s *Storage) Close() error {
 func New(ctx context.Context, s Settings) (*Client, error) {
 	client := Client{}
 	if s.StorageOpts != nil {
+		f, err := newStorage(ctx, s)
+		if err != nil {
+			return nil, err
+		}
+		client.Storage = f
+	}
+	if s.FeedOpts != nil {
 		f, err := newFeed(ctx, s)
 		if err != nil {
 			return nil, err
 		}
 		client.Feed = f
-	}
-	if s.FeedOpts != nil {
-
 	}
 	return &client, nil
 }
