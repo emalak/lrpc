@@ -4,7 +4,7 @@
 // - protoc             v4.25.1
 // source: feed.proto
 
-package feed
+package landmark_feed
 
 import (
 	context "context"
@@ -35,7 +35,7 @@ func NewLandmarkFeedClient(cc grpc.ClientConnInterface) LandmarkFeedClient {
 
 func (c *landmarkFeedClient) GetFeed(ctx context.Context, in *GetFeedRequest, opts ...grpc.CallOption) (*GetFeedResponse, error) {
 	out := new(GetFeedResponse)
-	err := c.cc.Invoke(ctx, "/landmark.feed.LandmarkFeed/GetFeed", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/landmark.feed_server.LandmarkFeed/GetFeed", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +80,7 @@ func _LandmarkFeed_GetFeed_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/landmark.feed.LandmarkFeed/GetFeed",
+		FullMethod: "/landmark.feed_server.LandmarkFeed/GetFeed",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(LandmarkFeedServer).GetFeed(ctx, req.(*GetFeedRequest))
@@ -92,7 +92,7 @@ func _LandmarkFeed_GetFeed_Handler(srv interface{}, ctx context.Context, dec fun
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var LandmarkFeed_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "landmark.feed.LandmarkFeed",
+	ServiceName: "landmark.feed_server.LandmarkFeed",
 	HandlerType: (*LandmarkFeedServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

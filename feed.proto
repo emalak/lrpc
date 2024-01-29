@@ -1,5 +1,5 @@
 syntax = "proto3";
-package landmark.feed;
+package landmark.feed_server;
 option go_package = "./landmark_feed";
 
 message GetFeedRequest {
