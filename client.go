@@ -2,7 +2,7 @@ package lrpc
 
 import (
 	"context"
-	"github.com/oppositemc/lrpc/rpc/feed"
+	feed "github.com/oppositemc/lrpc/rpc/feed"
 	storage "github.com/oppositemc/lrpc/rpc/storage"
 	"google.golang.org/grpc"
 	"time"
