@@ -2,6 +2,7 @@ package lrpc
 
 import (
 	"context"
+	"github.com/google/uuid"
 	feed "github.com/oppositemc/lrpc/rpc/feed"
 	storage "github.com/oppositemc/lrpc/rpc/storage"
 )
@@ -21,7 +22,7 @@ type gateway interface {
 	CreateComment(ctx context.Context, parentId, authorId, text string, attachments []string, rating int) error
 	GetComments(ctx context.Context, landmarkId string) ([]*Comment, error)
 	GetProfileComments(ctx context.Context, userId string, limit int) ([]*Comment, error)
-	GetFavouriteLandmarks(ctx context.Context, userId string) ([]string, error)
+	GetFavouriteLandmarks(ctx context.Context, userId string) ([]uuid.UUID, error)
 
 	// feed service calls
 
@@ -177,10 +178,10 @@ func (c *Client) GetFeed(ctx context.Context, userId string, amount int) ([]stri
 	return res.LandmarkIds, nil
 }
 
-func (c *Client) GetFavouriteLandmarks(ctx context.Context, userId string) ([]string, error) {
+func (c *Client) GetFavouriteLandmarks(ctx context.Context, userId string) ([]uuid.UUID, error) {
 	res, err := c.Storage.Client.GetFavouriteLandmarks(ctx, &storage.GetFavouriteLandmarksRequest{UserId: userId})
 	if err != nil {
 		return nil, err
 	}
-	return res.Ids, nil
+	return uuidArray(res.Ids)
 }
