@@ -449,25 +449,31 @@ func TestGetComments(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	comments, err := client.GetComments(ctx, landmarkId)
+	comments, err := client.GetComments(ctx, landmarkId, 10)
 	if err != nil {
 		t.Fatal(err)
 	}
 	fmt.Println(mustJSONString(comments))
 
 	// Test on invalid landmarkId
-	_, err = client.GetComments(ctx, "invalidId")
+	_, err = client.GetComments(ctx, "invalidId", 10)
 	if err == nil {
 		t.Error("Expected an error for invalid landmark ID, got none")
 	}
 	fmt.Println(err)
 
 	// Test on non-existent landmark
-	_, err = client.GetComments(ctx, gofakeit.UUID())
+	_, err = client.GetComments(ctx, gofakeit.UUID(), 10)
 	if err == nil {
 		t.Error("Expected an error for non-existent landmark ID, got none")
 	}
 	fmt.Println(err)
+
+	// Test on invalid limit
+	_, err = client.GetComments(ctx, landmarkId, -123)
+	if err == nil {
+		t.Error("Expected an error for invalid limit, got none")
+	}
 }
 
 func TestGetProfileComments(t *testing.T) {

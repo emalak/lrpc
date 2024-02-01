@@ -89,6 +89,7 @@ message Comment{
 }
 message GetCommentsRequest{
   string landmarkId = 1;
+  int32 limit = 2;
 }
 message GetCommentsResponse{
   repeated Comment comments = 1;

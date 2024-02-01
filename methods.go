@@ -20,7 +20,7 @@ type gateway interface {
 	GetRandomFeed(ctx context.Context, amount int) ([]string, error)
 	AddUser(ctx context.Context, userId string) error
 	CreateComment(ctx context.Context, parentId, authorId, text string, attachments []string, rating int) error
-	GetComments(ctx context.Context, landmarkId string) ([]*Comment, error)
+	GetComments(ctx context.Context, landmarkId string, limit int) ([]*Comment, error)
 	GetProfileComments(ctx context.Context, userId string, limit int) ([]*Comment, error)
 	GetFavouriteLandmarks(ctx context.Context, userId string) ([]uuid.UUID, error)
 	GetLikesAmount(ctx context.Context, userId string) (int, error)
@@ -117,8 +117,11 @@ func (c *Client) CreateComment(ctx context.Context, parentId, authorId, text str
 	return err
 }
 
-func (c *Client) GetComments(ctx context.Context, landmarkId string) ([]*Comment, error) {
-	res, err := c.Storage.Client.GetComments(ctx, &storage.GetCommentsRequest{LandmarkId: landmarkId})
+func (c *Client) GetComments(ctx context.Context, landmarkId string, limit int) ([]*Comment, error) {
+	res, err := c.Storage.Client.GetComments(ctx, &storage.GetCommentsRequest{
+		LandmarkId: landmarkId,
+		Limit:      int32(limit),
+	})
 	if err != nil {
 		return nil, err
 	}
