@@ -23,6 +23,7 @@ type gateway interface {
 	GetComments(ctx context.Context, landmarkId string) ([]*Comment, error)
 	GetProfileComments(ctx context.Context, userId string, limit int) ([]*Comment, error)
 	GetFavouriteLandmarks(ctx context.Context, userId string) ([]uuid.UUID, error)
+	GetLikesAmount(ctx context.Context, userId string) (int, error)
 
 	// feed service calls
 
@@ -184,4 +185,12 @@ func (c *Client) GetFavouriteLandmarks(ctx context.Context, userId string) ([]uu
 		return nil, err
 	}
 	return uuidArray(res.Ids)
+}
+
+func (c *Client) GetLikesAmount(ctx context.Context, userId string) (int, error) {
+	res, err := c.Storage.Client.GetLikesAmount(ctx, &storage.GetLikesAmountRequest{UserId: userId})
+	if err != nil {
+		return 0, err
+	}
+	return int(res.Count), nil
 }

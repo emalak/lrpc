@@ -35,6 +35,7 @@ type StorageServiceClient interface {
 	GetComments(ctx context.Context, in *GetCommentsRequest, opts ...grpc.CallOption) (*GetCommentsResponse, error)
 	GetProfileComments(ctx context.Context, in *GetProfileCommentsRequest, opts ...grpc.CallOption) (*GetProfileCommentsResponse, error)
 	GetFavouriteLandmarks(ctx context.Context, in *GetFavouriteLandmarksRequest, opts ...grpc.CallOption) (*GetFavouriteLandmarksResponse, error)
+	GetLikesAmount(ctx context.Context, in *GetLikesAmountRequest, opts ...grpc.CallOption) (*GetLikesAmountResponse, error)
 }
 
 type storageServiceClient struct {
@@ -162,6 +163,15 @@ func (c *storageServiceClient) GetFavouriteLandmarks(ctx context.Context, in *Ge
 	return out, nil
 }
 
+func (c *storageServiceClient) GetLikesAmount(ctx context.Context, in *GetLikesAmountRequest, opts ...grpc.CallOption) (*GetLikesAmountResponse, error) {
+	out := new(GetLikesAmountResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/GetLikesAmount", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // StorageServiceServer is the server API for StorageService service.
 // All implementations must embed UnimplementedStorageServiceServer
 // for forward compatibility
@@ -179,6 +189,7 @@ type StorageServiceServer interface {
 	GetComments(context.Context, *GetCommentsRequest) (*GetCommentsResponse, error)
 	GetProfileComments(context.Context, *GetProfileCommentsRequest) (*GetProfileCommentsResponse, error)
 	GetFavouriteLandmarks(context.Context, *GetFavouriteLandmarksRequest) (*GetFavouriteLandmarksResponse, error)
+	GetLikesAmount(context.Context, *GetLikesAmountRequest) (*GetLikesAmountResponse, error)
 	mustEmbedUnimplementedStorageServiceServer()
 }
 
@@ -224,6 +235,9 @@ func (UnimplementedStorageServiceServer) GetProfileComments(context.Context, *Ge
 }
 func (UnimplementedStorageServiceServer) GetFavouriteLandmarks(context.Context, *GetFavouriteLandmarksRequest) (*GetFavouriteLandmarksResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFavouriteLandmarks not implemented")
+}
+func (UnimplementedStorageServiceServer) GetLikesAmount(context.Context, *GetLikesAmountRequest) (*GetLikesAmountResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLikesAmount not implemented")
 }
 func (UnimplementedStorageServiceServer) mustEmbedUnimplementedStorageServiceServer() {}
 
@@ -472,6 +486,24 @@ func _StorageService_GetFavouriteLandmarks_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
+func _StorageService_GetLikesAmount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetLikesAmountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageServiceServer).GetLikesAmount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.storage.StorageService/GetLikesAmount",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageServiceServer).GetLikesAmount(ctx, req.(*GetLikesAmountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // StorageService_ServiceDesc is the grpc.ServiceDesc for StorageService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -530,6 +562,10 @@ var StorageService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetFavouriteLandmarks",
 			Handler:    _StorageService_GetFavouriteLandmarks_Handler,
+		},
+		{
+			MethodName: "GetLikesAmount",
+			Handler:    _StorageService_GetLikesAmount_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

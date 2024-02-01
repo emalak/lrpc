@@ -109,6 +109,35 @@ message GetFavouriteLandmarksResponse{
   repeated string ids = 1;
 }
 
+message GetLikesAmountRequest {
+  string userId = 1;
+}
+message GetLikesAmountResponse{
+  int32 count = 1;
+}
+
+message GetTagsRequest{
+  string userId = 1;
+}
+message GetTagsResponse{
+
+}
+
+message GetFeaturesTopicsRequest{
+  string userId = 1;
+  int32 amount = 2;
+}
+message FeaturedTopic{
+  string id = 1;
+  string name = 2;
+  string illustration = 3;
+}
+message GetFeaturedTopicsResponse{
+  repeated FeaturedTopic topics = 1;
+}
+
+
+
 service StorageService{
   rpc GetLandmark(GetLandmarkRequest) returns (GetLandmarkResponse) {}
   rpc AddLandmark(AddLandmarkRequest) returns (AddLandmarkResponse) {}
@@ -123,4 +152,5 @@ service StorageService{
   rpc GetComments(GetCommentsRequest) returns (GetCommentsResponse) {}
   rpc GetProfileComments(GetProfileCommentsRequest) returns (GetProfileCommentsResponse) {}
   rpc GetFavouriteLandmarks(GetFavouriteLandmarksRequest) returns (GetFavouriteLandmarksResponse) {}
+  rpc GetLikesAmount(GetLikesAmountRequest) returns (GetLikesAmountResponse) {}
 }
