@@ -102,6 +102,13 @@ message GetProfileCommentsResponse{
   repeated Comment comments = 1;
 }
 
+message GetFavouriteLandmarksRequest{
+  string userId = 1;
+}
+message GetFavouriteLandmarksResponse{
+  repeated string ids = 1;
+}
+
 service StorageService{
   rpc GetLandmark(GetLandmarkRequest) returns (GetLandmarkResponse) {}
   rpc AddLandmark(AddLandmarkRequest) returns (AddLandmarkResponse) {}
@@ -115,4 +122,5 @@ service StorageService{
   rpc CreateComment(CreateCommentRequest) returns (CreateCommentResponse) {}
   rpc GetComments(GetCommentsRequest) returns (GetCommentsResponse) {}
   rpc GetProfileComments(GetProfileCommentsRequest) returns (GetProfileCommentsResponse) {}
+  rpc GetFavouriteLandmarks(GetFavouriteLandmarksRequest) returns (GetFavouriteLandmarksResponse) {}
 }

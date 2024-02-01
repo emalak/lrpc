@@ -586,3 +586,33 @@ func TestGetFeed(t *testing.T) {
 	fmt.Println(err)
 
 }
+
+func TestGetFavouriteLandmarks(t *testing.T) {
+	const (
+		validUserId   = "2e9ee190-217c-4f92-aea4-b8086501fbb2"
+		invalidUserId = "invalidId"
+	)
+
+	ctx := context.Background()
+	client, err := New(ctx, Settings{
+		FeedOpts:    nil,
+		StorageOpts: &StorageOptions{Address: "localhost:8080"},
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	ids, err := client.GetFavouriteLandmarks(ctx, validUserId)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(ids) < 1 {
+		t.Fatal("empty ids")
+	}
+	fmt.Println(ids)
+
+	_, err = client.GetFavouriteLandmarks(ctx, invalidUserId)
+	if err == nil {
+		t.Fatal("Expected an error for invalid id, got nil")
+	}
+}
