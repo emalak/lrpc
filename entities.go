@@ -10,6 +10,7 @@ type dto interface {
 
 type Comment struct {
 	Id          string
+	ParentId    string
 	UserId      string
 	Grade       int
 	Attachments []string
@@ -23,6 +24,7 @@ func (c Comment) JSON() []byte {
 	obj := p.NewObject()
 
 	obj.Set("Id", p.NewString(c.Id))
+	obj.Set("ParentId", p.NewString(c.ParentId))
 	obj.Set("UserId", p.NewString(c.UserId))
 	obj.Set("Text", p.NewString(c.Text))
 	obj.Set("ReplyId", p.NewString(c.ReplyId))
