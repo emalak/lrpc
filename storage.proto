@@ -80,12 +80,13 @@ message CreateCommentResponse{
 
 message Comment{
   string id = 1;
-  string userId = 2;
-  int64 grade = 3;
-  repeated string attachments = 4;
-  string text = 5;
-  string replyId = 6;
-  int64 timestamp = 7;
+  string parentId = 2;
+  string userId = 3;
+  int64 grade = 4;
+  repeated string attachments = 5;
+  string text = 6;
+  string replyId = 7;
+  int64 timestamp = 8;
 }
 message GetCommentsRequest{
   string landmarkId = 1;
@@ -136,7 +137,6 @@ message FeaturedTopic{
 message GetFeaturedTopicsResponse{
   repeated FeaturedTopic topics = 1;
 }
-
 
 
 service StorageService{
