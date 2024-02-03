@@ -36,6 +36,11 @@ type StorageServiceClient interface {
 	GetProfileComments(ctx context.Context, in *GetProfileCommentsRequest, opts ...grpc.CallOption) (*GetProfileCommentsResponse, error)
 	GetFavouriteLandmarks(ctx context.Context, in *GetFavouriteLandmarksRequest, opts ...grpc.CallOption) (*GetFavouriteLandmarksResponse, error)
 	GetLikesAmount(ctx context.Context, in *GetLikesAmountRequest, opts ...grpc.CallOption) (*GetLikesAmountResponse, error)
+	AddFriend(ctx context.Context, in *AddFriendRequest, opts ...grpc.CallOption) (*AddFriendResponse, error)
+	DeleteFriend(ctx context.Context, in *DeleteFriendRequest, opts ...grpc.CallOption) (*DeleteFriendResponse, error)
+	GetFriends(ctx context.Context, in *GetFriendsRequest, opts ...grpc.CallOption) (*GetFriendsResponse, error)
+	CountFriends(ctx context.Context, in *CountFriendsRequest, opts ...grpc.CallOption) (*CountFriendsResponse, error)
+	IsFriend(ctx context.Context, in *IsFriendRequest, opts ...grpc.CallOption) (*IsFriendResponse, error)
 }
 
 type storageServiceClient struct {
@@ -172,6 +177,51 @@ func (c *storageServiceClient) GetLikesAmount(ctx context.Context, in *GetLikesA
 	return out, nil
 }
 
+func (c *storageServiceClient) AddFriend(ctx context.Context, in *AddFriendRequest, opts ...grpc.CallOption) (*AddFriendResponse, error) {
+	out := new(AddFriendResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/AddFriend", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageServiceClient) DeleteFriend(ctx context.Context, in *DeleteFriendRequest, opts ...grpc.CallOption) (*DeleteFriendResponse, error) {
+	out := new(DeleteFriendResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/DeleteFriend", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageServiceClient) GetFriends(ctx context.Context, in *GetFriendsRequest, opts ...grpc.CallOption) (*GetFriendsResponse, error) {
+	out := new(GetFriendsResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/GetFriends", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageServiceClient) CountFriends(ctx context.Context, in *CountFriendsRequest, opts ...grpc.CallOption) (*CountFriendsResponse, error) {
+	out := new(CountFriendsResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/CountFriends", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageServiceClient) IsFriend(ctx context.Context, in *IsFriendRequest, opts ...grpc.CallOption) (*IsFriendResponse, error) {
+	out := new(IsFriendResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/IsFriend", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // StorageServiceServer is the server API for StorageService service.
 // All implementations must embed UnimplementedStorageServiceServer
 // for forward compatibility
@@ -190,6 +240,11 @@ type StorageServiceServer interface {
 	GetProfileComments(context.Context, *GetProfileCommentsRequest) (*GetProfileCommentsResponse, error)
 	GetFavouriteLandmarks(context.Context, *GetFavouriteLandmarksRequest) (*GetFavouriteLandmarksResponse, error)
 	GetLikesAmount(context.Context, *GetLikesAmountRequest) (*GetLikesAmountResponse, error)
+	AddFriend(context.Context, *AddFriendRequest) (*AddFriendResponse, error)
+	DeleteFriend(context.Context, *DeleteFriendRequest) (*DeleteFriendResponse, error)
+	GetFriends(context.Context, *GetFriendsRequest) (*GetFriendsResponse, error)
+	CountFriends(context.Context, *CountFriendsRequest) (*CountFriendsResponse, error)
+	IsFriend(context.Context, *IsFriendRequest) (*IsFriendResponse, error)
 	mustEmbedUnimplementedStorageServiceServer()
 }
 
@@ -238,6 +293,21 @@ func (UnimplementedStorageServiceServer) GetFavouriteLandmarks(context.Context, 
 }
 func (UnimplementedStorageServiceServer) GetLikesAmount(context.Context, *GetLikesAmountRequest) (*GetLikesAmountResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLikesAmount not implemented")
+}
+func (UnimplementedStorageServiceServer) AddFriend(context.Context, *AddFriendRequest) (*AddFriendResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddFriend not implemented")
+}
+func (UnimplementedStorageServiceServer) DeleteFriend(context.Context, *DeleteFriendRequest) (*DeleteFriendResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteFriend not implemented")
+}
+func (UnimplementedStorageServiceServer) GetFriends(context.Context, *GetFriendsRequest) (*GetFriendsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFriends not implemented")
+}
+func (UnimplementedStorageServiceServer) CountFriends(context.Context, *CountFriendsRequest) (*CountFriendsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CountFriends not implemented")
+}
+func (UnimplementedStorageServiceServer) IsFriend(context.Context, *IsFriendRequest) (*IsFriendResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IsFriend not implemented")
 }
 func (UnimplementedStorageServiceServer) mustEmbedUnimplementedStorageServiceServer() {}
 
@@ -504,6 +574,96 @@ func _StorageService_GetLikesAmount_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _StorageService_AddFriend_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddFriendRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageServiceServer).AddFriend(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.storage.StorageService/AddFriend",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageServiceServer).AddFriend(ctx, req.(*AddFriendRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageService_DeleteFriend_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteFriendRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageServiceServer).DeleteFriend(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.storage.StorageService/DeleteFriend",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageServiceServer).DeleteFriend(ctx, req.(*DeleteFriendRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageService_GetFriends_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFriendsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageServiceServer).GetFriends(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.storage.StorageService/GetFriends",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageServiceServer).GetFriends(ctx, req.(*GetFriendsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageService_CountFriends_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CountFriendsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageServiceServer).CountFriends(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.storage.StorageService/CountFriends",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageServiceServer).CountFriends(ctx, req.(*CountFriendsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageService_IsFriend_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IsFriendRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageServiceServer).IsFriend(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.storage.StorageService/IsFriend",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageServiceServer).IsFriend(ctx, req.(*IsFriendRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // StorageService_ServiceDesc is the grpc.ServiceDesc for StorageService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -566,6 +726,26 @@ var StorageService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetLikesAmount",
 			Handler:    _StorageService_GetLikesAmount_Handler,
+		},
+		{
+			MethodName: "AddFriend",
+			Handler:    _StorageService_AddFriend_Handler,
+		},
+		{
+			MethodName: "DeleteFriend",
+			Handler:    _StorageService_DeleteFriend_Handler,
+		},
+		{
+			MethodName: "GetFriends",
+			Handler:    _StorageService_GetFriends_Handler,
+		},
+		{
+			MethodName: "CountFriends",
+			Handler:    _StorageService_CountFriends_Handler,
+		},
+		{
+			MethodName: "IsFriend",
+			Handler:    _StorageService_IsFriend_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

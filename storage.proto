@@ -138,6 +138,43 @@ message GetFeaturedTopicsResponse{
   repeated FeaturedTopic topics = 1;
 }
 
+message AddFriendRequest{
+  string sender = 1;
+  string receiver = 2;
+}
+message AddFriendResponse{
+
+}
+
+message DeleteFriendRequest{
+  string sender = 1;
+  string receiver = 2;
+}
+message DeleteFriendResponse{
+
+}
+
+message GetFriendsRequest{
+  string userId = 1;
+}
+message GetFriendsResponse{
+  repeated string ids = 1;
+}
+
+message CountFriendsRequest{
+  string userId = 1;
+}
+message CountFriendsResponse{
+  int32 count = 1;
+}
+
+message IsFriendRequest{
+  string user1 = 1;
+  string user2 = 2;
+}
+message IsFriendResponse{
+  bool isFriend = 1;
+}
 
 service StorageService{
   rpc GetLandmark(GetLandmarkRequest) returns (GetLandmarkResponse) {}
@@ -154,4 +191,9 @@ service StorageService{
   rpc GetProfileComments(GetProfileCommentsRequest) returns (GetProfileCommentsResponse) {}
   rpc GetFavouriteLandmarks(GetFavouriteLandmarksRequest) returns (GetFavouriteLandmarksResponse) {}
   rpc GetLikesAmount(GetLikesAmountRequest) returns (GetLikesAmountResponse) {}
+  rpc AddFriend(AddFriendRequest) returns (AddFriendResponse) {}
+  rpc DeleteFriend(DeleteFriendRequest) returns (DeleteFriendResponse) {}
+  rpc GetFriends(GetFriendsRequest) returns (GetFriendsResponse) {}
+  rpc CountFriends(CountFriendsRequest) returns (CountFriendsResponse) {}
+  rpc IsFriend(IsFriendRequest) returns (IsFriendResponse) {}
 }
