@@ -41,6 +41,13 @@ type StorageServiceClient interface {
 	GetFriends(ctx context.Context, in *GetFriendsRequest, opts ...grpc.CallOption) (*GetFriendsResponse, error)
 	CountFriends(ctx context.Context, in *CountFriendsRequest, opts ...grpc.CallOption) (*CountFriendsResponse, error)
 	IsFriend(ctx context.Context, in *IsFriendRequest, opts ...grpc.CallOption) (*IsFriendResponse, error)
+	GetTags(ctx context.Context, in *GetTagsRequest, opts ...grpc.CallOption) (*GetTagsResponse, error)
+	CountReviews(ctx context.Context, in *CountReviewsRequest, opts ...grpc.CallOption) (*CountFriendsResponse, error)
+	ConnectTags(ctx context.Context, in *ConnectTagsRequest, opts ...grpc.CallOption) (*ConnectTagsResponse, error)
+	DisconnectTags(ctx context.Context, in *ConnectTagsRequest, opts ...grpc.CallOption) (*DisconnectTagsResponse, error)
+	DeleteTag(ctx context.Context, in *DeleteFriendRequest, opts ...grpc.CallOption) (*DeleteTagResponse, error)
+	AddLandmarkTag(ctx context.Context, in *AddFriendRequest, opts ...grpc.CallOption) (*AddLandmarkTagResponse, error)
+	RemoveLandmarkTag(ctx context.Context, in *RemoveLandmarkTagRequest, opts ...grpc.CallOption) (*RemoveLandmarkTagResponse, error)
 }
 
 type storageServiceClient struct {
@@ -222,6 +229,69 @@ func (c *storageServiceClient) IsFriend(ctx context.Context, in *IsFriendRequest
 	return out, nil
 }
 
+func (c *storageServiceClient) GetTags(ctx context.Context, in *GetTagsRequest, opts ...grpc.CallOption) (*GetTagsResponse, error) {
+	out := new(GetTagsResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/GetTags", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageServiceClient) CountReviews(ctx context.Context, in *CountReviewsRequest, opts ...grpc.CallOption) (*CountFriendsResponse, error) {
+	out := new(CountFriendsResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/CountReviews", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageServiceClient) ConnectTags(ctx context.Context, in *ConnectTagsRequest, opts ...grpc.CallOption) (*ConnectTagsResponse, error) {
+	out := new(ConnectTagsResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/ConnectTags", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageServiceClient) DisconnectTags(ctx context.Context, in *ConnectTagsRequest, opts ...grpc.CallOption) (*DisconnectTagsResponse, error) {
+	out := new(DisconnectTagsResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/DisconnectTags", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageServiceClient) DeleteTag(ctx context.Context, in *DeleteFriendRequest, opts ...grpc.CallOption) (*DeleteTagResponse, error) {
+	out := new(DeleteTagResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/DeleteTag", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageServiceClient) AddLandmarkTag(ctx context.Context, in *AddFriendRequest, opts ...grpc.CallOption) (*AddLandmarkTagResponse, error) {
+	out := new(AddLandmarkTagResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/AddLandmarkTag", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageServiceClient) RemoveLandmarkTag(ctx context.Context, in *RemoveLandmarkTagRequest, opts ...grpc.CallOption) (*RemoveLandmarkTagResponse, error) {
+	out := new(RemoveLandmarkTagResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/RemoveLandmarkTag", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // StorageServiceServer is the server API for StorageService service.
 // All implementations must embed UnimplementedStorageServiceServer
 // for forward compatibility
@@ -245,6 +315,13 @@ type StorageServiceServer interface {
 	GetFriends(context.Context, *GetFriendsRequest) (*GetFriendsResponse, error)
 	CountFriends(context.Context, *CountFriendsRequest) (*CountFriendsResponse, error)
 	IsFriend(context.Context, *IsFriendRequest) (*IsFriendResponse, error)
+	GetTags(context.Context, *GetTagsRequest) (*GetTagsResponse, error)
+	CountReviews(context.Context, *CountReviewsRequest) (*CountFriendsResponse, error)
+	ConnectTags(context.Context, *ConnectTagsRequest) (*ConnectTagsResponse, error)
+	DisconnectTags(context.Context, *ConnectTagsRequest) (*DisconnectTagsResponse, error)
+	DeleteTag(context.Context, *DeleteFriendRequest) (*DeleteTagResponse, error)
+	AddLandmarkTag(context.Context, *AddFriendRequest) (*AddLandmarkTagResponse, error)
+	RemoveLandmarkTag(context.Context, *RemoveLandmarkTagRequest) (*RemoveLandmarkTagResponse, error)
 	mustEmbedUnimplementedStorageServiceServer()
 }
 
@@ -308,6 +385,27 @@ func (UnimplementedStorageServiceServer) CountFriends(context.Context, *CountFri
 }
 func (UnimplementedStorageServiceServer) IsFriend(context.Context, *IsFriendRequest) (*IsFriendResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IsFriend not implemented")
+}
+func (UnimplementedStorageServiceServer) GetTags(context.Context, *GetTagsRequest) (*GetTagsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTags not implemented")
+}
+func (UnimplementedStorageServiceServer) CountReviews(context.Context, *CountReviewsRequest) (*CountFriendsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CountReviews not implemented")
+}
+func (UnimplementedStorageServiceServer) ConnectTags(context.Context, *ConnectTagsRequest) (*ConnectTagsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ConnectTags not implemented")
+}
+func (UnimplementedStorageServiceServer) DisconnectTags(context.Context, *ConnectTagsRequest) (*DisconnectTagsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DisconnectTags not implemented")
+}
+func (UnimplementedStorageServiceServer) DeleteTag(context.Context, *DeleteFriendRequest) (*DeleteTagResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteTag not implemented")
+}
+func (UnimplementedStorageServiceServer) AddLandmarkTag(context.Context, *AddFriendRequest) (*AddLandmarkTagResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddLandmarkTag not implemented")
+}
+func (UnimplementedStorageServiceServer) RemoveLandmarkTag(context.Context, *RemoveLandmarkTagRequest) (*RemoveLandmarkTagResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RemoveLandmarkTag not implemented")
 }
 func (UnimplementedStorageServiceServer) mustEmbedUnimplementedStorageServiceServer() {}
 
@@ -664,6 +762,132 @@ func _StorageService_IsFriend_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _StorageService_GetTags_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTagsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageServiceServer).GetTags(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.storage.StorageService/GetTags",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageServiceServer).GetTags(ctx, req.(*GetTagsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageService_CountReviews_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CountReviewsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageServiceServer).CountReviews(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.storage.StorageService/CountReviews",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageServiceServer).CountReviews(ctx, req.(*CountReviewsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageService_ConnectTags_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ConnectTagsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageServiceServer).ConnectTags(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.storage.StorageService/ConnectTags",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageServiceServer).ConnectTags(ctx, req.(*ConnectTagsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageService_DisconnectTags_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ConnectTagsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageServiceServer).DisconnectTags(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.storage.StorageService/DisconnectTags",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageServiceServer).DisconnectTags(ctx, req.(*ConnectTagsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageService_DeleteTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteFriendRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageServiceServer).DeleteTag(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.storage.StorageService/DeleteTag",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageServiceServer).DeleteTag(ctx, req.(*DeleteFriendRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageService_AddLandmarkTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddFriendRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageServiceServer).AddLandmarkTag(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.storage.StorageService/AddLandmarkTag",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageServiceServer).AddLandmarkTag(ctx, req.(*AddFriendRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageService_RemoveLandmarkTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RemoveLandmarkTagRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageServiceServer).RemoveLandmarkTag(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.storage.StorageService/RemoveLandmarkTag",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageServiceServer).RemoveLandmarkTag(ctx, req.(*RemoveLandmarkTagRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // StorageService_ServiceDesc is the grpc.ServiceDesc for StorageService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -746,6 +970,34 @@ var StorageService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "IsFriend",
 			Handler:    _StorageService_IsFriend_Handler,
+		},
+		{
+			MethodName: "GetTags",
+			Handler:    _StorageService_GetTags_Handler,
+		},
+		{
+			MethodName: "CountReviews",
+			Handler:    _StorageService_CountReviews_Handler,
+		},
+		{
+			MethodName: "ConnectTags",
+			Handler:    _StorageService_ConnectTags_Handler,
+		},
+		{
+			MethodName: "DisconnectTags",
+			Handler:    _StorageService_DisconnectTags_Handler,
+		},
+		{
+			MethodName: "DeleteTag",
+			Handler:    _StorageService_DeleteTag_Handler,
+		},
+		{
+			MethodName: "AddLandmarkTag",
+			Handler:    _StorageService_AddLandmarkTag_Handler,
+		},
+		{
+			MethodName: "RemoveLandmarkTag",
+			Handler:    _StorageService_RemoveLandmarkTag_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

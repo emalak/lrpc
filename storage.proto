@@ -176,6 +176,58 @@ message IsFriendResponse{
   bool isFriend = 1;
 }
 
+message CountReviewsRequest {
+  string userId = 1;
+}
+message CountReviewsResponse{
+  int32 count = 1;
+}
+
+message CreateTagRequest{
+  string id = 1;
+}
+message CreateTagResponse{}
+
+message ConnectTagsRequest{
+  string id1 = 1;
+  string id2 = 2;
+  float score = 3;
+}
+message ConnectTagsResponse{
+
+}
+
+message DisconnectTagsRequest{
+  string id1 = 1;
+  string id2 = 2;
+}
+message DisconnectTagsResponse{
+
+}
+
+message DeleteTagRequest {
+  string id = 1;
+}
+message DeleteTagResponse{
+
+}
+
+message AddLandmarkTagRequest{
+  string landmarkId = 1;
+  string tagId = 2;
+}
+message AddLandmarkTagResponse{
+
+}
+
+message RemoveLandmarkTagRequest{
+  string landmarkId = 1;
+  string tagId = 2;
+}
+message RemoveLandmarkTagResponse{
+
+}
+
 service StorageService{
   rpc GetLandmark(GetLandmarkRequest) returns (GetLandmarkResponse) {}
   rpc AddLandmark(AddLandmarkRequest) returns (AddLandmarkResponse) {}
@@ -196,4 +248,11 @@ service StorageService{
   rpc GetFriends(GetFriendsRequest) returns (GetFriendsResponse) {}
   rpc CountFriends(CountFriendsRequest) returns (CountFriendsResponse) {}
   rpc IsFriend(IsFriendRequest) returns (IsFriendResponse) {}
+  rpc GetTags(GetTagsRequest) returns (GetTagsResponse) {}
+  rpc CountReviews(CountReviewsRequest) returns (CountFriendsResponse) {}
+  rpc ConnectTags(ConnectTagsRequest) returns (ConnectTagsResponse) {}
+  rpc DisconnectTags(ConnectTagsRequest) returns (DisconnectTagsResponse) {}
+  rpc DeleteTag(DeleteFriendRequest) returns (DeleteTagResponse) {}
+  rpc AddLandmarkTag(AddFriendRequest) returns (AddLandmarkTagResponse) {}
+  rpc RemoveLandmarkTag(RemoveLandmarkTagRequest) returns (RemoveLandmarkTagResponse) {}
 }
