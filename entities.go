@@ -61,3 +61,8 @@ func (l LandmarkPreview) JSON() []byte {
 
 	return obj.MarshalTo(nil)
 }
+
+type TagWithScore struct {
+	Id    string
+	Score float64
+}

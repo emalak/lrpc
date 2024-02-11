@@ -205,3 +205,80 @@ func (c *Client) IsLiked(ctx context.Context, landmarkId string, userId string) 
 	}
 	return res.Liked, nil
 }
+
+func (c *Client) GetUserTags(ctx context.Context, userId string) ([]string, error) {
+	res, err := c.Storage.Client.GetUserTags(ctx, &storage.GetUserTagsRequest{UserId: userId})
+	if err != nil {
+		return nil, err
+	}
+	return res.Ids, nil
+}
+
+func (c *Client) GetLandmarkTags(ctx context.Context, landmarkId string) ([]string, error) {
+	res, err := c.Storage.Client.GetLandmarkTags(ctx, &storage.GetLandmarkTagsRequest{LandmarkId: landmarkId})
+	if err != nil {
+		return nil, err
+	}
+	return res.Ids, nil
+}
+
+func (c *Client) CountReviews(ctx context.Context, userId string) (int, error) {
+	res, err := c.Storage.Client.CountReviews(ctx, &storage.CountReviewsRequest{UserId: userId})
+	if err != nil {
+		return 0, err
+	}
+	return int(res.Count), nil
+}
+
+func (c *Client) ConnectTags(ctx context.Context, id1, id2 string, score float64) error {
+	_, err := c.Storage.Client.ConnectTags(ctx, &storage.ConnectTagsRequest{
+		Id1:   id1,
+		Id2:   id2,
+		Score: float32(score),
+	})
+	return err
+}
+
+func (c *Client) DisconnectTags(ctx context.Context, id1, id2 string) error {
+	_, err := c.Storage.Client.DisconnectTags(ctx, &storage.DisconnectTagsRequest{
+		Id1: id1,
+		Id2: id2,
+	})
+	return err
+}
+
+func (c *Client) DeleteTag(ctx context.Context, id string) error {
+	_, err := c.Storage.Client.DeleteTag(ctx, &storage.DeleteTagRequest{Id: id})
+	return err
+}
+
+func (c *Client) AddLandmarkTag(ctx context.Context, landmarkId, tagId string) error {
+	_, err := c.Storage.Client.AddLandmarkTag(ctx, &storage.AddLandmarkTagRequest{
+		LandmarkId: landmarkId,
+		TagId:      tagId,
+	})
+	return err
+}
+
+func (c *Client) DeleteLandmarkTag(ctx context.Context, landmarkId, tagId string) error {
+	_, err := c.Storage.Client.RemoveLandmarkTag(ctx, &storage.RemoveLandmarkTagRequest{
+		LandmarkId: landmarkId,
+		TagId:      tagId,
+	})
+	return err
+}
+
+func (c *Client) GetConnectedTags(ctx context.Context, tagId string) ([]TagWithScore, error) {
+	res, err := c.Storage.Client.GetConnectedTags(ctx, &storage.GetConnectedTagsRequest{TagId: tagId})
+	if err != nil {
+		return nil, err
+	}
+	tags := make([]TagWithScore, len(res.Tags))
+	for i, v := range res.Tags {
+		tags[i] = TagWithScore{
+			Id:    v.Id,
+			Score: float64(v.Score),
+		}
+	}
+	return tags, nil
+}
