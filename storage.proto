@@ -270,7 +270,7 @@ service StorageService{
   rpc GetLandmarkTags(GetLandmarkTagsRequest) returns (GetLandmarkTagsResponse) {}
   rpc CountReviews(CountReviewsRequest) returns (CountReviewsResponse) {}
   rpc ConnectTags(ConnectTagsRequest) returns (ConnectTagsResponse) {}
-  rpc DisconnectTags(ConnectTagsRequest) returns (DisconnectTagsResponse) {}
+  rpc DisconnectTags(DisconnectTagsRequest) returns (DisconnectTagsResponse) {}
   rpc DeleteTag(DeleteFriendRequest) returns (DeleteTagResponse) {}
   rpc AddLandmarkTag(AddLandmarkTagRequest) returns (AddLandmarkTagResponse) {}
   rpc RemoveLandmarkTag(RemoveLandmarkTagRequest) returns (RemoveLandmarkTagResponse) {}
