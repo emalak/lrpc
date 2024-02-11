@@ -271,7 +271,7 @@ service StorageService{
   rpc CountReviews(CountReviewsRequest) returns (CountReviewsResponse) {}
   rpc ConnectTags(ConnectTagsRequest) returns (ConnectTagsResponse) {}
   rpc DisconnectTags(DisconnectTagsRequest) returns (DisconnectTagsResponse) {}
-  rpc DeleteTag(DeleteFriendRequest) returns (DeleteTagResponse) {}
+  rpc DeleteTag(DeleteTagRequest) returns (DeleteTagResponse) {}
   rpc AddLandmarkTag(AddLandmarkTagRequest) returns (AddLandmarkTagResponse) {}
   rpc RemoveLandmarkTag(RemoveLandmarkTagRequest) returns (RemoveLandmarkTagResponse) {}
   rpc GetConnectedTags(GetConnectedTagsRequest) returns (GetConnectedTagsResponse) {}
