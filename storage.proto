@@ -118,10 +118,10 @@ message GetLikesAmountResponse{
   int32 count = 1;
 }
 
-message GetTagsRequest{
+message GetUserTagsRequest{
   string userId = 1;
 }
-message GetTagsResponse{
+message GetUserTagsResponse{
 
 }
 
@@ -228,6 +228,13 @@ message RemoveLandmarkTagResponse{
 
 }
 
+message GetLandmarkTagsRequest {
+  string landmarkId = 1;
+}
+message GetLandmarkTagsResponse{
+  repeated string ids = 1;
+}
+
 service StorageService{
   rpc GetLandmark(GetLandmarkRequest) returns (GetLandmarkResponse) {}
   rpc AddLandmark(AddLandmarkRequest) returns (AddLandmarkResponse) {}
@@ -248,7 +255,8 @@ service StorageService{
   rpc GetFriends(GetFriendsRequest) returns (GetFriendsResponse) {}
   rpc CountFriends(CountFriendsRequest) returns (CountFriendsResponse) {}
   rpc IsFriend(IsFriendRequest) returns (IsFriendResponse) {}
-  rpc GetTags(GetTagsRequest) returns (GetTagsResponse) {}
+  rpc GetUserTags(GetUserTagsRequest) returns (GetUserTagsResponse) {}
+  rpc GetLandmarkTags(GetLandmarkTagsRequest) returns (GetLandmarkTagsResponse) {}
   rpc CountReviews(CountReviewsRequest) returns (CountFriendsResponse) {}
   rpc ConnectTags(ConnectTagsRequest) returns (ConnectTagsResponse) {}
   rpc DisconnectTags(ConnectTagsRequest) returns (DisconnectTagsResponse) {}

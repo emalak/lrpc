@@ -41,7 +41,8 @@ type StorageServiceClient interface {
 	GetFriends(ctx context.Context, in *GetFriendsRequest, opts ...grpc.CallOption) (*GetFriendsResponse, error)
 	CountFriends(ctx context.Context, in *CountFriendsRequest, opts ...grpc.CallOption) (*CountFriendsResponse, error)
 	IsFriend(ctx context.Context, in *IsFriendRequest, opts ...grpc.CallOption) (*IsFriendResponse, error)
-	GetTags(ctx context.Context, in *GetTagsRequest, opts ...grpc.CallOption) (*GetTagsResponse, error)
+	GetUserTags(ctx context.Context, in *GetUserTagsRequest, opts ...grpc.CallOption) (*GetUserTagsResponse, error)
+	GetLandmarkTags(ctx context.Context, in *GetLandmarkTagsRequest, opts ...grpc.CallOption) (*GetLandmarkTagsResponse, error)
 	CountReviews(ctx context.Context, in *CountReviewsRequest, opts ...grpc.CallOption) (*CountFriendsResponse, error)
 	ConnectTags(ctx context.Context, in *ConnectTagsRequest, opts ...grpc.CallOption) (*ConnectTagsResponse, error)
 	DisconnectTags(ctx context.Context, in *ConnectTagsRequest, opts ...grpc.CallOption) (*DisconnectTagsResponse, error)
@@ -229,9 +230,18 @@ func (c *storageServiceClient) IsFriend(ctx context.Context, in *IsFriendRequest
 	return out, nil
 }
 
-func (c *storageServiceClient) GetTags(ctx context.Context, in *GetTagsRequest, opts ...grpc.CallOption) (*GetTagsResponse, error) {
-	out := new(GetTagsResponse)
-	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/GetTags", in, out, opts...)
+func (c *storageServiceClient) GetUserTags(ctx context.Context, in *GetUserTagsRequest, opts ...grpc.CallOption) (*GetUserTagsResponse, error) {
+	out := new(GetUserTagsResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/GetUserTags", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageServiceClient) GetLandmarkTags(ctx context.Context, in *GetLandmarkTagsRequest, opts ...grpc.CallOption) (*GetLandmarkTagsResponse, error) {
+	out := new(GetLandmarkTagsResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/GetLandmarkTags", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -315,7 +325,8 @@ type StorageServiceServer interface {
 	GetFriends(context.Context, *GetFriendsRequest) (*GetFriendsResponse, error)
 	CountFriends(context.Context, *CountFriendsRequest) (*CountFriendsResponse, error)
 	IsFriend(context.Context, *IsFriendRequest) (*IsFriendResponse, error)
-	GetTags(context.Context, *GetTagsRequest) (*GetTagsResponse, error)
+	GetUserTags(context.Context, *GetUserTagsRequest) (*GetUserTagsResponse, error)
+	GetLandmarkTags(context.Context, *GetLandmarkTagsRequest) (*GetLandmarkTagsResponse, error)
 	CountReviews(context.Context, *CountReviewsRequest) (*CountFriendsResponse, error)
 	ConnectTags(context.Context, *ConnectTagsRequest) (*ConnectTagsResponse, error)
 	DisconnectTags(context.Context, *ConnectTagsRequest) (*DisconnectTagsResponse, error)
@@ -386,8 +397,11 @@ func (UnimplementedStorageServiceServer) CountFriends(context.Context, *CountFri
 func (UnimplementedStorageServiceServer) IsFriend(context.Context, *IsFriendRequest) (*IsFriendResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IsFriend not implemented")
 }
-func (UnimplementedStorageServiceServer) GetTags(context.Context, *GetTagsRequest) (*GetTagsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetTags not implemented")
+func (UnimplementedStorageServiceServer) GetUserTags(context.Context, *GetUserTagsRequest) (*GetUserTagsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserTags not implemented")
+}
+func (UnimplementedStorageServiceServer) GetLandmarkTags(context.Context, *GetLandmarkTagsRequest) (*GetLandmarkTagsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLandmarkTags not implemented")
 }
 func (UnimplementedStorageServiceServer) CountReviews(context.Context, *CountReviewsRequest) (*CountFriendsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CountReviews not implemented")
@@ -762,20 +776,38 @@ func _StorageService_IsFriend_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _StorageService_GetTags_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetTagsRequest)
+func _StorageService_GetUserTags_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserTagsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(StorageServiceServer).GetTags(ctx, in)
+		return srv.(StorageServiceServer).GetUserTags(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/landmark.storage.StorageService/GetTags",
+		FullMethod: "/landmark.storage.StorageService/GetUserTags",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StorageServiceServer).GetTags(ctx, req.(*GetTagsRequest))
+		return srv.(StorageServiceServer).GetUserTags(ctx, req.(*GetUserTagsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageService_GetLandmarkTags_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetLandmarkTagsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageServiceServer).GetLandmarkTags(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.storage.StorageService/GetLandmarkTags",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageServiceServer).GetLandmarkTags(ctx, req.(*GetLandmarkTagsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -972,8 +1004,12 @@ var StorageService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _StorageService_IsFriend_Handler,
 		},
 		{
-			MethodName: "GetTags",
-			Handler:    _StorageService_GetTags_Handler,
+			MethodName: "GetUserTags",
+			Handler:    _StorageService_GetUserTags_Handler,
+		},
+		{
+			MethodName: "GetLandmarkTags",
+			Handler:    _StorageService_GetLandmarkTags_Handler,
 		},
 		{
 			MethodName: "CountReviews",
