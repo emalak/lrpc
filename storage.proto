@@ -261,6 +261,6 @@ service StorageService{
   rpc ConnectTags(ConnectTagsRequest) returns (ConnectTagsResponse) {}
   rpc DisconnectTags(ConnectTagsRequest) returns (DisconnectTagsResponse) {}
   rpc DeleteTag(DeleteFriendRequest) returns (DeleteTagResponse) {}
-  rpc AddLandmarkTag(AddFriendRequest) returns (AddLandmarkTagResponse) {}
+  rpc AddLandmarkTag(AddLandmarkTagRequest) returns (AddLandmarkTagResponse) {}
   rpc RemoveLandmarkTag(RemoveLandmarkTagRequest) returns (RemoveLandmarkTagResponse) {}
 }

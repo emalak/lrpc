@@ -47,7 +47,7 @@ type StorageServiceClient interface {
 	ConnectTags(ctx context.Context, in *ConnectTagsRequest, opts ...grpc.CallOption) (*ConnectTagsResponse, error)
 	DisconnectTags(ctx context.Context, in *ConnectTagsRequest, opts ...grpc.CallOption) (*DisconnectTagsResponse, error)
 	DeleteTag(ctx context.Context, in *DeleteFriendRequest, opts ...grpc.CallOption) (*DeleteTagResponse, error)
-	AddLandmarkTag(ctx context.Context, in *AddFriendRequest, opts ...grpc.CallOption) (*AddLandmarkTagResponse, error)
+	AddLandmarkTag(ctx context.Context, in *AddLandmarkTagRequest, opts ...grpc.CallOption) (*AddLandmarkTagResponse, error)
 	RemoveLandmarkTag(ctx context.Context, in *RemoveLandmarkTagRequest, opts ...grpc.CallOption) (*RemoveLandmarkTagResponse, error)
 }
 
@@ -284,7 +284,7 @@ func (c *storageServiceClient) DeleteTag(ctx context.Context, in *DeleteFriendRe
 	return out, nil
 }
 
-func (c *storageServiceClient) AddLandmarkTag(ctx context.Context, in *AddFriendRequest, opts ...grpc.CallOption) (*AddLandmarkTagResponse, error) {
+func (c *storageServiceClient) AddLandmarkTag(ctx context.Context, in *AddLandmarkTagRequest, opts ...grpc.CallOption) (*AddLandmarkTagResponse, error) {
 	out := new(AddLandmarkTagResponse)
 	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/AddLandmarkTag", in, out, opts...)
 	if err != nil {
@@ -331,7 +331,7 @@ type StorageServiceServer interface {
 	ConnectTags(context.Context, *ConnectTagsRequest) (*ConnectTagsResponse, error)
 	DisconnectTags(context.Context, *ConnectTagsRequest) (*DisconnectTagsResponse, error)
 	DeleteTag(context.Context, *DeleteFriendRequest) (*DeleteTagResponse, error)
-	AddLandmarkTag(context.Context, *AddFriendRequest) (*AddLandmarkTagResponse, error)
+	AddLandmarkTag(context.Context, *AddLandmarkTagRequest) (*AddLandmarkTagResponse, error)
 	RemoveLandmarkTag(context.Context, *RemoveLandmarkTagRequest) (*RemoveLandmarkTagResponse, error)
 	mustEmbedUnimplementedStorageServiceServer()
 }
@@ -415,7 +415,7 @@ func (UnimplementedStorageServiceServer) DisconnectTags(context.Context, *Connec
 func (UnimplementedStorageServiceServer) DeleteTag(context.Context, *DeleteFriendRequest) (*DeleteTagResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteTag not implemented")
 }
-func (UnimplementedStorageServiceServer) AddLandmarkTag(context.Context, *AddFriendRequest) (*AddLandmarkTagResponse, error) {
+func (UnimplementedStorageServiceServer) AddLandmarkTag(context.Context, *AddLandmarkTagRequest) (*AddLandmarkTagResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddLandmarkTag not implemented")
 }
 func (UnimplementedStorageServiceServer) RemoveLandmarkTag(context.Context, *RemoveLandmarkTagRequest) (*RemoveLandmarkTagResponse, error) {
@@ -885,7 +885,7 @@ func _StorageService_DeleteTag_Handler(srv interface{}, ctx context.Context, dec
 }
 
 func _StorageService_AddLandmarkTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddFriendRequest)
+	in := new(AddLandmarkTagRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -897,7 +897,7 @@ func _StorageService_AddLandmarkTag_Handler(srv interface{}, ctx context.Context
 		FullMethod: "/landmark.storage.StorageService/AddLandmarkTag",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StorageServiceServer).AddLandmarkTag(ctx, req.(*AddFriendRequest))
+		return srv.(StorageServiceServer).AddLandmarkTag(ctx, req.(*AddLandmarkTagRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
