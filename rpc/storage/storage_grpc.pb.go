@@ -49,6 +49,7 @@ type StorageServiceClient interface {
 	DeleteTag(ctx context.Context, in *DeleteFriendRequest, opts ...grpc.CallOption) (*DeleteTagResponse, error)
 	AddLandmarkTag(ctx context.Context, in *AddLandmarkTagRequest, opts ...grpc.CallOption) (*AddLandmarkTagResponse, error)
 	RemoveLandmarkTag(ctx context.Context, in *RemoveLandmarkTagRequest, opts ...grpc.CallOption) (*RemoveLandmarkTagResponse, error)
+	GetConnectedTags(ctx context.Context, in *GetConnectedTagsRequest, opts ...grpc.CallOption) (*GetConnectedTagsResponse, error)
 }
 
 type storageServiceClient struct {
@@ -302,6 +303,15 @@ func (c *storageServiceClient) RemoveLandmarkTag(ctx context.Context, in *Remove
 	return out, nil
 }
 
+func (c *storageServiceClient) GetConnectedTags(ctx context.Context, in *GetConnectedTagsRequest, opts ...grpc.CallOption) (*GetConnectedTagsResponse, error) {
+	out := new(GetConnectedTagsResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/GetConnectedTags", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // StorageServiceServer is the server API for StorageService service.
 // All implementations must embed UnimplementedStorageServiceServer
 // for forward compatibility
@@ -333,6 +343,7 @@ type StorageServiceServer interface {
 	DeleteTag(context.Context, *DeleteFriendRequest) (*DeleteTagResponse, error)
 	AddLandmarkTag(context.Context, *AddLandmarkTagRequest) (*AddLandmarkTagResponse, error)
 	RemoveLandmarkTag(context.Context, *RemoveLandmarkTagRequest) (*RemoveLandmarkTagResponse, error)
+	GetConnectedTags(context.Context, *GetConnectedTagsRequest) (*GetConnectedTagsResponse, error)
 	mustEmbedUnimplementedStorageServiceServer()
 }
 
@@ -420,6 +431,9 @@ func (UnimplementedStorageServiceServer) AddLandmarkTag(context.Context, *AddLan
 }
 func (UnimplementedStorageServiceServer) RemoveLandmarkTag(context.Context, *RemoveLandmarkTagRequest) (*RemoveLandmarkTagResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemoveLandmarkTag not implemented")
+}
+func (UnimplementedStorageServiceServer) GetConnectedTags(context.Context, *GetConnectedTagsRequest) (*GetConnectedTagsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetConnectedTags not implemented")
 }
 func (UnimplementedStorageServiceServer) mustEmbedUnimplementedStorageServiceServer() {}
 
@@ -920,6 +934,24 @@ func _StorageService_RemoveLandmarkTag_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _StorageService_GetConnectedTags_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetConnectedTagsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageServiceServer).GetConnectedTags(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.storage.StorageService/GetConnectedTags",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageServiceServer).GetConnectedTags(ctx, req.(*GetConnectedTagsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // StorageService_ServiceDesc is the grpc.ServiceDesc for StorageService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1034,6 +1066,10 @@ var StorageService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RemoveLandmarkTag",
 			Handler:    _StorageService_RemoveLandmarkTag_Handler,
+		},
+		{
+			MethodName: "GetConnectedTags",
+			Handler:    _StorageService_GetConnectedTags_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

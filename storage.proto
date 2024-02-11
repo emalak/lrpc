@@ -235,6 +235,13 @@ message GetLandmarkTagsResponse{
   repeated string ids = 1;
 }
 
+message GetConnectedTagsRequest{
+  string tagId = 1;
+}
+message GetConnectedTagsResponse{
+  repeated string ids = 1;
+}
+
 service StorageService{
   rpc GetLandmark(GetLandmarkRequest) returns (GetLandmarkResponse) {}
   rpc AddLandmark(AddLandmarkRequest) returns (AddLandmarkResponse) {}
@@ -263,4 +270,5 @@ service StorageService{
   rpc DeleteTag(DeleteFriendRequest) returns (DeleteTagResponse) {}
   rpc AddLandmarkTag(AddLandmarkTagRequest) returns (AddLandmarkTagResponse) {}
   rpc RemoveLandmarkTag(RemoveLandmarkTagRequest) returns (RemoveLandmarkTagResponse) {}
+  rpc GetConnectedTags(GetConnectedTagsRequest) returns (GetConnectedTagsResponse) {}
 }
