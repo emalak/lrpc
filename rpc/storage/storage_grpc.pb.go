@@ -43,7 +43,7 @@ type StorageServiceClient interface {
 	IsFriend(ctx context.Context, in *IsFriendRequest, opts ...grpc.CallOption) (*IsFriendResponse, error)
 	GetUserTags(ctx context.Context, in *GetUserTagsRequest, opts ...grpc.CallOption) (*GetUserTagsResponse, error)
 	GetLandmarkTags(ctx context.Context, in *GetLandmarkTagsRequest, opts ...grpc.CallOption) (*GetLandmarkTagsResponse, error)
-	CountReviews(ctx context.Context, in *CountReviewsRequest, opts ...grpc.CallOption) (*CountFriendsResponse, error)
+	CountReviews(ctx context.Context, in *CountReviewsRequest, opts ...grpc.CallOption) (*CountReviewsResponse, error)
 	ConnectTags(ctx context.Context, in *ConnectTagsRequest, opts ...grpc.CallOption) (*ConnectTagsResponse, error)
 	DisconnectTags(ctx context.Context, in *ConnectTagsRequest, opts ...grpc.CallOption) (*DisconnectTagsResponse, error)
 	DeleteTag(ctx context.Context, in *DeleteFriendRequest, opts ...grpc.CallOption) (*DeleteTagResponse, error)
@@ -248,8 +248,8 @@ func (c *storageServiceClient) GetLandmarkTags(ctx context.Context, in *GetLandm
 	return out, nil
 }
 
-func (c *storageServiceClient) CountReviews(ctx context.Context, in *CountReviewsRequest, opts ...grpc.CallOption) (*CountFriendsResponse, error) {
-	out := new(CountFriendsResponse)
+func (c *storageServiceClient) CountReviews(ctx context.Context, in *CountReviewsRequest, opts ...grpc.CallOption) (*CountReviewsResponse, error) {
+	out := new(CountReviewsResponse)
 	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/CountReviews", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -327,7 +327,7 @@ type StorageServiceServer interface {
 	IsFriend(context.Context, *IsFriendRequest) (*IsFriendResponse, error)
 	GetUserTags(context.Context, *GetUserTagsRequest) (*GetUserTagsResponse, error)
 	GetLandmarkTags(context.Context, *GetLandmarkTagsRequest) (*GetLandmarkTagsResponse, error)
-	CountReviews(context.Context, *CountReviewsRequest) (*CountFriendsResponse, error)
+	CountReviews(context.Context, *CountReviewsRequest) (*CountReviewsResponse, error)
 	ConnectTags(context.Context, *ConnectTagsRequest) (*ConnectTagsResponse, error)
 	DisconnectTags(context.Context, *ConnectTagsRequest) (*DisconnectTagsResponse, error)
 	DeleteTag(context.Context, *DeleteFriendRequest) (*DeleteTagResponse, error)
@@ -403,7 +403,7 @@ func (UnimplementedStorageServiceServer) GetUserTags(context.Context, *GetUserTa
 func (UnimplementedStorageServiceServer) GetLandmarkTags(context.Context, *GetLandmarkTagsRequest) (*GetLandmarkTagsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLandmarkTags not implemented")
 }
-func (UnimplementedStorageServiceServer) CountReviews(context.Context, *CountReviewsRequest) (*CountFriendsResponse, error) {
+func (UnimplementedStorageServiceServer) CountReviews(context.Context, *CountReviewsRequest) (*CountReviewsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CountReviews not implemented")
 }
 func (UnimplementedStorageServiceServer) ConnectTags(context.Context, *ConnectTagsRequest) (*ConnectTagsResponse, error) {

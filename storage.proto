@@ -257,7 +257,7 @@ service StorageService{
   rpc IsFriend(IsFriendRequest) returns (IsFriendResponse) {}
   rpc GetUserTags(GetUserTagsRequest) returns (GetUserTagsResponse) {}
   rpc GetLandmarkTags(GetLandmarkTagsRequest) returns (GetLandmarkTagsResponse) {}
-  rpc CountReviews(CountReviewsRequest) returns (CountFriendsResponse) {}
+  rpc CountReviews(CountReviewsRequest) returns (CountReviewsResponse) {}
   rpc ConnectTags(ConnectTagsRequest) returns (ConnectTagsResponse) {}
   rpc DisconnectTags(ConnectTagsRequest) returns (DisconnectTagsResponse) {}
   rpc DeleteTag(DeleteFriendRequest) returns (DeleteTagResponse) {}
