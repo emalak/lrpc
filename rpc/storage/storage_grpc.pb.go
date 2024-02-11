@@ -45,7 +45,7 @@ type StorageServiceClient interface {
 	GetLandmarkTags(ctx context.Context, in *GetLandmarkTagsRequest, opts ...grpc.CallOption) (*GetLandmarkTagsResponse, error)
 	CountReviews(ctx context.Context, in *CountReviewsRequest, opts ...grpc.CallOption) (*CountReviewsResponse, error)
 	ConnectTags(ctx context.Context, in *ConnectTagsRequest, opts ...grpc.CallOption) (*ConnectTagsResponse, error)
-	DisconnectTags(ctx context.Context, in *ConnectTagsRequest, opts ...grpc.CallOption) (*DisconnectTagsResponse, error)
+	DisconnectTags(ctx context.Context, in *DisconnectTagsRequest, opts ...grpc.CallOption) (*DisconnectTagsResponse, error)
 	DeleteTag(ctx context.Context, in *DeleteFriendRequest, opts ...grpc.CallOption) (*DeleteTagResponse, error)
 	AddLandmarkTag(ctx context.Context, in *AddLandmarkTagRequest, opts ...grpc.CallOption) (*AddLandmarkTagResponse, error)
 	RemoveLandmarkTag(ctx context.Context, in *RemoveLandmarkTagRequest, opts ...grpc.CallOption) (*RemoveLandmarkTagResponse, error)
@@ -267,7 +267,7 @@ func (c *storageServiceClient) ConnectTags(ctx context.Context, in *ConnectTagsR
 	return out, nil
 }
 
-func (c *storageServiceClient) DisconnectTags(ctx context.Context, in *ConnectTagsRequest, opts ...grpc.CallOption) (*DisconnectTagsResponse, error) {
+func (c *storageServiceClient) DisconnectTags(ctx context.Context, in *DisconnectTagsRequest, opts ...grpc.CallOption) (*DisconnectTagsResponse, error) {
 	out := new(DisconnectTagsResponse)
 	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/DisconnectTags", in, out, opts...)
 	if err != nil {
@@ -339,7 +339,7 @@ type StorageServiceServer interface {
 	GetLandmarkTags(context.Context, *GetLandmarkTagsRequest) (*GetLandmarkTagsResponse, error)
 	CountReviews(context.Context, *CountReviewsRequest) (*CountReviewsResponse, error)
 	ConnectTags(context.Context, *ConnectTagsRequest) (*ConnectTagsResponse, error)
-	DisconnectTags(context.Context, *ConnectTagsRequest) (*DisconnectTagsResponse, error)
+	DisconnectTags(context.Context, *DisconnectTagsRequest) (*DisconnectTagsResponse, error)
 	DeleteTag(context.Context, *DeleteFriendRequest) (*DeleteTagResponse, error)
 	AddLandmarkTag(context.Context, *AddLandmarkTagRequest) (*AddLandmarkTagResponse, error)
 	RemoveLandmarkTag(context.Context, *RemoveLandmarkTagRequest) (*RemoveLandmarkTagResponse, error)
@@ -420,7 +420,7 @@ func (UnimplementedStorageServiceServer) CountReviews(context.Context, *CountRev
 func (UnimplementedStorageServiceServer) ConnectTags(context.Context, *ConnectTagsRequest) (*ConnectTagsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ConnectTags not implemented")
 }
-func (UnimplementedStorageServiceServer) DisconnectTags(context.Context, *ConnectTagsRequest) (*DisconnectTagsResponse, error) {
+func (UnimplementedStorageServiceServer) DisconnectTags(context.Context, *DisconnectTagsRequest) (*DisconnectTagsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DisconnectTags not implemented")
 }
 func (UnimplementedStorageServiceServer) DeleteTag(context.Context, *DeleteFriendRequest) (*DeleteTagResponse, error) {
@@ -863,7 +863,7 @@ func _StorageService_ConnectTags_Handler(srv interface{}, ctx context.Context, d
 }
 
 func _StorageService_DisconnectTags_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ConnectTagsRequest)
+	in := new(DisconnectTagsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -875,7 +875,7 @@ func _StorageService_DisconnectTags_Handler(srv interface{}, ctx context.Context
 		FullMethod: "/landmark.storage.StorageService/DisconnectTags",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StorageServiceServer).DisconnectTags(ctx, req.(*ConnectTagsRequest))
+		return srv.(StorageServiceServer).DisconnectTags(ctx, req.(*DisconnectTagsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
