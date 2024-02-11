@@ -122,7 +122,7 @@ message GetUserTagsRequest{
   string userId = 1;
 }
 message GetUserTagsResponse{
-
+  repeated string ids = 1;
 }
 
 message GetFeaturesTopicsRequest{
