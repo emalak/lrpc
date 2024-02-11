@@ -238,8 +238,12 @@ message GetLandmarkTagsResponse{
 message GetConnectedTagsRequest{
   string tagId = 1;
 }
+message Tag{
+  string id = 1;
+  float score = 2;
+}
 message GetConnectedTagsResponse{
-  repeated string ids = 1;
+  repeated Tag tags = 1;
 }
 
 service StorageService{
