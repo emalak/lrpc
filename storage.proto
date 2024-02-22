@@ -275,4 +275,5 @@ service StorageService{
   rpc AddLandmarkTag(AddLandmarkTagRequest) returns (AddLandmarkTagResponse) {}
   rpc RemoveLandmarkTag(RemoveLandmarkTagRequest) returns (RemoveLandmarkTagResponse) {}
   rpc GetConnectedTags(GetConnectedTagsRequest) returns (GetConnectedTagsResponse) {}
+  rpc CreateTag(CreateTagRequest) returns (CreateTagResponse) {}
 }

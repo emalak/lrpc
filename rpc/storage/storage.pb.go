@@ -3336,7 +3336,7 @@ var file_storage_proto_rawDesc = []byte{
 	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x29, 0x0a, 0x04, 0x74, 0x61, 0x67, 0x73, 0x18,
 	0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x15, 0x2e, 0x6c, 0x61, 0x6e, 0x64, 0x6d, 0x61, 0x72, 0x6b,
 	0x2e, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x2e, 0x54, 0x61, 0x67, 0x52, 0x04, 0x74, 0x61,
-	0x67, 0x73, 0x32, 0xe2, 0x15, 0x0a, 0x0e, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x53, 0x65,
+	0x67, 0x73, 0x32, 0xba, 0x16, 0x0a, 0x0e, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x53, 0x65,
 	0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x5c, 0x0a, 0x0b, 0x47, 0x65, 0x74, 0x4c, 0x61, 0x6e, 0x64,
 	0x6d, 0x61, 0x72, 0x6b, 0x12, 0x24, 0x2e, 0x6c, 0x61, 0x6e, 0x64, 0x6d, 0x61, 0x72, 0x6b, 0x2e,
 	0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x2e, 0x47, 0x65, 0x74, 0x4c, 0x61, 0x6e, 0x64, 0x6d,
@@ -3510,9 +3510,14 @@ var file_storage_proto_rawDesc = []byte{
 	0x67, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2a, 0x2e, 0x6c, 0x61, 0x6e, 0x64,
 	0x6d, 0x61, 0x72, 0x6b, 0x2e, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x2e, 0x47, 0x65, 0x74,
 	0x43, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x65, 0x64, 0x54, 0x61, 0x67, 0x73, 0x52, 0x65, 0x73,
-	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x14, 0x5a, 0x12, 0x2e, 0x2f, 0x6c, 0x61, 0x6e,
-	0x64, 0x6d, 0x61, 0x72, 0x6b, 0x5f, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x62, 0x06, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x56, 0x0a, 0x09, 0x43, 0x72, 0x65, 0x61, 0x74,
+	0x65, 0x54, 0x61, 0x67, 0x12, 0x22, 0x2e, 0x6c, 0x61, 0x6e, 0x64, 0x6d, 0x61, 0x72, 0x6b, 0x2e,
+	0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54, 0x61,
+	0x67, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x23, 0x2e, 0x6c, 0x61, 0x6e, 0x64, 0x6d,
+	0x61, 0x72, 0x6b, 0x2e, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x2e, 0x43, 0x72, 0x65, 0x61,
+	0x74, 0x65, 0x54, 0x61, 0x67, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42,
+	0x14, 0x5a, 0x12, 0x2e, 0x2f, 0x6c, 0x61, 0x6e, 0x64, 0x6d, 0x61, 0x72, 0x6b, 0x5f, 0x73, 0x74,
+	0x6f, 0x72, 0x61, 0x67, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -3626,36 +3631,38 @@ var file_storage_proto_depIdxs = []int32{
 	54, // 29: landmark.storage.StorageService.AddLandmarkTag:input_type -> landmark.storage.AddLandmarkTagRequest
 	56, // 30: landmark.storage.StorageService.RemoveLandmarkTag:input_type -> landmark.storage.RemoveLandmarkTagRequest
 	60, // 31: landmark.storage.StorageService.GetConnectedTags:input_type -> landmark.storage.GetConnectedTagsRequest
-	1,  // 32: landmark.storage.StorageService.GetLandmark:output_type -> landmark.storage.GetLandmarkResponse
-	3,  // 33: landmark.storage.StorageService.AddLandmark:output_type -> landmark.storage.AddLandmarkResponse
-	5,  // 34: landmark.storage.StorageService.LikeLandmark:output_type -> landmark.storage.LikeLandmarkResponse
-	7,  // 35: landmark.storage.StorageService.DislikeLandmark:output_type -> landmark.storage.DislikeLandmarkResponse
-	9,  // 36: landmark.storage.StorageService.GetLikes:output_type -> landmark.storage.GetLikesResponse
-	11, // 37: landmark.storage.StorageService.ViewLandmark:output_type -> landmark.storage.ViewLandmarkResponse
-	13, // 38: landmark.storage.StorageService.RecommendLandmarks:output_type -> landmark.storage.RecommendLandmarksResponse
-	15, // 39: landmark.storage.StorageService.GetRandomFeed:output_type -> landmark.storage.GetRandomFeedResponse
-	17, // 40: landmark.storage.StorageService.AddUser:output_type -> landmark.storage.AddUserResponse
-	19, // 41: landmark.storage.StorageService.CreateComment:output_type -> landmark.storage.CreateCommentResponse
-	22, // 42: landmark.storage.StorageService.GetComments:output_type -> landmark.storage.GetCommentsResponse
-	24, // 43: landmark.storage.StorageService.GetProfileComments:output_type -> landmark.storage.GetProfileCommentsResponse
-	26, // 44: landmark.storage.StorageService.GetFavouriteLandmarks:output_type -> landmark.storage.GetFavouriteLandmarksResponse
-	28, // 45: landmark.storage.StorageService.GetLikesAmount:output_type -> landmark.storage.GetLikesAmountResponse
-	35, // 46: landmark.storage.StorageService.AddFriend:output_type -> landmark.storage.AddFriendResponse
-	37, // 47: landmark.storage.StorageService.DeleteFriend:output_type -> landmark.storage.DeleteFriendResponse
-	39, // 48: landmark.storage.StorageService.GetFriends:output_type -> landmark.storage.GetFriendsResponse
-	41, // 49: landmark.storage.StorageService.CountFriends:output_type -> landmark.storage.CountFriendsResponse
-	43, // 50: landmark.storage.StorageService.IsFriend:output_type -> landmark.storage.IsFriendResponse
-	30, // 51: landmark.storage.StorageService.GetUserTags:output_type -> landmark.storage.GetUserTagsResponse
-	59, // 52: landmark.storage.StorageService.GetLandmarkTags:output_type -> landmark.storage.GetLandmarkTagsResponse
-	45, // 53: landmark.storage.StorageService.CountReviews:output_type -> landmark.storage.CountReviewsResponse
-	49, // 54: landmark.storage.StorageService.ConnectTags:output_type -> landmark.storage.ConnectTagsResponse
-	51, // 55: landmark.storage.StorageService.DisconnectTags:output_type -> landmark.storage.DisconnectTagsResponse
-	53, // 56: landmark.storage.StorageService.DeleteTag:output_type -> landmark.storage.DeleteTagResponse
-	55, // 57: landmark.storage.StorageService.AddLandmarkTag:output_type -> landmark.storage.AddLandmarkTagResponse
-	57, // 58: landmark.storage.StorageService.RemoveLandmarkTag:output_type -> landmark.storage.RemoveLandmarkTagResponse
-	62, // 59: landmark.storage.StorageService.GetConnectedTags:output_type -> landmark.storage.GetConnectedTagsResponse
-	32, // [32:60] is the sub-list for method output_type
-	4,  // [4:32] is the sub-list for method input_type
+	46, // 32: landmark.storage.StorageService.CreateTag:input_type -> landmark.storage.CreateTagRequest
+	1,  // 33: landmark.storage.StorageService.GetLandmark:output_type -> landmark.storage.GetLandmarkResponse
+	3,  // 34: landmark.storage.StorageService.AddLandmark:output_type -> landmark.storage.AddLandmarkResponse
+	5,  // 35: landmark.storage.StorageService.LikeLandmark:output_type -> landmark.storage.LikeLandmarkResponse
+	7,  // 36: landmark.storage.StorageService.DislikeLandmark:output_type -> landmark.storage.DislikeLandmarkResponse
+	9,  // 37: landmark.storage.StorageService.GetLikes:output_type -> landmark.storage.GetLikesResponse
+	11, // 38: landmark.storage.StorageService.ViewLandmark:output_type -> landmark.storage.ViewLandmarkResponse
+	13, // 39: landmark.storage.StorageService.RecommendLandmarks:output_type -> landmark.storage.RecommendLandmarksResponse
+	15, // 40: landmark.storage.StorageService.GetRandomFeed:output_type -> landmark.storage.GetRandomFeedResponse
+	17, // 41: landmark.storage.StorageService.AddUser:output_type -> landmark.storage.AddUserResponse
+	19, // 42: landmark.storage.StorageService.CreateComment:output_type -> landmark.storage.CreateCommentResponse
+	22, // 43: landmark.storage.StorageService.GetComments:output_type -> landmark.storage.GetCommentsResponse
+	24, // 44: landmark.storage.StorageService.GetProfileComments:output_type -> landmark.storage.GetProfileCommentsResponse
+	26, // 45: landmark.storage.StorageService.GetFavouriteLandmarks:output_type -> landmark.storage.GetFavouriteLandmarksResponse
+	28, // 46: landmark.storage.StorageService.GetLikesAmount:output_type -> landmark.storage.GetLikesAmountResponse
+	35, // 47: landmark.storage.StorageService.AddFriend:output_type -> landmark.storage.AddFriendResponse
+	37, // 48: landmark.storage.StorageService.DeleteFriend:output_type -> landmark.storage.DeleteFriendResponse
+	39, // 49: landmark.storage.StorageService.GetFriends:output_type -> landmark.storage.GetFriendsResponse
+	41, // 50: landmark.storage.StorageService.CountFriends:output_type -> landmark.storage.CountFriendsResponse
+	43, // 51: landmark.storage.StorageService.IsFriend:output_type -> landmark.storage.IsFriendResponse
+	30, // 52: landmark.storage.StorageService.GetUserTags:output_type -> landmark.storage.GetUserTagsResponse
+	59, // 53: landmark.storage.StorageService.GetLandmarkTags:output_type -> landmark.storage.GetLandmarkTagsResponse
+	45, // 54: landmark.storage.StorageService.CountReviews:output_type -> landmark.storage.CountReviewsResponse
+	49, // 55: landmark.storage.StorageService.ConnectTags:output_type -> landmark.storage.ConnectTagsResponse
+	51, // 56: landmark.storage.StorageService.DisconnectTags:output_type -> landmark.storage.DisconnectTagsResponse
+	53, // 57: landmark.storage.StorageService.DeleteTag:output_type -> landmark.storage.DeleteTagResponse
+	55, // 58: landmark.storage.StorageService.AddLandmarkTag:output_type -> landmark.storage.AddLandmarkTagResponse
+	57, // 59: landmark.storage.StorageService.RemoveLandmarkTag:output_type -> landmark.storage.RemoveLandmarkTagResponse
+	62, // 60: landmark.storage.StorageService.GetConnectedTags:output_type -> landmark.storage.GetConnectedTagsResponse
+	47, // 61: landmark.storage.StorageService.CreateTag:output_type -> landmark.storage.CreateTagResponse
+	33, // [33:62] is the sub-list for method output_type
+	4,  // [4:33] is the sub-list for method input_type
 	4,  // [4:4] is the sub-list for extension type_name
 	4,  // [4:4] is the sub-list for extension extendee
 	0,  // [0:4] is the sub-list for field type_name
