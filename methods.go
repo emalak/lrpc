@@ -282,3 +282,8 @@ func (c *Client) GetConnectedTags(ctx context.Context, tagId string) ([]TagWithS
 	}
 	return tags, nil
 }
+
+func (c *Client) CountFriends(ctx context.Context, userId string) (int, error) {
+	res, err := c.Storage.Client.CountFriends(ctx, &storage.CountFriendsRequest{UserId: userId})
+	return int(res.Count), err
+}
