@@ -246,6 +246,23 @@ message GetConnectedTagsResponse{
   repeated Tag tags = 1;
 }
 
+message SetUserTagRequest{
+  string userId = 1;
+  string tagId = 2;
+}
+message SetUserTagResponse{
+
+}
+
+message DeleteUserTagRequest{
+  string userId = 1;
+  string tagId = 2;
+}
+message DeleteUserTagResponse{
+
+}
+
+
 service StorageService{
   rpc GetLandmark(GetLandmarkRequest) returns (GetLandmarkResponse) {}
   rpc AddLandmark(AddLandmarkRequest) returns (AddLandmarkResponse) {}
@@ -266,6 +283,8 @@ service StorageService{
   rpc GetFriends(GetFriendsRequest) returns (GetFriendsResponse) {}
   rpc CountFriends(CountFriendsRequest) returns (CountFriendsResponse) {}
   rpc IsFriend(IsFriendRequest) returns (IsFriendResponse) {}
+  rpc SetUserTag(SetUserTagRequest) returns (SetUserTagResponse) {}
+  rpc DeleteUserTag(DeleteUserTagRequest) returns (DeleteTagResponse) {}
   rpc GetUserTags(GetUserTagsRequest) returns (GetUserTagsResponse) {}
   rpc GetLandmarkTags(GetLandmarkTagsRequest) returns (GetLandmarkTagsResponse) {}
   rpc CountReviews(CountReviewsRequest) returns (CountReviewsResponse) {}

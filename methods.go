@@ -292,3 +292,19 @@ func (c *Client) CreateTag(ctx context.Context, id string) error {
 	_, err := c.Storage.Client.CreateTag(ctx, &storage.CreateTagRequest{Id: id})
 	return err
 }
+
+func (c *Client) SetUserTag(ctx context.Context, userId string, tagId string) error {
+	_, err := c.Storage.Client.SetUserTag(ctx, &storage.SetUserTagRequest{
+		UserId: userId,
+		TagId:  tagId,
+	})
+	return err
+}
+
+func (c *Client) DeleteUserTag(ctx context.Context, userId string, tagId string) error {
+	_, err := c.Storage.Client.DeleteUserTag(ctx, &storage.DeleteUserTagRequest{
+		UserId: userId,
+		TagId:  tagId,
+	})
+	return err
+}
