@@ -343,3 +343,11 @@ func (c *Client) DeleteFriend(ctx context.Context, sender, receiver string) erro
 	})
 	return err
 }
+
+func (c *Client) IsFriend(ctx context.Context, user1, user2 string) (bool, error) {
+	res, err := c.Storage.Client.IsFriend(ctx, &storage.IsFriendRequest{
+		User1: user1,
+		User2: user2,
+	})
+	return res.IsFriend, err
+}
