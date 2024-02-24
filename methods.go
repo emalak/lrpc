@@ -328,6 +328,9 @@ func (c *Client) EditComment(ctx context.Context, userId, commentId, text string
 
 func (c *Client) GetFriends(ctx context.Context, userId string) ([]string, error) {
 	res, err := c.Storage.Client.GetFriends(ctx, &storage.GetFriendsRequest{UserId: userId})
+	if err != nil {
+		return nil, err
+	}
 	return res.Ids, err
 }
 
@@ -349,5 +352,20 @@ func (c *Client) IsFriend(ctx context.Context, user1, user2 string) (bool, error
 		User1: user1,
 		User2: user2,
 	})
+	if err != nil {
+		return false, err
+	}
 	return res.IsFriend, err
+}
+
+func (c *Client) GetLandmarksByTag(ctx context.Context, tagId string, limit, offset int) ([]string, error) {
+	res, err := c.Storage.Client.GetLandmarksByTag(ctx, &storage.GetLandmarksByTagRequest{
+		TagId:  tagId,
+		Limit:  int32(limit),
+		Offset: int32(offset),
+	})
+	if err != nil {
+		return nil, err
+	}
+	return res.Ids, nil
 }
