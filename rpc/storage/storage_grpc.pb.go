@@ -32,6 +32,8 @@ type StorageServiceClient interface {
 	GetRandomFeed(ctx context.Context, in *GetRandomFeedRequest, opts ...grpc.CallOption) (*GetRandomFeedResponse, error)
 	AddUser(ctx context.Context, in *AddUserRequest, opts ...grpc.CallOption) (*AddUserResponse, error)
 	CreateComment(ctx context.Context, in *CreateCommentRequest, opts ...grpc.CallOption) (*CreateCommentResponse, error)
+	DeleteComment(ctx context.Context, in *DeleteCommentRequest, opts ...grpc.CallOption) (*DeleteCommentResponse, error)
+	EditComment(ctx context.Context, in *EditCommentRequest, opts ...grpc.CallOption) (*EditCommentResponse, error)
 	GetComments(ctx context.Context, in *GetCommentsRequest, opts ...grpc.CallOption) (*GetCommentsResponse, error)
 	GetProfileComments(ctx context.Context, in *GetProfileCommentsRequest, opts ...grpc.CallOption) (*GetProfileCommentsResponse, error)
 	GetFavouriteLandmarks(ctx context.Context, in *GetFavouriteLandmarksRequest, opts ...grpc.CallOption) (*GetFavouriteLandmarksResponse, error)
@@ -147,6 +149,24 @@ func (c *storageServiceClient) AddUser(ctx context.Context, in *AddUserRequest, 
 func (c *storageServiceClient) CreateComment(ctx context.Context, in *CreateCommentRequest, opts ...grpc.CallOption) (*CreateCommentResponse, error) {
 	out := new(CreateCommentResponse)
 	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/CreateComment", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageServiceClient) DeleteComment(ctx context.Context, in *DeleteCommentRequest, opts ...grpc.CallOption) (*DeleteCommentResponse, error) {
+	out := new(DeleteCommentResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/DeleteComment", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageServiceClient) EditComment(ctx context.Context, in *EditCommentRequest, opts ...grpc.CallOption) (*EditCommentResponse, error) {
+	out := new(EditCommentResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/EditComment", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -356,6 +376,8 @@ type StorageServiceServer interface {
 	GetRandomFeed(context.Context, *GetRandomFeedRequest) (*GetRandomFeedResponse, error)
 	AddUser(context.Context, *AddUserRequest) (*AddUserResponse, error)
 	CreateComment(context.Context, *CreateCommentRequest) (*CreateCommentResponse, error)
+	DeleteComment(context.Context, *DeleteCommentRequest) (*DeleteCommentResponse, error)
+	EditComment(context.Context, *EditCommentRequest) (*EditCommentResponse, error)
 	GetComments(context.Context, *GetCommentsRequest) (*GetCommentsResponse, error)
 	GetProfileComments(context.Context, *GetProfileCommentsRequest) (*GetProfileCommentsResponse, error)
 	GetFavouriteLandmarks(context.Context, *GetFavouriteLandmarksRequest) (*GetFavouriteLandmarksResponse, error)
@@ -413,6 +435,12 @@ func (UnimplementedStorageServiceServer) AddUser(context.Context, *AddUserReques
 }
 func (UnimplementedStorageServiceServer) CreateComment(context.Context, *CreateCommentRequest) (*CreateCommentResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateComment not implemented")
+}
+func (UnimplementedStorageServiceServer) DeleteComment(context.Context, *DeleteCommentRequest) (*DeleteCommentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteComment not implemented")
+}
+func (UnimplementedStorageServiceServer) EditComment(context.Context, *EditCommentRequest) (*EditCommentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EditComment not implemented")
 }
 func (UnimplementedStorageServiceServer) GetComments(context.Context, *GetCommentsRequest) (*GetCommentsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetComments not implemented")
@@ -666,6 +694,42 @@ func _StorageService_CreateComment_Handler(srv interface{}, ctx context.Context,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(StorageServiceServer).CreateComment(ctx, req.(*CreateCommentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageService_DeleteComment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteCommentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageServiceServer).DeleteComment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.storage.StorageService/DeleteComment",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageServiceServer).DeleteComment(ctx, req.(*DeleteCommentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageService_EditComment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EditCommentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageServiceServer).EditComment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.storage.StorageService/EditComment",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageServiceServer).EditComment(ctx, req.(*EditCommentRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1094,6 +1158,14 @@ var StorageService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateComment",
 			Handler:    _StorageService_CreateComment_Handler,
+		},
+		{
+			MethodName: "DeleteComment",
+			Handler:    _StorageService_DeleteComment_Handler,
+		},
+		{
+			MethodName: "EditComment",
+			Handler:    _StorageService_EditComment_Handler,
 		},
 		{
 			MethodName: "GetComments",

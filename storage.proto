@@ -78,6 +78,23 @@ message CreateCommentRequest{
 message CreateCommentResponse{
 }
 
+message DeleteCommentRequest{
+  string userId = 1;
+  string commentId = 2;
+}
+message DeleteCommentResponse{
+
+}
+
+message EditCommentRequest{
+  string userId = 1;
+  string commentId = 2;
+  string text = 3;
+}
+message EditCommentResponse{
+
+}
+
 message Comment{
   string id = 1;
   string parentId = 2;
@@ -263,6 +280,7 @@ message DeleteUserTagResponse{
 }
 
 
+
 service StorageService{
   rpc GetLandmark(GetLandmarkRequest) returns (GetLandmarkResponse) {}
   rpc AddLandmark(AddLandmarkRequest) returns (AddLandmarkResponse) {}
@@ -274,6 +292,8 @@ service StorageService{
   rpc GetRandomFeed(GetRandomFeedRequest) returns (GetRandomFeedResponse) {}
   rpc AddUser(AddUserRequest) returns (AddUserResponse) {}
   rpc CreateComment(CreateCommentRequest) returns (CreateCommentResponse) {}
+  rpc DeleteComment(DeleteCommentRequest) returns (DeleteCommentResponse){}
+  rpc EditComment(EditCommentRequest) returns (EditCommentResponse) {}
   rpc GetComments(GetCommentsRequest) returns (GetCommentsResponse) {}
   rpc GetProfileComments(GetProfileCommentsRequest) returns (GetProfileCommentsResponse) {}
   rpc GetFavouriteLandmarks(GetFavouriteLandmarksRequest) returns (GetFavouriteLandmarksResponse) {}
