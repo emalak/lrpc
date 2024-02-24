@@ -45,8 +45,8 @@ func (c *Client) GetLandmark(ctx context.Context, landmarkId, userId string) (*L
 	}, nil
 }
 
-func (c *Client) AddLandmark(ctx context.Context, id string) error {
-	_, err := c.Storage.Client.AddLandmark(ctx, &storage.AddLandmarkRequest{Id: id})
+func (c *Client) AddLandmark(ctx context.Context, id string, score float32) error {
+	_, err := c.Storage.Client.AddLandmark(ctx, &storage.AddLandmarkRequest{Id: id, Score: score})
 	return err
 }
 
