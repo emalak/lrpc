@@ -279,10 +279,18 @@ message DeleteUserTagResponse{
 
 }
 
-
+message GetLandmarksByTagRequest{
+  string tagId = 1;
+  int32 limit = 2;
+  int32 offset = 3;
+}
+message GetLandmarksByTagResponse{
+  repeated string ids = 1;
+}
 
 service StorageService{
   rpc GetLandmark(GetLandmarkRequest) returns (GetLandmarkResponse) {}
+  rpc GetLandmarksByTag(GetLandmarksByTagRequest) returns (GetLandmarksByTagResponse) {}
   rpc AddLandmark(AddLandmarkRequest) returns (AddLandmarkResponse) {}
   rpc LikeLandmark(LikeLandmarkRequest) returns (LikeLandmarkResponse) {}
   rpc DislikeLandmark(DislikeLandmarkRequest) returns (DislikeLandmarkResponse) {}

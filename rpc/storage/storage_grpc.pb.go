@@ -23,6 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type StorageServiceClient interface {
 	GetLandmark(ctx context.Context, in *GetLandmarkRequest, opts ...grpc.CallOption) (*GetLandmarkResponse, error)
+	GetLandmarksByTag(ctx context.Context, in *GetLandmarksByTagRequest, opts ...grpc.CallOption) (*GetLandmarksByTagResponse, error)
 	AddLandmark(ctx context.Context, in *AddLandmarkRequest, opts ...grpc.CallOption) (*AddLandmarkResponse, error)
 	LikeLandmark(ctx context.Context, in *LikeLandmarkRequest, opts ...grpc.CallOption) (*LikeLandmarkResponse, error)
 	DislikeLandmark(ctx context.Context, in *DislikeLandmarkRequest, opts ...grpc.CallOption) (*DislikeLandmarkResponse, error)
@@ -68,6 +69,15 @@ func NewStorageServiceClient(cc grpc.ClientConnInterface) StorageServiceClient {
 func (c *storageServiceClient) GetLandmark(ctx context.Context, in *GetLandmarkRequest, opts ...grpc.CallOption) (*GetLandmarkResponse, error) {
 	out := new(GetLandmarkResponse)
 	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/GetLandmark", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageServiceClient) GetLandmarksByTag(ctx context.Context, in *GetLandmarksByTagRequest, opts ...grpc.CallOption) (*GetLandmarksByTagResponse, error) {
+	out := new(GetLandmarksByTagResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/GetLandmarksByTag", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -367,6 +377,7 @@ func (c *storageServiceClient) CreateTag(ctx context.Context, in *CreateTagReque
 // for forward compatibility
 type StorageServiceServer interface {
 	GetLandmark(context.Context, *GetLandmarkRequest) (*GetLandmarkResponse, error)
+	GetLandmarksByTag(context.Context, *GetLandmarksByTagRequest) (*GetLandmarksByTagResponse, error)
 	AddLandmark(context.Context, *AddLandmarkRequest) (*AddLandmarkResponse, error)
 	LikeLandmark(context.Context, *LikeLandmarkRequest) (*LikeLandmarkResponse, error)
 	DislikeLandmark(context.Context, *DislikeLandmarkRequest) (*DislikeLandmarkResponse, error)
@@ -408,6 +419,9 @@ type UnimplementedStorageServiceServer struct {
 
 func (UnimplementedStorageServiceServer) GetLandmark(context.Context, *GetLandmarkRequest) (*GetLandmarkResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLandmark not implemented")
+}
+func (UnimplementedStorageServiceServer) GetLandmarksByTag(context.Context, *GetLandmarksByTagRequest) (*GetLandmarksByTagResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLandmarksByTag not implemented")
 }
 func (UnimplementedStorageServiceServer) AddLandmark(context.Context, *AddLandmarkRequest) (*AddLandmarkResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddLandmark not implemented")
@@ -532,6 +546,24 @@ func _StorageService_GetLandmark_Handler(srv interface{}, ctx context.Context, d
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(StorageServiceServer).GetLandmark(ctx, req.(*GetLandmarkRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageService_GetLandmarksByTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetLandmarksByTagRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageServiceServer).GetLandmarksByTag(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.storage.StorageService/GetLandmarksByTag",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageServiceServer).GetLandmarksByTag(ctx, req.(*GetLandmarksByTagRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1122,6 +1154,10 @@ var StorageService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetLandmark",
 			Handler:    _StorageService_GetLandmark_Handler,
+		},
+		{
+			MethodName: "GetLandmarksByTag",
+			Handler:    _StorageService_GetLandmarksByTag_Handler,
 		},
 		{
 			MethodName: "AddLandmark",
