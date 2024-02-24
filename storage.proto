@@ -284,7 +284,7 @@ service StorageService{
   rpc CountFriends(CountFriendsRequest) returns (CountFriendsResponse) {}
   rpc IsFriend(IsFriendRequest) returns (IsFriendResponse) {}
   rpc SetUserTag(SetUserTagRequest) returns (SetUserTagResponse) {}
-  rpc DeleteUserTag(DeleteUserTagRequest) returns (DeleteTagResponse) {}
+  rpc DeleteUserTag(DeleteUserTagRequest) returns (DeleteUserTagResponse) {}
   rpc GetUserTags(GetUserTagsRequest) returns (GetUserTagsResponse) {}
   rpc GetLandmarkTags(GetLandmarkTagsRequest) returns (GetLandmarkTagsResponse) {}
   rpc CountReviews(CountReviewsRequest) returns (CountReviewsResponse) {}

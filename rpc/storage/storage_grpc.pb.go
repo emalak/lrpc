@@ -42,7 +42,7 @@ type StorageServiceClient interface {
 	CountFriends(ctx context.Context, in *CountFriendsRequest, opts ...grpc.CallOption) (*CountFriendsResponse, error)
 	IsFriend(ctx context.Context, in *IsFriendRequest, opts ...grpc.CallOption) (*IsFriendResponse, error)
 	SetUserTag(ctx context.Context, in *SetUserTagRequest, opts ...grpc.CallOption) (*SetUserTagResponse, error)
-	DeleteUserTag(ctx context.Context, in *DeleteUserTagRequest, opts ...grpc.CallOption) (*DeleteTagResponse, error)
+	DeleteUserTag(ctx context.Context, in *DeleteUserTagRequest, opts ...grpc.CallOption) (*DeleteUserTagResponse, error)
 	GetUserTags(ctx context.Context, in *GetUserTagsRequest, opts ...grpc.CallOption) (*GetUserTagsResponse, error)
 	GetLandmarkTags(ctx context.Context, in *GetLandmarkTagsRequest, opts ...grpc.CallOption) (*GetLandmarkTagsResponse, error)
 	CountReviews(ctx context.Context, in *CountReviewsRequest, opts ...grpc.CallOption) (*CountReviewsResponse, error)
@@ -243,8 +243,8 @@ func (c *storageServiceClient) SetUserTag(ctx context.Context, in *SetUserTagReq
 	return out, nil
 }
 
-func (c *storageServiceClient) DeleteUserTag(ctx context.Context, in *DeleteUserTagRequest, opts ...grpc.CallOption) (*DeleteTagResponse, error) {
-	out := new(DeleteTagResponse)
+func (c *storageServiceClient) DeleteUserTag(ctx context.Context, in *DeleteUserTagRequest, opts ...grpc.CallOption) (*DeleteUserTagResponse, error) {
+	out := new(DeleteUserTagResponse)
 	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/DeleteUserTag", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -366,7 +366,7 @@ type StorageServiceServer interface {
 	CountFriends(context.Context, *CountFriendsRequest) (*CountFriendsResponse, error)
 	IsFriend(context.Context, *IsFriendRequest) (*IsFriendResponse, error)
 	SetUserTag(context.Context, *SetUserTagRequest) (*SetUserTagResponse, error)
-	DeleteUserTag(context.Context, *DeleteUserTagRequest) (*DeleteTagResponse, error)
+	DeleteUserTag(context.Context, *DeleteUserTagRequest) (*DeleteUserTagResponse, error)
 	GetUserTags(context.Context, *GetUserTagsRequest) (*GetUserTagsResponse, error)
 	GetLandmarkTags(context.Context, *GetLandmarkTagsRequest) (*GetLandmarkTagsResponse, error)
 	CountReviews(context.Context, *CountReviewsRequest) (*CountReviewsResponse, error)
@@ -444,7 +444,7 @@ func (UnimplementedStorageServiceServer) IsFriend(context.Context, *IsFriendRequ
 func (UnimplementedStorageServiceServer) SetUserTag(context.Context, *SetUserTagRequest) (*SetUserTagResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetUserTag not implemented")
 }
-func (UnimplementedStorageServiceServer) DeleteUserTag(context.Context, *DeleteUserTagRequest) (*DeleteTagResponse, error) {
+func (UnimplementedStorageServiceServer) DeleteUserTag(context.Context, *DeleteUserTagRequest) (*DeleteUserTagResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteUserTag not implemented")
 }
 func (UnimplementedStorageServiceServer) GetUserTags(context.Context, *GetUserTagsRequest) (*GetUserTagsResponse, error) {
