@@ -325,3 +325,21 @@ func (c *Client) EditComment(ctx context.Context, userId, commentId, text string
 	})
 	return err
 }
+
+func (c *Client) GetFriends(ctx context.Context, userId string) ([]string, error) {
+	res, err := c.Storage.Client.GetFriends(ctx, &storage.GetFriendsRequest{UserId: userId})
+	return res.Ids, err
+}
+
+func (c *Client) AddFriend(ctx context.Context, sender, receiver string) error {
+	_, err := c.Storage.Client.AddFriend(ctx, &storage.AddFriendRequest{Sender: sender, Receiver: receiver})
+	return err
+}
+
+func (c *Client) DeleteFriend(ctx context.Context, sender, receiver string) error {
+	_, err := c.Storage.Client.DeleteFriend(ctx, &storage.DeleteFriendRequest{
+		Sender:   sender,
+		Receiver: receiver,
+	})
+	return err
+}
