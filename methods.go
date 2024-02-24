@@ -308,3 +308,20 @@ func (c *Client) DeleteUserTag(ctx context.Context, userId string, tagId string)
 	})
 	return err
 }
+
+func (c *Client) DeleteComment(ctx context.Context, userId, commentId string) error {
+	_, err := c.Storage.Client.DeleteComment(ctx, &storage.DeleteCommentRequest{
+		UserId:    userId,
+		CommentId: commentId,
+	})
+	return err
+}
+
+func (c *Client) EditComment(ctx context.Context, userId, commentId, text string) error {
+	_, err := c.Storage.Client.EditComment(ctx, &storage.EditCommentRequest{
+		UserId:    userId,
+		CommentId: commentId,
+		Text:      text,
+	})
+	return err
+}
