@@ -649,3 +649,63 @@ func TestGetLikesAmount(t *testing.T) {
 		t.Fatal("Expected an error for invalid id, got nil")
 	}
 }
+
+func TestGetUserTags(t *testing.T) {
+	const (
+		userId = "20eb3e96-ee97-43bb-b190-139805380847"
+	)
+
+	ctx := context.Background()
+	client, err := New(ctx, Settings{
+		FeedOpts:    nil,
+		StorageOpts: &StorageOptions{Address: "localhost:8080"},
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	res, err := client.GetUserTags(context.Background(), userId)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(res)
+}
+
+func TestSetUserTag(t *testing.T) {
+	const (
+		userId = "20eb3e96-ee97-43bb-b190-139805380847"
+		tagId  = "99789578-79d8-4a25-91fe-4f6a6353965e"
+	)
+
+	ctx := context.Background()
+	client, err := New(ctx, Settings{
+		FeedOpts:    nil,
+		StorageOpts: &StorageOptions{Address: "localhost:8080"},
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	err = client.SetUserTag(context.Background(), userId, tagId)
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestGetLandmarksByTag(t *testing.T) {
+	const (
+		tagId = "71a9f8d9-640c-4aa9-a062-44ee3bc6e033"
+	)
+	ctx := context.Background()
+	client, err := New(ctx, Settings{
+		FeedOpts:    nil,
+		StorageOpts: &StorageOptions{Address: "localhost:8080"},
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	res, err := client.GetLandmarksByTag(context.Background(), tagId, 10, 2)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(res)
+}
