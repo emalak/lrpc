@@ -132,6 +132,7 @@ func (c *Client) GetComments(ctx context.Context, landmarkId string, limit int) 
 	for i, v := range res.Comments {
 		comment := &Comment{
 			Id:          v.Id,
+			ParentId:    v.ParentId,
 			UserId:      v.UserId,
 			Grade:       int(v.Grade),
 			Attachments: v.Attachments,
@@ -158,6 +159,7 @@ func (c *Client) GetProfileComments(ctx context.Context, userId string, limit in
 	comments := make([]*Comment, len(res.Comments))
 	for i, v := range res.Comments {
 		comment := &Comment{
+			ParentId:    v.ParentId,
 			Id:          v.Id,
 			UserId:      v.UserId,
 			Grade:       int(v.Grade),
