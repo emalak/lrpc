@@ -293,6 +293,8 @@ message GetLandmarksByTagResponse{
 message GetLandmarksFilteredRequest {
   repeated string include = 1;
   repeated string exclude = 2;
+  int32 offset = 3;
+  int32 limit = 4;
 }
 message GetLandmarksFilteredResponse {
   repeated string ids = 1;
