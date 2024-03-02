@@ -371,3 +371,14 @@ func (c *Client) GetLandmarksByTag(ctx context.Context, tagId string, limit, off
 	}
 	return res.Ids, nil
 }
+
+func (c *Client) GetLandmarksFiltered(ctx context.Context, include, exclude []string) ([]string, error) {
+	res, err := c.Storage.Client.GetLandmarksFiltered(ctx, &storage.GetLandmarksFilteredRequest{
+		Include: include,
+		Exclude: exclude,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return res.Ids, nil
+}
