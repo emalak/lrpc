@@ -290,6 +290,14 @@ message GetLandmarksByTagResponse{
   repeated string ids = 1;
 }
 
+message GetLandmarksFilteredRequest {
+  repeated string include = 1;
+  repeated string exclude = 2;
+}
+message GetLandmarksFilteredResponse {
+  repeated string ids = 1;
+}
+
 service StorageService{
   rpc GetLandmark(GetLandmarkRequest) returns (GetLandmarkResponse) {}
   rpc GetLandmarksByTag(GetLandmarksByTagRequest) returns (GetLandmarksByTagResponse) {}
@@ -325,4 +333,5 @@ service StorageService{
   rpc RemoveLandmarkTag(RemoveLandmarkTagRequest) returns (RemoveLandmarkTagResponse) {}
   rpc GetConnectedTags(GetConnectedTagsRequest) returns (GetConnectedTagsResponse) {}
   rpc CreateTag(CreateTagRequest) returns (CreateTagResponse) {}
+  rpc GetLandmarksFiltered(GetLandmarksFilteredRequest) returns (GetLandmarksFilteredResponse) {}
 }
