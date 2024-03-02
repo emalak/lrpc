@@ -56,6 +56,7 @@ type StorageServiceClient interface {
 	RemoveLandmarkTag(ctx context.Context, in *RemoveLandmarkTagRequest, opts ...grpc.CallOption) (*RemoveLandmarkTagResponse, error)
 	GetConnectedTags(ctx context.Context, in *GetConnectedTagsRequest, opts ...grpc.CallOption) (*GetConnectedTagsResponse, error)
 	CreateTag(ctx context.Context, in *CreateTagRequest, opts ...grpc.CallOption) (*CreateTagResponse, error)
+	GetLandmarksFiltered(ctx context.Context, in *GetLandmarksFilteredRequest, opts ...grpc.CallOption) (*GetLandmarksFilteredResponse, error)
 }
 
 type storageServiceClient struct {
@@ -372,6 +373,15 @@ func (c *storageServiceClient) CreateTag(ctx context.Context, in *CreateTagReque
 	return out, nil
 }
 
+func (c *storageServiceClient) GetLandmarksFiltered(ctx context.Context, in *GetLandmarksFilteredRequest, opts ...grpc.CallOption) (*GetLandmarksFilteredResponse, error) {
+	out := new(GetLandmarksFilteredResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/GetLandmarksFiltered", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // StorageServiceServer is the server API for StorageService service.
 // All implementations must embed UnimplementedStorageServiceServer
 // for forward compatibility
@@ -410,6 +420,7 @@ type StorageServiceServer interface {
 	RemoveLandmarkTag(context.Context, *RemoveLandmarkTagRequest) (*RemoveLandmarkTagResponse, error)
 	GetConnectedTags(context.Context, *GetConnectedTagsRequest) (*GetConnectedTagsResponse, error)
 	CreateTag(context.Context, *CreateTagRequest) (*CreateTagResponse, error)
+	GetLandmarksFiltered(context.Context, *GetLandmarksFilteredRequest) (*GetLandmarksFilteredResponse, error)
 	mustEmbedUnimplementedStorageServiceServer()
 }
 
@@ -518,6 +529,9 @@ func (UnimplementedStorageServiceServer) GetConnectedTags(context.Context, *GetC
 }
 func (UnimplementedStorageServiceServer) CreateTag(context.Context, *CreateTagRequest) (*CreateTagResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTag not implemented")
+}
+func (UnimplementedStorageServiceServer) GetLandmarksFiltered(context.Context, *GetLandmarksFilteredRequest) (*GetLandmarksFilteredResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLandmarksFiltered not implemented")
 }
 func (UnimplementedStorageServiceServer) mustEmbedUnimplementedStorageServiceServer() {}
 
@@ -1144,6 +1158,24 @@ func _StorageService_CreateTag_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _StorageService_GetLandmarksFiltered_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetLandmarksFilteredRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageServiceServer).GetLandmarksFiltered(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.storage.StorageService/GetLandmarksFiltered",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageServiceServer).GetLandmarksFiltered(ctx, req.(*GetLandmarksFilteredRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // StorageService_ServiceDesc is the grpc.ServiceDesc for StorageService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1286,6 +1318,10 @@ var StorageService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateTag",
 			Handler:    _StorageService_CreateTag_Handler,
+		},
+		{
+			MethodName: "GetLandmarksFiltered",
+			Handler:    _StorageService_GetLandmarksFiltered_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
