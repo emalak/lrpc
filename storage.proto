@@ -109,6 +109,7 @@ message Comment{
 message GetCommentsRequest{
   string landmarkId = 1;
   int32 limit = 2;
+  int32 offset = 3;
 }
 message GetCommentsResponse{
   repeated Comment comments = 1;
@@ -117,6 +118,7 @@ message GetCommentsResponse{
 message GetProfileCommentsRequest{
   string userId = 1;
   int32 limit = 2;
+  int32 offset = 3;
 }
 message GetProfileCommentsResponse{
   repeated Comment comments = 1;
@@ -124,6 +126,8 @@ message GetProfileCommentsResponse{
 
 message GetFavouriteLandmarksRequest{
   string userId = 1;
+  int32 limit = 2;
+  int32 offset = 3;
 }
 message GetFavouriteLandmarksResponse{
   repeated string ids = 1;

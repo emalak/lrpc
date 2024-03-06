@@ -117,7 +117,7 @@ func (c *Client) CreateComment(ctx context.Context, parentId, authorId, text str
 	return err
 }
 
-func (c *Client) GetComments(ctx context.Context, landmarkId string, limit int) ([]*Comment, error) {
+func (c *Client) GetComments(ctx context.Context, landmarkId string, limit, offset int) ([]*Comment, error) {
 	res, err := c.Storage.Client.GetComments(ctx, &storage.GetCommentsRequest{
 		LandmarkId: landmarkId,
 		Limit:      int32(limit),
@@ -145,7 +145,7 @@ func (c *Client) GetComments(ctx context.Context, landmarkId string, limit int) 
 	return comments, nil
 }
 
-func (c *Client) GetProfileComments(ctx context.Context, userId string, limit int) ([]*Comment, error) {
+func (c *Client) GetProfileComments(ctx context.Context, userId string, limit, offset int) ([]*Comment, error) {
 	res, err := c.Storage.Client.GetProfileComments(ctx, &storage.GetProfileCommentsRequest{
 		UserId: userId,
 		Limit:  int32(limit),
@@ -184,7 +184,7 @@ func (c *Client) GetFeed(ctx context.Context, userId string, amount int) ([]stri
 	return res.LandmarkIds, nil
 }
 
-func (c *Client) GetFavouriteLandmarks(ctx context.Context, userId string) ([]uuid.UUID, error) {
+func (c *Client) GetFavouriteLandmarks(ctx context.Context, userId string, limit, offset int) ([]uuid.UUID, error) {
 	res, err := c.Storage.Client.GetFavouriteLandmarks(ctx, &storage.GetFavouriteLandmarksRequest{UserId: userId})
 	if err != nil {
 		return nil, err
