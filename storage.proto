@@ -304,6 +304,12 @@ message GetLandmarksFilteredResponse {
   repeated string ids = 1;
 }
 
+message UpdateLandmarkScoreRequest{
+  string id = 1;
+  int32 score = 2;
+}
+message UpdateLandmarkScoreResponse{}
+
 service StorageService{
   // Landmark
   rpc GetLandmark(GetLandmarkRequest) returns (GetLandmarkResponse) {}
@@ -316,6 +322,7 @@ service StorageService{
   rpc GetFavouriteLandmarks(GetFavouriteLandmarksRequest) returns (GetFavouriteLandmarksResponse) {}
   rpc GetLikesAmount(GetLikesAmountRequest) returns (GetLikesAmountResponse) {}
   rpc GetLandmarksFiltered(GetLandmarksFilteredRequest) returns (GetLandmarksFilteredResponse) {}
+  rpc UpdateLandmarkScore(UpdateLandmarkScoreRequest) returns (UpdateLandmarkScoreResponse) {}
 
   // User feed
   rpc RecommendLandmarks(RecommendLandmarksRequest) returns (RecommendLandmarksResponse) {}

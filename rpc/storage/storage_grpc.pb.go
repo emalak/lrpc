@@ -22,6 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type StorageServiceClient interface {
+	// Landmark
 	GetLandmark(ctx context.Context, in *GetLandmarkRequest, opts ...grpc.CallOption) (*GetLandmarkResponse, error)
 	GetLandmarksByTag(ctx context.Context, in *GetLandmarksByTagRequest, opts ...grpc.CallOption) (*GetLandmarksByTagResponse, error)
 	AddLandmark(ctx context.Context, in *AddLandmarkRequest, opts ...grpc.CallOption) (*AddLandmarkResponse, error)
@@ -29,34 +30,39 @@ type StorageServiceClient interface {
 	DislikeLandmark(ctx context.Context, in *DislikeLandmarkRequest, opts ...grpc.CallOption) (*DislikeLandmarkResponse, error)
 	GetLikes(ctx context.Context, in *GetLikesRequest, opts ...grpc.CallOption) (*GetLikesResponse, error)
 	ViewLandmark(ctx context.Context, in *ViewLandmarkRequest, opts ...grpc.CallOption) (*ViewLandmarkResponse, error)
+	GetFavouriteLandmarks(ctx context.Context, in *GetFavouriteLandmarksRequest, opts ...grpc.CallOption) (*GetFavouriteLandmarksResponse, error)
+	GetLikesAmount(ctx context.Context, in *GetLikesAmountRequest, opts ...grpc.CallOption) (*GetLikesAmountResponse, error)
+	GetLandmarksFiltered(ctx context.Context, in *GetLandmarksFilteredRequest, opts ...grpc.CallOption) (*GetLandmarksFilteredResponse, error)
+	UpdateLandmarkScore(ctx context.Context, in *UpdateLandmarkScoreRequest, opts ...grpc.CallOption) (*UpdateLandmarkScoreResponse, error)
+	// User feed
 	RecommendLandmarks(ctx context.Context, in *RecommendLandmarksRequest, opts ...grpc.CallOption) (*RecommendLandmarksResponse, error)
 	GetRandomFeed(ctx context.Context, in *GetRandomFeedRequest, opts ...grpc.CallOption) (*GetRandomFeedResponse, error)
 	AddUser(ctx context.Context, in *AddUserRequest, opts ...grpc.CallOption) (*AddUserResponse, error)
+	// Comments
 	CreateComment(ctx context.Context, in *CreateCommentRequest, opts ...grpc.CallOption) (*CreateCommentResponse, error)
 	DeleteComment(ctx context.Context, in *DeleteCommentRequest, opts ...grpc.CallOption) (*DeleteCommentResponse, error)
 	EditComment(ctx context.Context, in *EditCommentRequest, opts ...grpc.CallOption) (*EditCommentResponse, error)
 	GetComments(ctx context.Context, in *GetCommentsRequest, opts ...grpc.CallOption) (*GetCommentsResponse, error)
 	GetProfileComments(ctx context.Context, in *GetProfileCommentsRequest, opts ...grpc.CallOption) (*GetProfileCommentsResponse, error)
-	GetFavouriteLandmarks(ctx context.Context, in *GetFavouriteLandmarksRequest, opts ...grpc.CallOption) (*GetFavouriteLandmarksResponse, error)
-	GetLikesAmount(ctx context.Context, in *GetLikesAmountRequest, opts ...grpc.CallOption) (*GetLikesAmountResponse, error)
+	CountReviews(ctx context.Context, in *CountReviewsRequest, opts ...grpc.CallOption) (*CountReviewsResponse, error)
+	// Friends
 	AddFriend(ctx context.Context, in *AddFriendRequest, opts ...grpc.CallOption) (*AddFriendResponse, error)
 	DeleteFriend(ctx context.Context, in *DeleteFriendRequest, opts ...grpc.CallOption) (*DeleteFriendResponse, error)
 	GetFriends(ctx context.Context, in *GetFriendsRequest, opts ...grpc.CallOption) (*GetFriendsResponse, error)
 	CountFriends(ctx context.Context, in *CountFriendsRequest, opts ...grpc.CallOption) (*CountFriendsResponse, error)
 	IsFriend(ctx context.Context, in *IsFriendRequest, opts ...grpc.CallOption) (*IsFriendResponse, error)
+	// Tags
+	AddLandmarkTag(ctx context.Context, in *AddLandmarkTagRequest, opts ...grpc.CallOption) (*AddLandmarkTagResponse, error)
+	RemoveLandmarkTag(ctx context.Context, in *RemoveLandmarkTagRequest, opts ...grpc.CallOption) (*RemoveLandmarkTagResponse, error)
+	CreateTag(ctx context.Context, in *CreateTagRequest, opts ...grpc.CallOption) (*CreateTagResponse, error)
 	SetUserTag(ctx context.Context, in *SetUserTagRequest, opts ...grpc.CallOption) (*SetUserTagResponse, error)
 	DeleteUserTag(ctx context.Context, in *DeleteUserTagRequest, opts ...grpc.CallOption) (*DeleteUserTagResponse, error)
 	GetUserTags(ctx context.Context, in *GetUserTagsRequest, opts ...grpc.CallOption) (*GetUserTagsResponse, error)
 	GetLandmarkTags(ctx context.Context, in *GetLandmarkTagsRequest, opts ...grpc.CallOption) (*GetLandmarkTagsResponse, error)
-	CountReviews(ctx context.Context, in *CountReviewsRequest, opts ...grpc.CallOption) (*CountReviewsResponse, error)
 	ConnectTags(ctx context.Context, in *ConnectTagsRequest, opts ...grpc.CallOption) (*ConnectTagsResponse, error)
 	DisconnectTags(ctx context.Context, in *DisconnectTagsRequest, opts ...grpc.CallOption) (*DisconnectTagsResponse, error)
 	DeleteTag(ctx context.Context, in *DeleteTagRequest, opts ...grpc.CallOption) (*DeleteTagResponse, error)
-	AddLandmarkTag(ctx context.Context, in *AddLandmarkTagRequest, opts ...grpc.CallOption) (*AddLandmarkTagResponse, error)
-	RemoveLandmarkTag(ctx context.Context, in *RemoveLandmarkTagRequest, opts ...grpc.CallOption) (*RemoveLandmarkTagResponse, error)
 	GetConnectedTags(ctx context.Context, in *GetConnectedTagsRequest, opts ...grpc.CallOption) (*GetConnectedTagsResponse, error)
-	CreateTag(ctx context.Context, in *CreateTagRequest, opts ...grpc.CallOption) (*CreateTagResponse, error)
-	GetLandmarksFiltered(ctx context.Context, in *GetLandmarksFilteredRequest, opts ...grpc.CallOption) (*GetLandmarksFilteredResponse, error)
 }
 
 type storageServiceClient struct {
@@ -124,6 +130,42 @@ func (c *storageServiceClient) GetLikes(ctx context.Context, in *GetLikesRequest
 func (c *storageServiceClient) ViewLandmark(ctx context.Context, in *ViewLandmarkRequest, opts ...grpc.CallOption) (*ViewLandmarkResponse, error) {
 	out := new(ViewLandmarkResponse)
 	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/ViewLandmark", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageServiceClient) GetFavouriteLandmarks(ctx context.Context, in *GetFavouriteLandmarksRequest, opts ...grpc.CallOption) (*GetFavouriteLandmarksResponse, error) {
+	out := new(GetFavouriteLandmarksResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/GetFavouriteLandmarks", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageServiceClient) GetLikesAmount(ctx context.Context, in *GetLikesAmountRequest, opts ...grpc.CallOption) (*GetLikesAmountResponse, error) {
+	out := new(GetLikesAmountResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/GetLikesAmount", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageServiceClient) GetLandmarksFiltered(ctx context.Context, in *GetLandmarksFilteredRequest, opts ...grpc.CallOption) (*GetLandmarksFilteredResponse, error) {
+	out := new(GetLandmarksFilteredResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/GetLandmarksFiltered", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageServiceClient) UpdateLandmarkScore(ctx context.Context, in *UpdateLandmarkScoreRequest, opts ...grpc.CallOption) (*UpdateLandmarkScoreResponse, error) {
+	out := new(UpdateLandmarkScoreResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/UpdateLandmarkScore", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -202,18 +244,9 @@ func (c *storageServiceClient) GetProfileComments(ctx context.Context, in *GetPr
 	return out, nil
 }
 
-func (c *storageServiceClient) GetFavouriteLandmarks(ctx context.Context, in *GetFavouriteLandmarksRequest, opts ...grpc.CallOption) (*GetFavouriteLandmarksResponse, error) {
-	out := new(GetFavouriteLandmarksResponse)
-	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/GetFavouriteLandmarks", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *storageServiceClient) GetLikesAmount(ctx context.Context, in *GetLikesAmountRequest, opts ...grpc.CallOption) (*GetLikesAmountResponse, error) {
-	out := new(GetLikesAmountResponse)
-	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/GetLikesAmount", in, out, opts...)
+func (c *storageServiceClient) CountReviews(ctx context.Context, in *CountReviewsRequest, opts ...grpc.CallOption) (*CountReviewsResponse, error) {
+	out := new(CountReviewsResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/CountReviews", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -265,6 +298,33 @@ func (c *storageServiceClient) IsFriend(ctx context.Context, in *IsFriendRequest
 	return out, nil
 }
 
+func (c *storageServiceClient) AddLandmarkTag(ctx context.Context, in *AddLandmarkTagRequest, opts ...grpc.CallOption) (*AddLandmarkTagResponse, error) {
+	out := new(AddLandmarkTagResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/AddLandmarkTag", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageServiceClient) RemoveLandmarkTag(ctx context.Context, in *RemoveLandmarkTagRequest, opts ...grpc.CallOption) (*RemoveLandmarkTagResponse, error) {
+	out := new(RemoveLandmarkTagResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/RemoveLandmarkTag", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageServiceClient) CreateTag(ctx context.Context, in *CreateTagRequest, opts ...grpc.CallOption) (*CreateTagResponse, error) {
+	out := new(CreateTagResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/CreateTag", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *storageServiceClient) SetUserTag(ctx context.Context, in *SetUserTagRequest, opts ...grpc.CallOption) (*SetUserTagResponse, error) {
 	out := new(SetUserTagResponse)
 	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/SetUserTag", in, out, opts...)
@@ -301,15 +361,6 @@ func (c *storageServiceClient) GetLandmarkTags(ctx context.Context, in *GetLandm
 	return out, nil
 }
 
-func (c *storageServiceClient) CountReviews(ctx context.Context, in *CountReviewsRequest, opts ...grpc.CallOption) (*CountReviewsResponse, error) {
-	out := new(CountReviewsResponse)
-	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/CountReviews", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *storageServiceClient) ConnectTags(ctx context.Context, in *ConnectTagsRequest, opts ...grpc.CallOption) (*ConnectTagsResponse, error) {
 	out := new(ConnectTagsResponse)
 	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/ConnectTags", in, out, opts...)
@@ -337,45 +388,9 @@ func (c *storageServiceClient) DeleteTag(ctx context.Context, in *DeleteTagReque
 	return out, nil
 }
 
-func (c *storageServiceClient) AddLandmarkTag(ctx context.Context, in *AddLandmarkTagRequest, opts ...grpc.CallOption) (*AddLandmarkTagResponse, error) {
-	out := new(AddLandmarkTagResponse)
-	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/AddLandmarkTag", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *storageServiceClient) RemoveLandmarkTag(ctx context.Context, in *RemoveLandmarkTagRequest, opts ...grpc.CallOption) (*RemoveLandmarkTagResponse, error) {
-	out := new(RemoveLandmarkTagResponse)
-	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/RemoveLandmarkTag", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *storageServiceClient) GetConnectedTags(ctx context.Context, in *GetConnectedTagsRequest, opts ...grpc.CallOption) (*GetConnectedTagsResponse, error) {
 	out := new(GetConnectedTagsResponse)
 	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/GetConnectedTags", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *storageServiceClient) CreateTag(ctx context.Context, in *CreateTagRequest, opts ...grpc.CallOption) (*CreateTagResponse, error) {
-	out := new(CreateTagResponse)
-	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/CreateTag", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *storageServiceClient) GetLandmarksFiltered(ctx context.Context, in *GetLandmarksFilteredRequest, opts ...grpc.CallOption) (*GetLandmarksFilteredResponse, error) {
-	out := new(GetLandmarksFilteredResponse)
-	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/GetLandmarksFiltered", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -386,6 +401,7 @@ func (c *storageServiceClient) GetLandmarksFiltered(ctx context.Context, in *Get
 // All implementations must embed UnimplementedStorageServiceServer
 // for forward compatibility
 type StorageServiceServer interface {
+	// Landmark
 	GetLandmark(context.Context, *GetLandmarkRequest) (*GetLandmarkResponse, error)
 	GetLandmarksByTag(context.Context, *GetLandmarksByTagRequest) (*GetLandmarksByTagResponse, error)
 	AddLandmark(context.Context, *AddLandmarkRequest) (*AddLandmarkResponse, error)
@@ -393,34 +409,39 @@ type StorageServiceServer interface {
 	DislikeLandmark(context.Context, *DislikeLandmarkRequest) (*DislikeLandmarkResponse, error)
 	GetLikes(context.Context, *GetLikesRequest) (*GetLikesResponse, error)
 	ViewLandmark(context.Context, *ViewLandmarkRequest) (*ViewLandmarkResponse, error)
+	GetFavouriteLandmarks(context.Context, *GetFavouriteLandmarksRequest) (*GetFavouriteLandmarksResponse, error)
+	GetLikesAmount(context.Context, *GetLikesAmountRequest) (*GetLikesAmountResponse, error)
+	GetLandmarksFiltered(context.Context, *GetLandmarksFilteredRequest) (*GetLandmarksFilteredResponse, error)
+	UpdateLandmarkScore(context.Context, *UpdateLandmarkScoreRequest) (*UpdateLandmarkScoreResponse, error)
+	// User feed
 	RecommendLandmarks(context.Context, *RecommendLandmarksRequest) (*RecommendLandmarksResponse, error)
 	GetRandomFeed(context.Context, *GetRandomFeedRequest) (*GetRandomFeedResponse, error)
 	AddUser(context.Context, *AddUserRequest) (*AddUserResponse, error)
+	// Comments
 	CreateComment(context.Context, *CreateCommentRequest) (*CreateCommentResponse, error)
 	DeleteComment(context.Context, *DeleteCommentRequest) (*DeleteCommentResponse, error)
 	EditComment(context.Context, *EditCommentRequest) (*EditCommentResponse, error)
 	GetComments(context.Context, *GetCommentsRequest) (*GetCommentsResponse, error)
 	GetProfileComments(context.Context, *GetProfileCommentsRequest) (*GetProfileCommentsResponse, error)
-	GetFavouriteLandmarks(context.Context, *GetFavouriteLandmarksRequest) (*GetFavouriteLandmarksResponse, error)
-	GetLikesAmount(context.Context, *GetLikesAmountRequest) (*GetLikesAmountResponse, error)
+	CountReviews(context.Context, *CountReviewsRequest) (*CountReviewsResponse, error)
+	// Friends
 	AddFriend(context.Context, *AddFriendRequest) (*AddFriendResponse, error)
 	DeleteFriend(context.Context, *DeleteFriendRequest) (*DeleteFriendResponse, error)
 	GetFriends(context.Context, *GetFriendsRequest) (*GetFriendsResponse, error)
 	CountFriends(context.Context, *CountFriendsRequest) (*CountFriendsResponse, error)
 	IsFriend(context.Context, *IsFriendRequest) (*IsFriendResponse, error)
+	// Tags
+	AddLandmarkTag(context.Context, *AddLandmarkTagRequest) (*AddLandmarkTagResponse, error)
+	RemoveLandmarkTag(context.Context, *RemoveLandmarkTagRequest) (*RemoveLandmarkTagResponse, error)
+	CreateTag(context.Context, *CreateTagRequest) (*CreateTagResponse, error)
 	SetUserTag(context.Context, *SetUserTagRequest) (*SetUserTagResponse, error)
 	DeleteUserTag(context.Context, *DeleteUserTagRequest) (*DeleteUserTagResponse, error)
 	GetUserTags(context.Context, *GetUserTagsRequest) (*GetUserTagsResponse, error)
 	GetLandmarkTags(context.Context, *GetLandmarkTagsRequest) (*GetLandmarkTagsResponse, error)
-	CountReviews(context.Context, *CountReviewsRequest) (*CountReviewsResponse, error)
 	ConnectTags(context.Context, *ConnectTagsRequest) (*ConnectTagsResponse, error)
 	DisconnectTags(context.Context, *DisconnectTagsRequest) (*DisconnectTagsResponse, error)
 	DeleteTag(context.Context, *DeleteTagRequest) (*DeleteTagResponse, error)
-	AddLandmarkTag(context.Context, *AddLandmarkTagRequest) (*AddLandmarkTagResponse, error)
-	RemoveLandmarkTag(context.Context, *RemoveLandmarkTagRequest) (*RemoveLandmarkTagResponse, error)
 	GetConnectedTags(context.Context, *GetConnectedTagsRequest) (*GetConnectedTagsResponse, error)
-	CreateTag(context.Context, *CreateTagRequest) (*CreateTagResponse, error)
-	GetLandmarksFiltered(context.Context, *GetLandmarksFilteredRequest) (*GetLandmarksFilteredResponse, error)
 	mustEmbedUnimplementedStorageServiceServer()
 }
 
@@ -449,6 +470,18 @@ func (UnimplementedStorageServiceServer) GetLikes(context.Context, *GetLikesRequ
 func (UnimplementedStorageServiceServer) ViewLandmark(context.Context, *ViewLandmarkRequest) (*ViewLandmarkResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ViewLandmark not implemented")
 }
+func (UnimplementedStorageServiceServer) GetFavouriteLandmarks(context.Context, *GetFavouriteLandmarksRequest) (*GetFavouriteLandmarksResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFavouriteLandmarks not implemented")
+}
+func (UnimplementedStorageServiceServer) GetLikesAmount(context.Context, *GetLikesAmountRequest) (*GetLikesAmountResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLikesAmount not implemented")
+}
+func (UnimplementedStorageServiceServer) GetLandmarksFiltered(context.Context, *GetLandmarksFilteredRequest) (*GetLandmarksFilteredResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLandmarksFiltered not implemented")
+}
+func (UnimplementedStorageServiceServer) UpdateLandmarkScore(context.Context, *UpdateLandmarkScoreRequest) (*UpdateLandmarkScoreResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateLandmarkScore not implemented")
+}
 func (UnimplementedStorageServiceServer) RecommendLandmarks(context.Context, *RecommendLandmarksRequest) (*RecommendLandmarksResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RecommendLandmarks not implemented")
 }
@@ -473,11 +506,8 @@ func (UnimplementedStorageServiceServer) GetComments(context.Context, *GetCommen
 func (UnimplementedStorageServiceServer) GetProfileComments(context.Context, *GetProfileCommentsRequest) (*GetProfileCommentsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProfileComments not implemented")
 }
-func (UnimplementedStorageServiceServer) GetFavouriteLandmarks(context.Context, *GetFavouriteLandmarksRequest) (*GetFavouriteLandmarksResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetFavouriteLandmarks not implemented")
-}
-func (UnimplementedStorageServiceServer) GetLikesAmount(context.Context, *GetLikesAmountRequest) (*GetLikesAmountResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetLikesAmount not implemented")
+func (UnimplementedStorageServiceServer) CountReviews(context.Context, *CountReviewsRequest) (*CountReviewsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CountReviews not implemented")
 }
 func (UnimplementedStorageServiceServer) AddFriend(context.Context, *AddFriendRequest) (*AddFriendResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddFriend not implemented")
@@ -494,6 +524,15 @@ func (UnimplementedStorageServiceServer) CountFriends(context.Context, *CountFri
 func (UnimplementedStorageServiceServer) IsFriend(context.Context, *IsFriendRequest) (*IsFriendResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IsFriend not implemented")
 }
+func (UnimplementedStorageServiceServer) AddLandmarkTag(context.Context, *AddLandmarkTagRequest) (*AddLandmarkTagResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddLandmarkTag not implemented")
+}
+func (UnimplementedStorageServiceServer) RemoveLandmarkTag(context.Context, *RemoveLandmarkTagRequest) (*RemoveLandmarkTagResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RemoveLandmarkTag not implemented")
+}
+func (UnimplementedStorageServiceServer) CreateTag(context.Context, *CreateTagRequest) (*CreateTagResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateTag not implemented")
+}
 func (UnimplementedStorageServiceServer) SetUserTag(context.Context, *SetUserTagRequest) (*SetUserTagResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetUserTag not implemented")
 }
@@ -506,9 +545,6 @@ func (UnimplementedStorageServiceServer) GetUserTags(context.Context, *GetUserTa
 func (UnimplementedStorageServiceServer) GetLandmarkTags(context.Context, *GetLandmarkTagsRequest) (*GetLandmarkTagsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLandmarkTags not implemented")
 }
-func (UnimplementedStorageServiceServer) CountReviews(context.Context, *CountReviewsRequest) (*CountReviewsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CountReviews not implemented")
-}
 func (UnimplementedStorageServiceServer) ConnectTags(context.Context, *ConnectTagsRequest) (*ConnectTagsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ConnectTags not implemented")
 }
@@ -518,20 +554,8 @@ func (UnimplementedStorageServiceServer) DisconnectTags(context.Context, *Discon
 func (UnimplementedStorageServiceServer) DeleteTag(context.Context, *DeleteTagRequest) (*DeleteTagResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteTag not implemented")
 }
-func (UnimplementedStorageServiceServer) AddLandmarkTag(context.Context, *AddLandmarkTagRequest) (*AddLandmarkTagResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddLandmarkTag not implemented")
-}
-func (UnimplementedStorageServiceServer) RemoveLandmarkTag(context.Context, *RemoveLandmarkTagRequest) (*RemoveLandmarkTagResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RemoveLandmarkTag not implemented")
-}
 func (UnimplementedStorageServiceServer) GetConnectedTags(context.Context, *GetConnectedTagsRequest) (*GetConnectedTagsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetConnectedTags not implemented")
-}
-func (UnimplementedStorageServiceServer) CreateTag(context.Context, *CreateTagRequest) (*CreateTagResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateTag not implemented")
-}
-func (UnimplementedStorageServiceServer) GetLandmarksFiltered(context.Context, *GetLandmarksFilteredRequest) (*GetLandmarksFilteredResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetLandmarksFiltered not implemented")
 }
 func (UnimplementedStorageServiceServer) mustEmbedUnimplementedStorageServiceServer() {}
 
@@ -668,6 +692,78 @@ func _StorageService_ViewLandmark_Handler(srv interface{}, ctx context.Context, 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(StorageServiceServer).ViewLandmark(ctx, req.(*ViewLandmarkRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageService_GetFavouriteLandmarks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFavouriteLandmarksRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageServiceServer).GetFavouriteLandmarks(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.storage.StorageService/GetFavouriteLandmarks",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageServiceServer).GetFavouriteLandmarks(ctx, req.(*GetFavouriteLandmarksRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageService_GetLikesAmount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetLikesAmountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageServiceServer).GetLikesAmount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.storage.StorageService/GetLikesAmount",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageServiceServer).GetLikesAmount(ctx, req.(*GetLikesAmountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageService_GetLandmarksFiltered_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetLandmarksFilteredRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageServiceServer).GetLandmarksFiltered(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.storage.StorageService/GetLandmarksFiltered",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageServiceServer).GetLandmarksFiltered(ctx, req.(*GetLandmarksFilteredRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageService_UpdateLandmarkScore_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateLandmarkScoreRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageServiceServer).UpdateLandmarkScore(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.storage.StorageService/UpdateLandmarkScore",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageServiceServer).UpdateLandmarkScore(ctx, req.(*UpdateLandmarkScoreRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -816,38 +912,20 @@ func _StorageService_GetProfileComments_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
-func _StorageService_GetFavouriteLandmarks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetFavouriteLandmarksRequest)
+func _StorageService_CountReviews_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CountReviewsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(StorageServiceServer).GetFavouriteLandmarks(ctx, in)
+		return srv.(StorageServiceServer).CountReviews(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/landmark.storage.StorageService/GetFavouriteLandmarks",
+		FullMethod: "/landmark.storage.StorageService/CountReviews",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StorageServiceServer).GetFavouriteLandmarks(ctx, req.(*GetFavouriteLandmarksRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _StorageService_GetLikesAmount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetLikesAmountRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(StorageServiceServer).GetLikesAmount(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/landmark.storage.StorageService/GetLikesAmount",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StorageServiceServer).GetLikesAmount(ctx, req.(*GetLikesAmountRequest))
+		return srv.(StorageServiceServer).CountReviews(ctx, req.(*CountReviewsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -942,6 +1020,60 @@ func _StorageService_IsFriend_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _StorageService_AddLandmarkTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddLandmarkTagRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageServiceServer).AddLandmarkTag(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.storage.StorageService/AddLandmarkTag",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageServiceServer).AddLandmarkTag(ctx, req.(*AddLandmarkTagRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageService_RemoveLandmarkTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RemoveLandmarkTagRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageServiceServer).RemoveLandmarkTag(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.storage.StorageService/RemoveLandmarkTag",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageServiceServer).RemoveLandmarkTag(ctx, req.(*RemoveLandmarkTagRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageService_CreateTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateTagRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageServiceServer).CreateTag(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.storage.StorageService/CreateTag",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageServiceServer).CreateTag(ctx, req.(*CreateTagRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _StorageService_SetUserTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SetUserTagRequest)
 	if err := dec(in); err != nil {
@@ -1014,24 +1146,6 @@ func _StorageService_GetLandmarkTags_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
-func _StorageService_CountReviews_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CountReviewsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(StorageServiceServer).CountReviews(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/landmark.storage.StorageService/CountReviews",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StorageServiceServer).CountReviews(ctx, req.(*CountReviewsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _StorageService_ConnectTags_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ConnectTagsRequest)
 	if err := dec(in); err != nil {
@@ -1086,42 +1200,6 @@ func _StorageService_DeleteTag_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
-func _StorageService_AddLandmarkTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddLandmarkTagRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(StorageServiceServer).AddLandmarkTag(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/landmark.storage.StorageService/AddLandmarkTag",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StorageServiceServer).AddLandmarkTag(ctx, req.(*AddLandmarkTagRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _StorageService_RemoveLandmarkTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RemoveLandmarkTagRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(StorageServiceServer).RemoveLandmarkTag(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/landmark.storage.StorageService/RemoveLandmarkTag",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StorageServiceServer).RemoveLandmarkTag(ctx, req.(*RemoveLandmarkTagRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _StorageService_GetConnectedTags_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetConnectedTagsRequest)
 	if err := dec(in); err != nil {
@@ -1136,42 +1214,6 @@ func _StorageService_GetConnectedTags_Handler(srv interface{}, ctx context.Conte
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(StorageServiceServer).GetConnectedTags(ctx, req.(*GetConnectedTagsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _StorageService_CreateTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateTagRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(StorageServiceServer).CreateTag(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/landmark.storage.StorageService/CreateTag",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StorageServiceServer).CreateTag(ctx, req.(*CreateTagRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _StorageService_GetLandmarksFiltered_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetLandmarksFilteredRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(StorageServiceServer).GetLandmarksFiltered(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/landmark.storage.StorageService/GetLandmarksFiltered",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StorageServiceServer).GetLandmarksFiltered(ctx, req.(*GetLandmarksFilteredRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1212,6 +1254,22 @@ var StorageService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _StorageService_ViewLandmark_Handler,
 		},
 		{
+			MethodName: "GetFavouriteLandmarks",
+			Handler:    _StorageService_GetFavouriteLandmarks_Handler,
+		},
+		{
+			MethodName: "GetLikesAmount",
+			Handler:    _StorageService_GetLikesAmount_Handler,
+		},
+		{
+			MethodName: "GetLandmarksFiltered",
+			Handler:    _StorageService_GetLandmarksFiltered_Handler,
+		},
+		{
+			MethodName: "UpdateLandmarkScore",
+			Handler:    _StorageService_UpdateLandmarkScore_Handler,
+		},
+		{
 			MethodName: "RecommendLandmarks",
 			Handler:    _StorageService_RecommendLandmarks_Handler,
 		},
@@ -1244,12 +1302,8 @@ var StorageService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _StorageService_GetProfileComments_Handler,
 		},
 		{
-			MethodName: "GetFavouriteLandmarks",
-			Handler:    _StorageService_GetFavouriteLandmarks_Handler,
-		},
-		{
-			MethodName: "GetLikesAmount",
-			Handler:    _StorageService_GetLikesAmount_Handler,
+			MethodName: "CountReviews",
+			Handler:    _StorageService_CountReviews_Handler,
 		},
 		{
 			MethodName: "AddFriend",
@@ -1272,6 +1326,18 @@ var StorageService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _StorageService_IsFriend_Handler,
 		},
 		{
+			MethodName: "AddLandmarkTag",
+			Handler:    _StorageService_AddLandmarkTag_Handler,
+		},
+		{
+			MethodName: "RemoveLandmarkTag",
+			Handler:    _StorageService_RemoveLandmarkTag_Handler,
+		},
+		{
+			MethodName: "CreateTag",
+			Handler:    _StorageService_CreateTag_Handler,
+		},
+		{
 			MethodName: "SetUserTag",
 			Handler:    _StorageService_SetUserTag_Handler,
 		},
@@ -1288,10 +1354,6 @@ var StorageService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _StorageService_GetLandmarkTags_Handler,
 		},
 		{
-			MethodName: "CountReviews",
-			Handler:    _StorageService_CountReviews_Handler,
-		},
-		{
 			MethodName: "ConnectTags",
 			Handler:    _StorageService_ConnectTags_Handler,
 		},
@@ -1304,24 +1366,8 @@ var StorageService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _StorageService_DeleteTag_Handler,
 		},
 		{
-			MethodName: "AddLandmarkTag",
-			Handler:    _StorageService_AddLandmarkTag_Handler,
-		},
-		{
-			MethodName: "RemoveLandmarkTag",
-			Handler:    _StorageService_RemoveLandmarkTag_Handler,
-		},
-		{
 			MethodName: "GetConnectedTags",
 			Handler:    _StorageService_GetConnectedTags_Handler,
-		},
-		{
-			MethodName: "CreateTag",
-			Handler:    _StorageService_CreateTag_Handler,
-		},
-		{
-			MethodName: "GetLandmarksFiltered",
-			Handler:    _StorageService_GetLandmarksFiltered_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
