@@ -305,6 +305,7 @@ message GetLandmarksFilteredResponse {
 }
 
 service StorageService{
+  // Landmark
   rpc GetLandmark(GetLandmarkRequest) returns (GetLandmarkResponse) {}
   rpc GetLandmarksByTag(GetLandmarksByTagRequest) returns (GetLandmarksByTagResponse) {}
   rpc AddLandmark(AddLandmarkRequest) returns (AddLandmarkResponse) {}
@@ -312,32 +313,42 @@ service StorageService{
   rpc DislikeLandmark(DislikeLandmarkRequest) returns (DislikeLandmarkResponse) {}
   rpc GetLikes(GetLikesRequest) returns (GetLikesResponse) {}
   rpc ViewLandmark(ViewLandmarkRequest) returns (ViewLandmarkResponse) {}
+  rpc GetFavouriteLandmarks(GetFavouriteLandmarksRequest) returns (GetFavouriteLandmarksResponse) {}
+  rpc GetLikesAmount(GetLikesAmountRequest) returns (GetLikesAmountResponse) {}
+  rpc GetLandmarksFiltered(GetLandmarksFilteredRequest) returns (GetLandmarksFilteredResponse) {}
+
+  // User feed
   rpc RecommendLandmarks(RecommendLandmarksRequest) returns (RecommendLandmarksResponse) {}
   rpc GetRandomFeed(GetRandomFeedRequest) returns (GetRandomFeedResponse) {}
+
   rpc AddUser(AddUserRequest) returns (AddUserResponse) {}
+
+  // Comments
   rpc CreateComment(CreateCommentRequest) returns (CreateCommentResponse) {}
   rpc DeleteComment(DeleteCommentRequest) returns (DeleteCommentResponse){}
   rpc EditComment(EditCommentRequest) returns (EditCommentResponse) {}
   rpc GetComments(GetCommentsRequest) returns (GetCommentsResponse) {}
   rpc GetProfileComments(GetProfileCommentsRequest) returns (GetProfileCommentsResponse) {}
-  rpc GetFavouriteLandmarks(GetFavouriteLandmarksRequest) returns (GetFavouriteLandmarksResponse) {}
-  rpc GetLikesAmount(GetLikesAmountRequest) returns (GetLikesAmountResponse) {}
+  rpc CountReviews(CountReviewsRequest) returns (CountReviewsResponse) {}
+
+  // Friends
   rpc AddFriend(AddFriendRequest) returns (AddFriendResponse) {}
   rpc DeleteFriend(DeleteFriendRequest) returns (DeleteFriendResponse) {}
   rpc GetFriends(GetFriendsRequest) returns (GetFriendsResponse) {}
   rpc CountFriends(CountFriendsRequest) returns (CountFriendsResponse) {}
   rpc IsFriend(IsFriendRequest) returns (IsFriendResponse) {}
+
+  // Tags
+  rpc AddLandmarkTag(AddLandmarkTagRequest) returns (AddLandmarkTagResponse) {}
+  rpc RemoveLandmarkTag(RemoveLandmarkTagRequest) returns (RemoveLandmarkTagResponse) {}
+  rpc CreateTag(CreateTagRequest) returns (CreateTagResponse) {}
   rpc SetUserTag(SetUserTagRequest) returns (SetUserTagResponse) {}
   rpc DeleteUserTag(DeleteUserTagRequest) returns (DeleteUserTagResponse) {}
   rpc GetUserTags(GetUserTagsRequest) returns (GetUserTagsResponse) {}
   rpc GetLandmarkTags(GetLandmarkTagsRequest) returns (GetLandmarkTagsResponse) {}
-  rpc CountReviews(CountReviewsRequest) returns (CountReviewsResponse) {}
   rpc ConnectTags(ConnectTagsRequest) returns (ConnectTagsResponse) {}
   rpc DisconnectTags(DisconnectTagsRequest) returns (DisconnectTagsResponse) {}
   rpc DeleteTag(DeleteTagRequest) returns (DeleteTagResponse) {}
-  rpc AddLandmarkTag(AddLandmarkTagRequest) returns (AddLandmarkTagResponse) {}
-  rpc RemoveLandmarkTag(RemoveLandmarkTagRequest) returns (RemoveLandmarkTagResponse) {}
   rpc GetConnectedTags(GetConnectedTagsRequest) returns (GetConnectedTagsResponse) {}
-  rpc CreateTag(CreateTagRequest) returns (CreateTagResponse) {}
-  rpc GetLandmarksFiltered(GetLandmarksFilteredRequest) returns (GetLandmarksFilteredResponse) {}
+
 }
