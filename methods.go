@@ -187,7 +187,7 @@ func (c *Client) GetFeed(ctx context.Context, userId string, amount int) ([]stri
 }
 
 func (c *Client) GetFavouriteLandmarks(ctx context.Context, userId string, limit, offset int) ([]uuid.UUID, error) {
-	res, err := c.Storage.Client.GetFavouriteLandmarks(ctx, &storage.GetFavouriteLandmarksRequest{UserId: userId})
+	res, err := c.Storage.Client.GetFavouriteLandmarks(ctx, &storage.GetFavouriteLandmarksRequest{UserId: userId, Limit: int32(limit), Offset: int32(offset)})
 	if err != nil {
 		return nil, err
 	}
