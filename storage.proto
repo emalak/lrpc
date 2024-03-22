@@ -310,6 +310,20 @@ message UpdateLandmarkScoreRequest{
 }
 message UpdateLandmarkScoreResponse{}
 
+message GetRecentFriendsFavouritesRequest{
+  string userId = 1;
+  int32 limit = 2;
+  int32 offset = 3;
+}
+message FriendLikedLandmark{
+  string friendId = 1;
+  string landmarkId = 2;
+  int64 timestamp = 3;
+}
+message GetRecentFriendsFavouritesResponse{
+  repeated FriendLikedLandmark result = 1;
+}
+
 service StorageService{
   // Landmark
   rpc GetLandmark(GetLandmarkRequest) returns (GetLandmarkResponse) {}
@@ -323,6 +337,7 @@ service StorageService{
   rpc GetLikesAmount(GetLikesAmountRequest) returns (GetLikesAmountResponse) {}
   rpc GetLandmarksFiltered(GetLandmarksFilteredRequest) returns (GetLandmarksFilteredResponse) {}
   rpc UpdateLandmarkScore(UpdateLandmarkScoreRequest) returns (UpdateLandmarkScoreResponse) {}
+  rpc GetRecentFriendsFavourites(GetRecentFriendsFavouritesRequest) returns (GetRecentFriendsFavouritesResponse) {}
 
   // User feed
   rpc RecommendLandmarks(RecommendLandmarksRequest) returns (RecommendLandmarksResponse) {}
