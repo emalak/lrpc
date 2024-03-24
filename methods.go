@@ -386,3 +386,12 @@ func (c *Client) GetLandmarksFiltered(ctx context.Context, include, exclude []st
 	}
 	return res.Ids, nil
 }
+
+func (c *Client) GetRecentFriendsFavourites(ctx context.Context, userId string, limit, offset int) (*storage.GetRecentFriendsFavouritesResponse, error) {
+	res, err := c.Storage.Client.GetRecentFriendsFavourites(ctx, &storage.GetRecentFriendsFavouritesRequest{
+		UserId: userId,
+		Limit:  int32(limit),
+		Offset: int32(offset),
+	})
+	return res, err
+}
