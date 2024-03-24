@@ -46,6 +46,7 @@ type StorageServiceClient interface {
 	GetComments(ctx context.Context, in *GetCommentsRequest, opts ...grpc.CallOption) (*GetCommentsResponse, error)
 	GetProfileComments(ctx context.Context, in *GetProfileCommentsRequest, opts ...grpc.CallOption) (*GetProfileCommentsResponse, error)
 	CountReviews(ctx context.Context, in *CountReviewsRequest, opts ...grpc.CallOption) (*CountReviewsResponse, error)
+	IsReviewedBy(ctx context.Context, in *IsReviewedRequest, opts ...grpc.CallOption) (*IsReviewedResponse, error)
 	// Friends
 	AddFriend(ctx context.Context, in *AddFriendRequest, opts ...grpc.CallOption) (*AddFriendResponse, error)
 	DeleteFriend(ctx context.Context, in *DeleteFriendRequest, opts ...grpc.CallOption) (*DeleteFriendResponse, error)
@@ -263,6 +264,15 @@ func (c *storageServiceClient) CountReviews(ctx context.Context, in *CountReview
 	return out, nil
 }
 
+func (c *storageServiceClient) IsReviewedBy(ctx context.Context, in *IsReviewedRequest, opts ...grpc.CallOption) (*IsReviewedResponse, error) {
+	out := new(IsReviewedResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/IsReviewedBy", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *storageServiceClient) AddFriend(ctx context.Context, in *AddFriendRequest, opts ...grpc.CallOption) (*AddFriendResponse, error) {
 	out := new(AddFriendResponse)
 	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/AddFriend", in, out, opts...)
@@ -435,6 +445,7 @@ type StorageServiceServer interface {
 	GetComments(context.Context, *GetCommentsRequest) (*GetCommentsResponse, error)
 	GetProfileComments(context.Context, *GetProfileCommentsRequest) (*GetProfileCommentsResponse, error)
 	CountReviews(context.Context, *CountReviewsRequest) (*CountReviewsResponse, error)
+	IsReviewedBy(context.Context, *IsReviewedRequest) (*IsReviewedResponse, error)
 	// Friends
 	AddFriend(context.Context, *AddFriendRequest) (*AddFriendResponse, error)
 	DeleteFriend(context.Context, *DeleteFriendRequest) (*DeleteFriendResponse, error)
@@ -522,6 +533,9 @@ func (UnimplementedStorageServiceServer) GetProfileComments(context.Context, *Ge
 }
 func (UnimplementedStorageServiceServer) CountReviews(context.Context, *CountReviewsRequest) (*CountReviewsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CountReviews not implemented")
+}
+func (UnimplementedStorageServiceServer) IsReviewedBy(context.Context, *IsReviewedRequest) (*IsReviewedResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IsReviewedBy not implemented")
 }
 func (UnimplementedStorageServiceServer) AddFriend(context.Context, *AddFriendRequest) (*AddFriendResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddFriend not implemented")
@@ -962,6 +976,24 @@ func _StorageService_CountReviews_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _StorageService_IsReviewedBy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IsReviewedRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageServiceServer).IsReviewedBy(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.storage.StorageService/IsReviewedBy",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageServiceServer).IsReviewedBy(ctx, req.(*IsReviewedRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _StorageService_AddFriend_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AddFriendRequest)
 	if err := dec(in); err != nil {
@@ -1340,6 +1372,10 @@ var StorageService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CountReviews",
 			Handler:    _StorageService_CountReviews_Handler,
+		},
+		{
+			MethodName: "IsReviewedBy",
+			Handler:    _StorageService_IsReviewedBy_Handler,
 		},
 		{
 			MethodName: "AddFriend",

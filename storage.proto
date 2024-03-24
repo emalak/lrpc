@@ -324,6 +324,14 @@ message GetRecentFriendsFavouritesResponse{
   repeated FriendLikedLandmark result = 1;
 }
 
+message IsReviewedRequest{
+  string landmarkId = 1;
+  string userId = 2;
+}
+message IsReviewedResponse{
+  bool isReviewed = 1;
+}
+
 service StorageService{
   // Landmark
   rpc GetLandmark(GetLandmarkRequest) returns (GetLandmarkResponse) {}
@@ -352,6 +360,7 @@ service StorageService{
   rpc GetComments(GetCommentsRequest) returns (GetCommentsResponse) {}
   rpc GetProfileComments(GetProfileCommentsRequest) returns (GetProfileCommentsResponse) {}
   rpc CountReviews(CountReviewsRequest) returns (CountReviewsResponse) {}
+  rpc IsReviewedBy(IsReviewedRequest) returns (IsReviewedResponse) {}
 
   // Friends
   rpc AddFriend(AddFriendRequest) returns (AddFriendResponse) {}
