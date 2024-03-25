@@ -395,3 +395,11 @@ func (c *Client) GetRecentFriendsFavourites(ctx context.Context, userId string, 
 	})
 	return res.Result, err
 }
+
+func (c *Client) IsReviewedBy(ctx context.Context, landmarkId, userId string) (bool, error) {
+	res, err := c.Storage.Client.IsReviewedBy(ctx, &storage.IsReviewedRequest{
+		LandmarkId: landmarkId,
+		UserId:     userId,
+	})
+	return res.IsReviewed, err
+}
