@@ -403,3 +403,24 @@ func (c *Client) IsReviewedBy(ctx context.Context, landmarkId, userId string) (b
 	})
 	return res.IsReviewed, err
 }
+
+func (c *Client) GetReview(ctx context.Context, landmarkId, userId string) (*Comment, error) {
+	res, err := c.Storage.Client.GetReview(ctx, &storage.GetReviewRequest{
+		LandmarkId: landmarkId,
+		UserId:     userId,
+	})
+	if err != nil {
+		return nil, err
+	}
+	com := &Comment{
+		Id:          res.Review.Id,
+		ParentId:    res.Review.ParentId,
+		UserId:      res.Review.UserId,
+		Grade:       int(res.Review.Grade),
+		Attachments: res.Review.Attachments,
+		Text:        res.Review.Text,
+		ReplyId:     res.Review.ReplyId,
+		Timestamp:   int(res.Review.Timestamp),
+	}
+	return com, nil
+}
