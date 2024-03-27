@@ -412,6 +412,9 @@ func (c *Client) GetReview(ctx context.Context, landmarkId, userId string) (*Com
 	if err != nil {
 		return nil, err
 	}
+	if res == nil {
+		return nil, nil
+	}
 	com := &Comment{
 		Id:          res.Review.Id,
 		ParentId:    res.Review.ParentId,
