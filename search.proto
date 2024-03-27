@@ -1,0 +1,22 @@
+syntax = "proto3";
+package landmark.search;
+option go_package = "./landmark_feed";
+
+message AddLandmarkRequest{
+  string id = 1;
+  string name = 2;
+}
+message AddLandmarkResponse{}
+
+message SearchRequest{
+  string query = 1;
+}
+message SearchResponse{
+  repeated string landmarkIds = 1;
+  repeated string tagIds = 2;
+}
+
+service LandmarkSearch{
+  rpc AddLandmark(AddLandmarkRequest) returns (AddLandmarkResponse){}
+  rpc Search(SearchRequest) returns (SearchResponse) {}
+}
