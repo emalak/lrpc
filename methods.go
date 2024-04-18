@@ -393,6 +393,9 @@ func (c *Client) GetRecentFriendsFavourites(ctx context.Context, userId string, 
 		Limit:  int32(limit),
 		Offset: int32(offset),
 	})
+	if err != nil {
+		return nil, err
+	}
 	return res.Result, err
 }
 
