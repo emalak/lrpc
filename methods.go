@@ -393,6 +393,9 @@ func (c *Client) GetRecentFriendsFavourites(ctx context.Context, userId string, 
 		Limit:  int32(limit),
 		Offset: int32(offset),
 	})
+	if err != nil {
+		return nil, err
+	}
 	return res.Result, err
 }
 
@@ -411,6 +414,9 @@ func (c *Client) GetReview(ctx context.Context, landmarkId, userId string) (*Com
 	})
 	if err != nil {
 		return nil, err
+	}
+	if res.Review == nil {
+		return nil, nil
 	}
 	com := &Comment{
 		Id:          res.Review.Id,
