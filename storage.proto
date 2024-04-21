@@ -110,6 +110,7 @@ message GetCommentsRequest{
   string landmarkId = 1;
   int32 limit = 2;
   int32 offset = 3;
+  string userId = 4;
 }
 message GetCommentsResponse{
   repeated Comment comments = 1;
