@@ -430,3 +430,11 @@ func (c *Client) GetReview(ctx context.Context, landmarkId, userId string) (*Com
 	}
 	return com, nil
 }
+
+func (c *Client) SetLandmarkScore(ctx context.Context, landmarkId string, score float64) error {
+	_, err := c.Storage.Client.SetLandmarkScore(ctx, &storage.SetLandmarkScoreRequest{
+		LandmarkId: landmarkId,
+		Score:      float32(score),
+	})
+	return err
+}
