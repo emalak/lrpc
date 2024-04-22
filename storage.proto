@@ -349,6 +349,14 @@ message SetLandmarkScoreResponse{
 
 }
 
+message SetMultipleViewedRequest{
+  string userId = 1;
+  repeated string landmarkIds = 2;
+}
+message SetMultipleViewedResponse{
+
+}
+
 service StorageService{
   // Landmark
   rpc GetLandmark(GetLandmarkRequest) returns (GetLandmarkResponse) {}
