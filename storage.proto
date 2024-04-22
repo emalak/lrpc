@@ -343,7 +343,7 @@ message GetReviewResponse{
 
 message SetLandmarkScoreRequest{
   string landmarkId = 1;
-  string float32 = 2;
+  float score = 2;
 }
 message SetLandmarkScoreResponse{
 
