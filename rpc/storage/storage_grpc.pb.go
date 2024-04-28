@@ -35,6 +35,7 @@ type StorageServiceClient interface {
 	GetLandmarksFiltered(ctx context.Context, in *GetLandmarksFilteredRequest, opts ...grpc.CallOption) (*GetLandmarksFilteredResponse, error)
 	UpdateLandmarkScore(ctx context.Context, in *UpdateLandmarkScoreRequest, opts ...grpc.CallOption) (*UpdateLandmarkScoreResponse, error)
 	GetRecentFriendsFavourites(ctx context.Context, in *GetRecentFriendsFavouritesRequest, opts ...grpc.CallOption) (*GetRecentFriendsFavouritesResponse, error)
+	SetLandmarkScore(ctx context.Context, in *SetLandmarkScoreRequest, opts ...grpc.CallOption) (*SetLandmarkScoreResponse, error)
 	// User feed
 	RecommendLandmarks(ctx context.Context, in *RecommendLandmarksRequest, opts ...grpc.CallOption) (*RecommendLandmarksResponse, error)
 	GetRandomFeed(ctx context.Context, in *GetRandomFeedRequest, opts ...grpc.CallOption) (*GetRandomFeedResponse, error)
@@ -178,6 +179,15 @@ func (c *storageServiceClient) UpdateLandmarkScore(ctx context.Context, in *Upda
 func (c *storageServiceClient) GetRecentFriendsFavourites(ctx context.Context, in *GetRecentFriendsFavouritesRequest, opts ...grpc.CallOption) (*GetRecentFriendsFavouritesResponse, error) {
 	out := new(GetRecentFriendsFavouritesResponse)
 	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/GetRecentFriendsFavourites", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageServiceClient) SetLandmarkScore(ctx context.Context, in *SetLandmarkScoreRequest, opts ...grpc.CallOption) (*SetLandmarkScoreResponse, error) {
+	out := new(SetLandmarkScoreResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/SetLandmarkScore", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -444,6 +454,7 @@ type StorageServiceServer interface {
 	GetLandmarksFiltered(context.Context, *GetLandmarksFilteredRequest) (*GetLandmarksFilteredResponse, error)
 	UpdateLandmarkScore(context.Context, *UpdateLandmarkScoreRequest) (*UpdateLandmarkScoreResponse, error)
 	GetRecentFriendsFavourites(context.Context, *GetRecentFriendsFavouritesRequest) (*GetRecentFriendsFavouritesResponse, error)
+	SetLandmarkScore(context.Context, *SetLandmarkScoreRequest) (*SetLandmarkScoreResponse, error)
 	// User feed
 	RecommendLandmarks(context.Context, *RecommendLandmarksRequest) (*RecommendLandmarksResponse, error)
 	GetRandomFeed(context.Context, *GetRandomFeedRequest) (*GetRandomFeedResponse, error)
@@ -517,6 +528,9 @@ func (UnimplementedStorageServiceServer) UpdateLandmarkScore(context.Context, *U
 }
 func (UnimplementedStorageServiceServer) GetRecentFriendsFavourites(context.Context, *GetRecentFriendsFavouritesRequest) (*GetRecentFriendsFavouritesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRecentFriendsFavourites not implemented")
+}
+func (UnimplementedStorageServiceServer) SetLandmarkScore(context.Context, *SetLandmarkScoreRequest) (*SetLandmarkScoreResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetLandmarkScore not implemented")
 }
 func (UnimplementedStorageServiceServer) RecommendLandmarks(context.Context, *RecommendLandmarksRequest) (*RecommendLandmarksResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RecommendLandmarks not implemented")
@@ -824,6 +838,24 @@ func _StorageService_GetRecentFriendsFavourites_Handler(srv interface{}, ctx con
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(StorageServiceServer).GetRecentFriendsFavourites(ctx, req.(*GetRecentFriendsFavouritesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageService_SetLandmarkScore_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetLandmarkScoreRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageServiceServer).SetLandmarkScore(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.storage.StorageService/SetLandmarkScore",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageServiceServer).SetLandmarkScore(ctx, req.(*SetLandmarkScoreRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1368,6 +1400,10 @@ var StorageService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetRecentFriendsFavourites",
 			Handler:    _StorageService_GetRecentFriendsFavourites_Handler,
+		},
+		{
+			MethodName: "SetLandmarkScore",
+			Handler:    _StorageService_SetLandmarkScore_Handler,
 		},
 		{
 			MethodName: "RecommendLandmarks",

@@ -64,7 +64,7 @@ func newStorage(ctx context.Context, s Settings) (*Storage, error) {
 		s.StorageOpts.Address,
 		grpc.WithBlock(),
 		grpc.WithInsecure(),
-		grpc.WithTimeout(time.Second*5))
+		grpc.WithTimeout(time.Second*10))
 	if err != nil {
 		return nil, err
 	}

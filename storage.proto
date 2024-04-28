@@ -341,6 +341,22 @@ message GetReviewResponse{
   Comment review = 1;
 }
 
+message SetLandmarkScoreRequest{
+  string landmarkId = 1;
+  float score = 2;
+}
+message SetLandmarkScoreResponse{
+
+}
+
+message SetMultipleViewedRequest{
+  string userId = 1;
+  repeated string landmarkIds = 2;
+}
+message SetMultipleViewedResponse{
+
+}
+
 service StorageService{
   // Landmark
   rpc GetLandmark(GetLandmarkRequest) returns (GetLandmarkResponse) {}
@@ -355,6 +371,7 @@ service StorageService{
   rpc GetLandmarksFiltered(GetLandmarksFilteredRequest) returns (GetLandmarksFilteredResponse) {}
   rpc UpdateLandmarkScore(UpdateLandmarkScoreRequest) returns (UpdateLandmarkScoreResponse) {}
   rpc GetRecentFriendsFavourites(GetRecentFriendsFavouritesRequest) returns (GetRecentFriendsFavouritesResponse) {}
+  rpc SetLandmarkScore(SetLandmarkScoreRequest) returns (SetLandmarkScoreResponse) {}
 
   // User feed
   rpc RecommendLandmarks(RecommendLandmarksRequest) returns (RecommendLandmarksResponse) {}
