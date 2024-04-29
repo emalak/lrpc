@@ -2,7 +2,6 @@ package lrpc
 
 import (
 	"context"
-	"fmt"
 	"github.com/google/uuid"
 	feed "github.com/oppositemc/lrpc/rpc/feed"
 	storage "github.com/oppositemc/lrpc/rpc/storage"
@@ -177,7 +176,6 @@ func (c *Client) GetProfileComments(ctx context.Context, userId string, limit, o
 }
 
 func (c *Client) GetFeed(ctx context.Context, userId string, amount int) ([]string, error) {
-	fmt.Println(c.Feed.Client)
 	res, err := c.Feed.Client.GetFeed(ctx, &feed.GetFeedRequest{
 		UserId: userId,
 		Amount: int32(amount),
