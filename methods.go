@@ -3,6 +3,7 @@ package lrpc
 import (
 	"context"
 	"github.com/google/uuid"
+	feed "github.com/oppositemc/lrpc/rpc/feed"
 	storage "github.com/oppositemc/lrpc/rpc/storage"
 )
 
@@ -175,14 +176,14 @@ func (c *Client) GetProfileComments(ctx context.Context, userId string, limit, o
 }
 
 func (c *Client) GetFeed(ctx context.Context, userId string, amount int) ([]string, error) {
-	res, err := c.Storage.Client.RecommendLandmarks(ctx, &storage.RecommendLandmarksRequest{
+	res, err := c.Feed.Client.GetFeed(ctx, &feed.GetFeedRequest{
 		UserId: userId,
-		Amount: int64(amount),
+		Amount: int32(amount),
 	})
 	if err != nil {
 		return nil, err
 	}
-	return res.Ids, nil
+	return res.LandmarkIds, nil
 }
 
 func (c *Client) GetFavouriteLandmarks(ctx context.Context, userId string, limit, offset int) ([]uuid.UUID, error) {
