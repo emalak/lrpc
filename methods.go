@@ -447,3 +447,10 @@ func (c *Client) NotInterested(ctx context.Context, userId, landmarkId string) e
 	})
 	return err
 }
+
+func (c *Client) ResetFeed(ctx context.Context, userId string) error {
+	_, err := c.Feed.Client.ResetFeed(ctx, &feed.ResetFeedRequest{
+		UserId: userId,
+	})
+	return err
+}
