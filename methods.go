@@ -439,3 +439,11 @@ func (c *Client) SetLandmarkScore(ctx context.Context, landmarkId string, score 
 	})
 	return err
 }
+
+func (c *Client) NotInterested(ctx context.Context, userId, landmarkId string) error {
+	_, err := c.Storage.Client.NotInterested(ctx, &storage.NotInterestedRequest{
+		UserId:     userId,
+		LandmarkId: landmarkId,
+	})
+	return err
+}
