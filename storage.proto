@@ -357,6 +357,14 @@ message SetMultipleViewedResponse{
 
 }
 
+message NotInterestedRequest{
+  string userId = 1;
+  string landmarkId = 2;
+}
+message NotInterestedResponse{
+
+}
+
 service StorageService{
   // Landmark
   rpc GetLandmark(GetLandmarkRequest) returns (GetLandmarkResponse) {}
@@ -372,6 +380,7 @@ service StorageService{
   rpc UpdateLandmarkScore(UpdateLandmarkScoreRequest) returns (UpdateLandmarkScoreResponse) {}
   rpc GetRecentFriendsFavourites(GetRecentFriendsFavouritesRequest) returns (GetRecentFriendsFavouritesResponse) {}
   rpc SetLandmarkScore(SetLandmarkScoreRequest) returns (SetLandmarkScoreResponse) {}
+  rpc NotInterested(NotInterestedRequest) returns (NotInterestedResponse) {}
 
   // User feed
   rpc RecommendLandmarks(RecommendLandmarksRequest) returns (RecommendLandmarksResponse) {}

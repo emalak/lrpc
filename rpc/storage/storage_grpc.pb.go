@@ -36,6 +36,7 @@ type StorageServiceClient interface {
 	UpdateLandmarkScore(ctx context.Context, in *UpdateLandmarkScoreRequest, opts ...grpc.CallOption) (*UpdateLandmarkScoreResponse, error)
 	GetRecentFriendsFavourites(ctx context.Context, in *GetRecentFriendsFavouritesRequest, opts ...grpc.CallOption) (*GetRecentFriendsFavouritesResponse, error)
 	SetLandmarkScore(ctx context.Context, in *SetLandmarkScoreRequest, opts ...grpc.CallOption) (*SetLandmarkScoreResponse, error)
+	NotInterested(ctx context.Context, in *NotInterestedRequest, opts ...grpc.CallOption) (*NotInterestedResponse, error)
 	// User feed
 	RecommendLandmarks(ctx context.Context, in *RecommendLandmarksRequest, opts ...grpc.CallOption) (*RecommendLandmarksResponse, error)
 	GetRandomFeed(ctx context.Context, in *GetRandomFeedRequest, opts ...grpc.CallOption) (*GetRandomFeedResponse, error)
@@ -188,6 +189,15 @@ func (c *storageServiceClient) GetRecentFriendsFavourites(ctx context.Context, i
 func (c *storageServiceClient) SetLandmarkScore(ctx context.Context, in *SetLandmarkScoreRequest, opts ...grpc.CallOption) (*SetLandmarkScoreResponse, error) {
 	out := new(SetLandmarkScoreResponse)
 	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/SetLandmarkScore", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageServiceClient) NotInterested(ctx context.Context, in *NotInterestedRequest, opts ...grpc.CallOption) (*NotInterestedResponse, error) {
+	out := new(NotInterestedResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/NotInterested", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -455,6 +465,7 @@ type StorageServiceServer interface {
 	UpdateLandmarkScore(context.Context, *UpdateLandmarkScoreRequest) (*UpdateLandmarkScoreResponse, error)
 	GetRecentFriendsFavourites(context.Context, *GetRecentFriendsFavouritesRequest) (*GetRecentFriendsFavouritesResponse, error)
 	SetLandmarkScore(context.Context, *SetLandmarkScoreRequest) (*SetLandmarkScoreResponse, error)
+	NotInterested(context.Context, *NotInterestedRequest) (*NotInterestedResponse, error)
 	// User feed
 	RecommendLandmarks(context.Context, *RecommendLandmarksRequest) (*RecommendLandmarksResponse, error)
 	GetRandomFeed(context.Context, *GetRandomFeedRequest) (*GetRandomFeedResponse, error)
@@ -531,6 +542,9 @@ func (UnimplementedStorageServiceServer) GetRecentFriendsFavourites(context.Cont
 }
 func (UnimplementedStorageServiceServer) SetLandmarkScore(context.Context, *SetLandmarkScoreRequest) (*SetLandmarkScoreResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetLandmarkScore not implemented")
+}
+func (UnimplementedStorageServiceServer) NotInterested(context.Context, *NotInterestedRequest) (*NotInterestedResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method NotInterested not implemented")
 }
 func (UnimplementedStorageServiceServer) RecommendLandmarks(context.Context, *RecommendLandmarksRequest) (*RecommendLandmarksResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RecommendLandmarks not implemented")
@@ -856,6 +870,24 @@ func _StorageService_SetLandmarkScore_Handler(srv interface{}, ctx context.Conte
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(StorageServiceServer).SetLandmarkScore(ctx, req.(*SetLandmarkScoreRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageService_NotInterested_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NotInterestedRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageServiceServer).NotInterested(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.storage.StorageService/NotInterested",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageServiceServer).NotInterested(ctx, req.(*NotInterestedRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1404,6 +1436,10 @@ var StorageService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetLandmarkScore",
 			Handler:    _StorageService_SetLandmarkScore_Handler,
+		},
+		{
+			MethodName: "NotInterested",
+			Handler:    _StorageService_NotInterested_Handler,
 		},
 		{
 			MethodName: "RecommendLandmarks",
