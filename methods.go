@@ -258,10 +258,11 @@ func (c *Client) DeleteTag(ctx context.Context, id string) error {
 	return err
 }
 
-func (c *Client) AddLandmarkTag(ctx context.Context, landmarkId, tagId string) error {
+func (c *Client) AddLandmarkTag(ctx context.Context, landmarkId, tagId string, score float32) error {
 	_, err := c.Storage.Client.AddLandmarkTag(ctx, &storage.AddLandmarkTagRequest{
 		LandmarkId: landmarkId,
 		TagId:      tagId,
+		Score:      score,
 	})
 	return err
 }
