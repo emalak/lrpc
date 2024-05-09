@@ -396,7 +396,7 @@ service StorageService{
   rpc GetRecentFriendsFavourites(GetRecentFriendsFavouritesRequest) returns (GetRecentFriendsFavouritesResponse) {}
   rpc SetLandmarkScore(SetLandmarkScoreRequest) returns (SetLandmarkScoreResponse) {}
   rpc NotInterested(NotInterestedRequest) returns (NotInterestedResponse) {}
-  rpc DeleteLandmark(DeleteCommentRequest) returns (DeleteCommentResponse) {}
+  rpc DeleteLandmark(DeleteLandmarkRequest) returns (DeleteLandmarkResponse) {}
 
   // User feed
   rpc RecommendLandmarks(RecommendLandmarksRequest) returns (RecommendLandmarksResponse) {}

@@ -37,7 +37,7 @@ type StorageServiceClient interface {
 	GetRecentFriendsFavourites(ctx context.Context, in *GetRecentFriendsFavouritesRequest, opts ...grpc.CallOption) (*GetRecentFriendsFavouritesResponse, error)
 	SetLandmarkScore(ctx context.Context, in *SetLandmarkScoreRequest, opts ...grpc.CallOption) (*SetLandmarkScoreResponse, error)
 	NotInterested(ctx context.Context, in *NotInterestedRequest, opts ...grpc.CallOption) (*NotInterestedResponse, error)
-	DeleteLandmark(ctx context.Context, in *DeleteCommentRequest, opts ...grpc.CallOption) (*DeleteCommentResponse, error)
+	DeleteLandmark(ctx context.Context, in *DeleteLandmarkRequest, opts ...grpc.CallOption) (*DeleteLandmarkResponse, error)
 	// User feed
 	RecommendLandmarks(ctx context.Context, in *RecommendLandmarksRequest, opts ...grpc.CallOption) (*RecommendLandmarksResponse, error)
 	GetRandomFeed(ctx context.Context, in *GetRandomFeedRequest, opts ...grpc.CallOption) (*GetRandomFeedResponse, error)
@@ -69,7 +69,7 @@ type StorageServiceClient interface {
 	DisconnectTags(ctx context.Context, in *DisconnectTagsRequest, opts ...grpc.CallOption) (*DisconnectTagsResponse, error)
 	DeleteTag(ctx context.Context, in *DeleteTagRequest, opts ...grpc.CallOption) (*DeleteTagResponse, error)
 	GetConnectedTags(ctx context.Context, in *GetConnectedTagsRequest, opts ...grpc.CallOption) (*GetConnectedTagsResponse, error)
-	ChangeUserTAgs(ctx context.Context, in *ChangeUserTagsRequest, opts ...grpc.CallOption) (*ChangeUserTagsResponse, error)
+	ChangeUserTags(ctx context.Context, in *ChangeUserTagsRequest, opts ...grpc.CallOption) (*ChangeUserTagsResponse, error)
 }
 
 type storageServiceClient struct {
@@ -206,8 +206,8 @@ func (c *storageServiceClient) NotInterested(ctx context.Context, in *NotInteres
 	return out, nil
 }
 
-func (c *storageServiceClient) DeleteLandmark(ctx context.Context, in *DeleteCommentRequest, opts ...grpc.CallOption) (*DeleteCommentResponse, error) {
-	out := new(DeleteCommentResponse)
+func (c *storageServiceClient) DeleteLandmark(ctx context.Context, in *DeleteLandmarkRequest, opts ...grpc.CallOption) (*DeleteLandmarkResponse, error) {
+	out := new(DeleteLandmarkResponse)
 	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/DeleteLandmark", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -458,9 +458,9 @@ func (c *storageServiceClient) GetConnectedTags(ctx context.Context, in *GetConn
 	return out, nil
 }
 
-func (c *storageServiceClient) ChangeUserTAgs(ctx context.Context, in *ChangeUserTagsRequest, opts ...grpc.CallOption) (*ChangeUserTagsResponse, error) {
+func (c *storageServiceClient) ChangeUserTags(ctx context.Context, in *ChangeUserTagsRequest, opts ...grpc.CallOption) (*ChangeUserTagsResponse, error) {
 	out := new(ChangeUserTagsResponse)
-	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/ChangeUserTAgs", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/ChangeUserTags", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -486,7 +486,7 @@ type StorageServiceServer interface {
 	GetRecentFriendsFavourites(context.Context, *GetRecentFriendsFavouritesRequest) (*GetRecentFriendsFavouritesResponse, error)
 	SetLandmarkScore(context.Context, *SetLandmarkScoreRequest) (*SetLandmarkScoreResponse, error)
 	NotInterested(context.Context, *NotInterestedRequest) (*NotInterestedResponse, error)
-	DeleteLandmark(context.Context, *DeleteCommentRequest) (*DeleteCommentResponse, error)
+	DeleteLandmark(context.Context, *DeleteLandmarkRequest) (*DeleteLandmarkResponse, error)
 	// User feed
 	RecommendLandmarks(context.Context, *RecommendLandmarksRequest) (*RecommendLandmarksResponse, error)
 	GetRandomFeed(context.Context, *GetRandomFeedRequest) (*GetRandomFeedResponse, error)
@@ -518,7 +518,7 @@ type StorageServiceServer interface {
 	DisconnectTags(context.Context, *DisconnectTagsRequest) (*DisconnectTagsResponse, error)
 	DeleteTag(context.Context, *DeleteTagRequest) (*DeleteTagResponse, error)
 	GetConnectedTags(context.Context, *GetConnectedTagsRequest) (*GetConnectedTagsResponse, error)
-	ChangeUserTAgs(context.Context, *ChangeUserTagsRequest) (*ChangeUserTagsResponse, error)
+	ChangeUserTags(context.Context, *ChangeUserTagsRequest) (*ChangeUserTagsResponse, error)
 	mustEmbedUnimplementedStorageServiceServer()
 }
 
@@ -568,7 +568,7 @@ func (UnimplementedStorageServiceServer) SetLandmarkScore(context.Context, *SetL
 func (UnimplementedStorageServiceServer) NotInterested(context.Context, *NotInterestedRequest) (*NotInterestedResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method NotInterested not implemented")
 }
-func (UnimplementedStorageServiceServer) DeleteLandmark(context.Context, *DeleteCommentRequest) (*DeleteCommentResponse, error) {
+func (UnimplementedStorageServiceServer) DeleteLandmark(context.Context, *DeleteLandmarkRequest) (*DeleteLandmarkResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteLandmark not implemented")
 }
 func (UnimplementedStorageServiceServer) RecommendLandmarks(context.Context, *RecommendLandmarksRequest) (*RecommendLandmarksResponse, error) {
@@ -652,8 +652,8 @@ func (UnimplementedStorageServiceServer) DeleteTag(context.Context, *DeleteTagRe
 func (UnimplementedStorageServiceServer) GetConnectedTags(context.Context, *GetConnectedTagsRequest) (*GetConnectedTagsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetConnectedTags not implemented")
 }
-func (UnimplementedStorageServiceServer) ChangeUserTAgs(context.Context, *ChangeUserTagsRequest) (*ChangeUserTagsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ChangeUserTAgs not implemented")
+func (UnimplementedStorageServiceServer) ChangeUserTags(context.Context, *ChangeUserTagsRequest) (*ChangeUserTagsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ChangeUserTags not implemented")
 }
 func (UnimplementedStorageServiceServer) mustEmbedUnimplementedStorageServiceServer() {}
 
@@ -921,7 +921,7 @@ func _StorageService_NotInterested_Handler(srv interface{}, ctx context.Context,
 }
 
 func _StorageService_DeleteLandmark_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteCommentRequest)
+	in := new(DeleteLandmarkRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -933,7 +933,7 @@ func _StorageService_DeleteLandmark_Handler(srv interface{}, ctx context.Context
 		FullMethod: "/landmark.storage.StorageService/DeleteLandmark",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StorageServiceServer).DeleteLandmark(ctx, req.(*DeleteCommentRequest))
+		return srv.(StorageServiceServer).DeleteLandmark(ctx, req.(*DeleteLandmarkRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1424,20 +1424,20 @@ func _StorageService_GetConnectedTags_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _StorageService_ChangeUserTAgs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _StorageService_ChangeUserTags_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ChangeUserTagsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(StorageServiceServer).ChangeUserTAgs(ctx, in)
+		return srv.(StorageServiceServer).ChangeUserTags(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/landmark.storage.StorageService/ChangeUserTAgs",
+		FullMethod: "/landmark.storage.StorageService/ChangeUserTags",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StorageServiceServer).ChangeUserTAgs(ctx, req.(*ChangeUserTagsRequest))
+		return srv.(StorageServiceServer).ChangeUserTags(ctx, req.(*ChangeUserTagsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1618,8 +1618,8 @@ var StorageService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _StorageService_GetConnectedTags_Handler,
 		},
 		{
-			MethodName: "ChangeUserTAgs",
-			Handler:    _StorageService_ChangeUserTAgs_Handler,
+			MethodName: "ChangeUserTags",
+			Handler:    _StorageService_ChangeUserTags_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
