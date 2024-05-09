@@ -365,6 +365,21 @@ message NotInterestedResponse{
 
 }
 
+message ChangeUserTagsRequest{
+  string userId = 1;
+  repeated string tags = 2;
+}
+message ChangeUserTagsResponse{
+
+}
+
+message DeleteLandmarkRequest{
+  string landmarkId = 1;
+}
+message DeleteLandmarkResponse{
+
+}
+
 service StorageService{
   // Landmark
   rpc GetLandmark(GetLandmarkRequest) returns (GetLandmarkResponse) {}
@@ -381,6 +396,7 @@ service StorageService{
   rpc GetRecentFriendsFavourites(GetRecentFriendsFavouritesRequest) returns (GetRecentFriendsFavouritesResponse) {}
   rpc SetLandmarkScore(SetLandmarkScoreRequest) returns (SetLandmarkScoreResponse) {}
   rpc NotInterested(NotInterestedRequest) returns (NotInterestedResponse) {}
+  rpc DeleteLandmark(DeleteCommentRequest) returns (DeleteCommentResponse) {}
 
   // User feed
   rpc RecommendLandmarks(RecommendLandmarksRequest) returns (RecommendLandmarksResponse) {}
@@ -417,5 +433,6 @@ service StorageService{
   rpc DisconnectTags(DisconnectTagsRequest) returns (DisconnectTagsResponse) {}
   rpc DeleteTag(DeleteTagRequest) returns (DeleteTagResponse) {}
   rpc GetConnectedTags(GetConnectedTagsRequest) returns (GetConnectedTagsResponse) {}
+  rpc ChangeUserTags(ChangeUserTagsRequest) returns (ChangeUserTagsResponse) {}
 
 }
