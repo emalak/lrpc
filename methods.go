@@ -454,3 +454,16 @@ func (c *Client) ResetFeed(ctx context.Context, userId string) error {
 	})
 	return err
 }
+
+func (c *Client) DeleteLandmark(ctx context.Context, landmarkId string) error {
+	_, err := c.Storage.Client.DeleteLandmark(ctx, &storage.DeleteLandmarkRequest{LandmarkId: landmarkId})
+	return err
+}
+
+func (c *Client) ChangeUserTags(ctx context.Context, userId string, tags []string) error {
+	_, err := c.Storage.Client.ChangeUserTags(ctx, &storage.ChangeUserTagsRequest{
+		UserId: userId,
+		Tags:   tags,
+	})
+	return err
+}
