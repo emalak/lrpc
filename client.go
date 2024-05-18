@@ -5,7 +5,7 @@ import (
 	feed "github.com/oppositemc/lrpc/rpc/feed"
 	storage "github.com/oppositemc/lrpc/rpc/storage"
 	"google.golang.org/grpc"
-	"time"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 type Settings struct {
@@ -36,8 +36,8 @@ func newFeed(ctx context.Context, s Settings) (*Feed, error) {
 		ctx,
 		s.FeedOpts.Address,
 		grpc.WithBlock(),
-		grpc.WithInsecure(),
-		grpc.WithTimeout(time.Second*5))
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+	)
 	if err != nil {
 		return nil, err
 	}
@@ -63,8 +63,8 @@ func newStorage(ctx context.Context, s Settings) (*Storage, error) {
 		ctx,
 		s.StorageOpts.Address,
 		grpc.WithBlock(),
-		grpc.WithInsecure(),
-		grpc.WithTimeout(time.Second*10))
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+	)
 	if err != nil {
 		return nil, err
 	}
