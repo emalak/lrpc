@@ -13,6 +13,14 @@ message GetFeedResponse {
 }
 
 
+message ResetFeedRequest{
+  string userId = 1;
+}
+message ResetFeedResponse{
+
+}
+
 service LandmarkFeed {
   rpc GetFeed(GetFeedRequest) returns (GetFeedResponse) {}
+  rpc ResetFeed(ResetFeedRequest) returns (ResetFeedResponse) {}
 }

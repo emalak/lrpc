@@ -256,10 +256,11 @@ func (c *Client) DeleteTag(ctx context.Context, id string) error {
 	return err
 }
 
-func (c *Client) AddLandmarkTag(ctx context.Context, landmarkId, tagId string) error {
+func (c *Client) AddLandmarkTag(ctx context.Context, landmarkId, tagId string, score float32) error {
 	_, err := c.Storage.Client.AddLandmarkTag(ctx, &storage.AddLandmarkTagRequest{
 		LandmarkId: landmarkId,
 		TagId:      tagId,
+		Score:      score,
 	})
 	return err
 }
@@ -435,6 +436,34 @@ func (c *Client) SetLandmarkScore(ctx context.Context, landmarkId string, score 
 	_, err := c.Storage.Client.SetLandmarkScore(ctx, &storage.SetLandmarkScoreRequest{
 		LandmarkId: landmarkId,
 		Score:      float32(score),
+	})
+	return err
+}
+
+func (c *Client) NotInterested(ctx context.Context, userId, landmarkId string) error {
+	_, err := c.Storage.Client.NotInterested(ctx, &storage.NotInterestedRequest{
+		UserId:     userId,
+		LandmarkId: landmarkId,
+	})
+	return err
+}
+
+func (c *Client) ResetFeed(ctx context.Context, userId string) error {
+	_, err := c.Feed.Client.ResetFeed(ctx, &feed.ResetFeedRequest{
+		UserId: userId,
+	})
+	return err
+}
+
+func (c *Client) DeleteLandmark(ctx context.Context, landmarkId string) error {
+	_, err := c.Storage.Client.DeleteLandmark(ctx, &storage.DeleteLandmarkRequest{LandmarkId: landmarkId})
+	return err
+}
+
+func (c *Client) ChangeUserTags(ctx context.Context, userId string, tags []string) error {
+	_, err := c.Storage.Client.ChangeUserTags(ctx, &storage.ChangeUserTagsRequest{
+		UserId: userId,
+		Tags:   tags,
 	})
 	return err
 }

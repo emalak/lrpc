@@ -23,6 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LandmarkFeedClient interface {
 	GetFeed(ctx context.Context, in *GetFeedRequest, opts ...grpc.CallOption) (*GetFeedResponse, error)
+	ResetFeed(ctx context.Context, in *ResetFeedRequest, opts ...grpc.CallOption) (*ResetFeedResponse, error)
 }
 
 type landmarkFeedClient struct {
@@ -42,11 +43,21 @@ func (c *landmarkFeedClient) GetFeed(ctx context.Context, in *GetFeedRequest, op
 	return out, nil
 }
 
+func (c *landmarkFeedClient) ResetFeed(ctx context.Context, in *ResetFeedRequest, opts ...grpc.CallOption) (*ResetFeedResponse, error) {
+	out := new(ResetFeedResponse)
+	err := c.cc.Invoke(ctx, "/landmark.feed_server.LandmarkFeed/ResetFeed", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LandmarkFeedServer is the server API for LandmarkFeed service.
 // All implementations must embed UnimplementedLandmarkFeedServer
 // for forward compatibility
 type LandmarkFeedServer interface {
 	GetFeed(context.Context, *GetFeedRequest) (*GetFeedResponse, error)
+	ResetFeed(context.Context, *ResetFeedRequest) (*ResetFeedResponse, error)
 	mustEmbedUnimplementedLandmarkFeedServer()
 }
 
@@ -56,6 +67,9 @@ type UnimplementedLandmarkFeedServer struct {
 
 func (UnimplementedLandmarkFeedServer) GetFeed(context.Context, *GetFeedRequest) (*GetFeedResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFeed not implemented")
+}
+func (UnimplementedLandmarkFeedServer) ResetFeed(context.Context, *ResetFeedRequest) (*ResetFeedResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ResetFeed not implemented")
 }
 func (UnimplementedLandmarkFeedServer) mustEmbedUnimplementedLandmarkFeedServer() {}
 
@@ -88,6 +102,24 @@ func _LandmarkFeed_GetFeed_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LandmarkFeed_ResetFeed_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ResetFeedRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LandmarkFeedServer).ResetFeed(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.feed_server.LandmarkFeed/ResetFeed",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LandmarkFeedServer).ResetFeed(ctx, req.(*ResetFeedRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LandmarkFeed_ServiceDesc is the grpc.ServiceDesc for LandmarkFeed service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -98,6 +130,10 @@ var LandmarkFeed_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetFeed",
 			Handler:    _LandmarkFeed_GetFeed_Handler,
+		},
+		{
+			MethodName: "ResetFeed",
+			Handler:    _LandmarkFeed_ResetFeed_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
