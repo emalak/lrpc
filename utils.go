@@ -13,3 +13,8 @@ func uuidArray(in []string) ([]uuid.UUID, error) {
 	}
 	return array, nil
 }
+
+type Coordinates struct {
+	Longitude float64
+	Latitude  float64
+}
