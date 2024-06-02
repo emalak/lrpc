@@ -135,8 +135,9 @@ message GetProfileCommentsResponse{
 message GetFavouriteLandmarksRequest{
   string userId = 1;
   int32 limit = 2;
-  Coordinates boundary = 3;
-  int32 offset = 4;
+  Coordinates northeast = 3;
+  Coordinates southeast = 4;
+  int32 offset = 5;
 }
 message GetFavouriteLandmarksResponse{
   repeated string ids = 1;
@@ -306,9 +307,10 @@ message GetLandmarksByTagResponse{
 message GetLandmarksFilteredRequest {
   repeated string include = 1;
   repeated string exclude = 2;
-  Coordinates boundary = 3;
-  int32 offset = 4;
-  int32 limit = 5;
+  Coordinates northeast = 3;
+  Coordinates southeast = 4;
+  int32 offset = 5;
+  int32 limit = 6;
 }
 message GetLandmarksFilteredResponse {
   repeated string ids = 1;
