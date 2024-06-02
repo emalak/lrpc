@@ -1,3 +1,2 @@
 protoc --go_out=./rpc/feed/ --go_opt=paths=source_relative --go-grpc_out=./rpc/feed/ --go-grpc_opt=paths=source_relative feed.proto
 protoc --go_out=./rpc/storage/ --go_opt=paths=source_relative --go-grpc_out=./rpc/storage/ --go-grpc_opt=paths=source_relative storage.proto
-protoc --go_out=./rpc/surge/ --go_opt=paths=source_relative --go-grpc_out=./rpc/surge/ --go-grpc_opt=paths=source_relative surge.proto

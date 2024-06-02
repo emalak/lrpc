@@ -2,6 +2,11 @@ syntax = "proto3";
 package landmark.storage;
 option go_package = "./landmark_storage";
 
+message Coordinates {
+  float longitude = 1;
+  float latitude = 2;
+}
+
 message GetLandmarkRequest {
   string landmarkId = 1;
   string userId = 2;
@@ -130,7 +135,8 @@ message GetProfileCommentsResponse{
 message GetFavouriteLandmarksRequest{
   string userId = 1;
   int32 limit = 2;
-  int32 offset = 3;
+  Coordinates boundary = 3;
+  int32 offset = 4;
 }
 message GetFavouriteLandmarksResponse{
   repeated string ids = 1;
@@ -300,8 +306,9 @@ message GetLandmarksByTagResponse{
 message GetLandmarksFilteredRequest {
   repeated string include = 1;
   repeated string exclude = 2;
-  int32 offset = 3;
-  int32 limit = 4;
+  Coordinates boundary = 3;
+  int32 offset = 4;
+  int32 limit = 5;
 }
 message GetLandmarksFilteredResponse {
   repeated string ids = 1;
