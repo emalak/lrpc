@@ -391,6 +391,14 @@ message DeleteLandmarkResponse{
 
 }
 
+message SetLandmarkCoordsRequest{
+  string landmarkId = 1;
+  Coordinates coords = 2;
+}
+message SetLandmarkCoordsResponse{
+
+}
+
 service StorageService{
   // Landmark
   rpc GetLandmark(GetLandmarkRequest) returns (GetLandmarkResponse) {}
@@ -408,6 +416,7 @@ service StorageService{
   rpc SetLandmarkScore(SetLandmarkScoreRequest) returns (SetLandmarkScoreResponse) {}
   rpc NotInterested(NotInterestedRequest) returns (NotInterestedResponse) {}
   rpc DeleteLandmark(DeleteLandmarkRequest) returns (DeleteLandmarkResponse) {}
+  rpc SetLandmarkCoords(SetLandmarkCoordsRequest) returns (SetLandmarkCoordsResponse) {}
 
   // User feed
   rpc RecommendLandmarks(RecommendLandmarksRequest) returns (RecommendLandmarksResponse) {}

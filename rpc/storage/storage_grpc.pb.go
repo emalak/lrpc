@@ -38,6 +38,7 @@ type StorageServiceClient interface {
 	SetLandmarkScore(ctx context.Context, in *SetLandmarkScoreRequest, opts ...grpc.CallOption) (*SetLandmarkScoreResponse, error)
 	NotInterested(ctx context.Context, in *NotInterestedRequest, opts ...grpc.CallOption) (*NotInterestedResponse, error)
 	DeleteLandmark(ctx context.Context, in *DeleteLandmarkRequest, opts ...grpc.CallOption) (*DeleteLandmarkResponse, error)
+	SetLandmarkCoords(ctx context.Context, in *SetLandmarkCoordsRequest, opts ...grpc.CallOption) (*SetLandmarkCoordsResponse, error)
 	// User feed
 	RecommendLandmarks(ctx context.Context, in *RecommendLandmarksRequest, opts ...grpc.CallOption) (*RecommendLandmarksResponse, error)
 	GetRandomFeed(ctx context.Context, in *GetRandomFeedRequest, opts ...grpc.CallOption) (*GetRandomFeedResponse, error)
@@ -209,6 +210,15 @@ func (c *storageServiceClient) NotInterested(ctx context.Context, in *NotInteres
 func (c *storageServiceClient) DeleteLandmark(ctx context.Context, in *DeleteLandmarkRequest, opts ...grpc.CallOption) (*DeleteLandmarkResponse, error) {
 	out := new(DeleteLandmarkResponse)
 	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/DeleteLandmark", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageServiceClient) SetLandmarkCoords(ctx context.Context, in *SetLandmarkCoordsRequest, opts ...grpc.CallOption) (*SetLandmarkCoordsResponse, error) {
+	out := new(SetLandmarkCoordsResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/SetLandmarkCoords", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -487,6 +497,7 @@ type StorageServiceServer interface {
 	SetLandmarkScore(context.Context, *SetLandmarkScoreRequest) (*SetLandmarkScoreResponse, error)
 	NotInterested(context.Context, *NotInterestedRequest) (*NotInterestedResponse, error)
 	DeleteLandmark(context.Context, *DeleteLandmarkRequest) (*DeleteLandmarkResponse, error)
+	SetLandmarkCoords(context.Context, *SetLandmarkCoordsRequest) (*SetLandmarkCoordsResponse, error)
 	// User feed
 	RecommendLandmarks(context.Context, *RecommendLandmarksRequest) (*RecommendLandmarksResponse, error)
 	GetRandomFeed(context.Context, *GetRandomFeedRequest) (*GetRandomFeedResponse, error)
@@ -570,6 +581,9 @@ func (UnimplementedStorageServiceServer) NotInterested(context.Context, *NotInte
 }
 func (UnimplementedStorageServiceServer) DeleteLandmark(context.Context, *DeleteLandmarkRequest) (*DeleteLandmarkResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteLandmark not implemented")
+}
+func (UnimplementedStorageServiceServer) SetLandmarkCoords(context.Context, *SetLandmarkCoordsRequest) (*SetLandmarkCoordsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetLandmarkCoords not implemented")
 }
 func (UnimplementedStorageServiceServer) RecommendLandmarks(context.Context, *RecommendLandmarksRequest) (*RecommendLandmarksResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RecommendLandmarks not implemented")
@@ -934,6 +948,24 @@ func _StorageService_DeleteLandmark_Handler(srv interface{}, ctx context.Context
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(StorageServiceServer).DeleteLandmark(ctx, req.(*DeleteLandmarkRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageService_SetLandmarkCoords_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetLandmarkCoordsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageServiceServer).SetLandmarkCoords(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.storage.StorageService/SetLandmarkCoords",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageServiceServer).SetLandmarkCoords(ctx, req.(*SetLandmarkCoordsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1508,6 +1540,10 @@ var StorageService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteLandmark",
 			Handler:    _StorageService_DeleteLandmark_Handler,
+		},
+		{
+			MethodName: "SetLandmarkCoords",
+			Handler:    _StorageService_SetLandmarkCoords_Handler,
 		},
 		{
 			MethodName: "RecommendLandmarks",

@@ -4805,6 +4805,99 @@ func (*DeleteLandmarkResponse) Descriptor() ([]byte, []int) {
 	return file_storage_proto_rawDescGZIP(), []int{94}
 }
 
+type SetLandmarkCoordsRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	LandmarkId string       `protobuf:"bytes,1,opt,name=landmarkId,proto3" json:"landmarkId,omitempty"`
+	Coords     *Coordinates `protobuf:"bytes,2,opt,name=coords,proto3" json:"coords,omitempty"`
+}
+
+func (x *SetLandmarkCoordsRequest) Reset() {
+	*x = SetLandmarkCoordsRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_storage_proto_msgTypes[95]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SetLandmarkCoordsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetLandmarkCoordsRequest) ProtoMessage() {}
+
+func (x *SetLandmarkCoordsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_storage_proto_msgTypes[95]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetLandmarkCoordsRequest.ProtoReflect.Descriptor instead.
+func (*SetLandmarkCoordsRequest) Descriptor() ([]byte, []int) {
+	return file_storage_proto_rawDescGZIP(), []int{95}
+}
+
+func (x *SetLandmarkCoordsRequest) GetLandmarkId() string {
+	if x != nil {
+		return x.LandmarkId
+	}
+	return ""
+}
+
+func (x *SetLandmarkCoordsRequest) GetCoords() *Coordinates {
+	if x != nil {
+		return x.Coords
+	}
+	return nil
+}
+
+type SetLandmarkCoordsResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *SetLandmarkCoordsResponse) Reset() {
+	*x = SetLandmarkCoordsResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_storage_proto_msgTypes[96]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SetLandmarkCoordsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetLandmarkCoordsResponse) ProtoMessage() {}
+
+func (x *SetLandmarkCoordsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_storage_proto_msgTypes[96]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetLandmarkCoordsResponse.ProtoReflect.Descriptor instead.
+func (*SetLandmarkCoordsResponse) Descriptor() ([]byte, []int) {
+	return file_storage_proto_rawDescGZIP(), []int{96}
+}
+
 var File_storage_proto protoreflect.FileDescriptor
 
 var file_storage_proto_rawDesc = []byte{
@@ -5184,7 +5277,16 @@ var file_storage_proto_rawDesc = []byte{
 	0x74, 0x12, 0x1e, 0x0a, 0x0a, 0x6c, 0x61, 0x6e, 0x64, 0x6d, 0x61, 0x72, 0x6b, 0x49, 0x64, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x6c, 0x61, 0x6e, 0x64, 0x6d, 0x61, 0x72, 0x6b, 0x49,
 	0x64, 0x22, 0x18, 0x0a, 0x16, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x4c, 0x61, 0x6e, 0x64, 0x6d,
-	0x61, 0x72, 0x6b, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x32, 0xfa, 0x21, 0x0a, 0x0e,
+	0x61, 0x72, 0x6b, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x71, 0x0a, 0x18, 0x53,
+	0x65, 0x74, 0x4c, 0x61, 0x6e, 0x64, 0x6d, 0x61, 0x72, 0x6b, 0x43, 0x6f, 0x6f, 0x72, 0x64, 0x73,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1e, 0x0a, 0x0a, 0x6c, 0x61, 0x6e, 0x64, 0x6d,
+	0x61, 0x72, 0x6b, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x6c, 0x61, 0x6e,
+	0x64, 0x6d, 0x61, 0x72, 0x6b, 0x49, 0x64, 0x12, 0x35, 0x0a, 0x06, 0x63, 0x6f, 0x6f, 0x72, 0x64,
+	0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x6c, 0x61, 0x6e, 0x64, 0x6d, 0x61,
+	0x72, 0x6b, 0x2e, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x2e, 0x43, 0x6f, 0x6f, 0x72, 0x64,
+	0x69, 0x6e, 0x61, 0x74, 0x65, 0x73, 0x52, 0x06, 0x63, 0x6f, 0x6f, 0x72, 0x64, 0x73, 0x22, 0x1b,
+	0x0a, 0x19, 0x53, 0x65, 0x74, 0x4c, 0x61, 0x6e, 0x64, 0x6d, 0x61, 0x72, 0x6b, 0x43, 0x6f, 0x6f,
+	0x72, 0x64, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x32, 0xea, 0x22, 0x0a, 0x0e,
 	0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x5c,
 	0x0a, 0x0b, 0x47, 0x65, 0x74, 0x4c, 0x61, 0x6e, 0x64, 0x6d, 0x61, 0x72, 0x6b, 0x12, 0x24, 0x2e,
 	0x6c, 0x61, 0x6e, 0x64, 0x6d, 0x61, 0x72, 0x6b, 0x2e, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65,
@@ -5286,6 +5388,13 @@ var file_storage_proto_rawDesc = []byte{
 	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x28, 0x2e, 0x6c, 0x61, 0x6e, 0x64, 0x6d, 0x61, 0x72, 0x6b,
 	0x2e, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x4c,
 	0x61, 0x6e, 0x64, 0x6d, 0x61, 0x72, 0x6b, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
+	0x00, 0x12, 0x6e, 0x0a, 0x11, 0x53, 0x65, 0x74, 0x4c, 0x61, 0x6e, 0x64, 0x6d, 0x61, 0x72, 0x6b,
+	0x43, 0x6f, 0x6f, 0x72, 0x64, 0x73, 0x12, 0x2a, 0x2e, 0x6c, 0x61, 0x6e, 0x64, 0x6d, 0x61, 0x72,
+	0x6b, 0x2e, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x2e, 0x53, 0x65, 0x74, 0x4c, 0x61, 0x6e,
+	0x64, 0x6d, 0x61, 0x72, 0x6b, 0x43, 0x6f, 0x6f, 0x72, 0x64, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x1a, 0x2b, 0x2e, 0x6c, 0x61, 0x6e, 0x64, 0x6d, 0x61, 0x72, 0x6b, 0x2e, 0x73, 0x74,
+	0x6f, 0x72, 0x61, 0x67, 0x65, 0x2e, 0x53, 0x65, 0x74, 0x4c, 0x61, 0x6e, 0x64, 0x6d, 0x61, 0x72,
+	0x6b, 0x43, 0x6f, 0x6f, 0x72, 0x64, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
 	0x00, 0x12, 0x71, 0x0a, 0x12, 0x52, 0x65, 0x63, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x64, 0x4c, 0x61,
 	0x6e, 0x64, 0x6d, 0x61, 0x72, 0x6b, 0x73, 0x12, 0x2b, 0x2e, 0x6c, 0x61, 0x6e, 0x64, 0x6d, 0x61,
 	0x72, 0x6b, 0x2e, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x2e, 0x52, 0x65, 0x63, 0x6f, 0x6d,
@@ -5473,7 +5582,7 @@ func file_storage_proto_rawDescGZIP() []byte {
 	return file_storage_proto_rawDescData
 }
 
-var file_storage_proto_msgTypes = make([]protoimpl.MessageInfo, 95)
+var file_storage_proto_msgTypes = make([]protoimpl.MessageInfo, 97)
 var file_storage_proto_goTypes = []interface{}{
 	(*Coordinates)(nil),                        // 0: landmark.storage.Coordinates
 	(*GetLandmarkRequest)(nil),                 // 1: landmark.storage.GetLandmarkRequest
@@ -5570,6 +5679,8 @@ var file_storage_proto_goTypes = []interface{}{
 	(*ChangeUserTagsResponse)(nil),             // 92: landmark.storage.ChangeUserTagsResponse
 	(*DeleteLandmarkRequest)(nil),              // 93: landmark.storage.DeleteLandmarkRequest
 	(*DeleteLandmarkResponse)(nil),             // 94: landmark.storage.DeleteLandmarkResponse
+	(*SetLandmarkCoordsRequest)(nil),           // 95: landmark.storage.SetLandmarkCoordsRequest
+	(*SetLandmarkCoordsResponse)(nil),          // 96: landmark.storage.SetLandmarkCoordsResponse
 }
 var file_storage_proto_depIdxs = []int32{
 	25, // 0: landmark.storage.GetCommentsResponse.comments:type_name -> landmark.storage.Comment
@@ -5582,97 +5693,100 @@ var file_storage_proto_depIdxs = []int32{
 	0,  // 7: landmark.storage.GetLandmarksFilteredRequest.southeast:type_name -> landmark.storage.Coordinates
 	79, // 8: landmark.storage.GetRecentFriendsFavouritesResponse.result:type_name -> landmark.storage.FriendLikedLandmark
 	25, // 9: landmark.storage.GetReviewResponse.review:type_name -> landmark.storage.Comment
-	1,  // 10: landmark.storage.StorageService.GetLandmark:input_type -> landmark.storage.GetLandmarkRequest
-	72, // 11: landmark.storage.StorageService.GetLandmarksByTag:input_type -> landmark.storage.GetLandmarksByTagRequest
-	3,  // 12: landmark.storage.StorageService.AddLandmark:input_type -> landmark.storage.AddLandmarkRequest
-	5,  // 13: landmark.storage.StorageService.LikeLandmark:input_type -> landmark.storage.LikeLandmarkRequest
-	7,  // 14: landmark.storage.StorageService.DislikeLandmark:input_type -> landmark.storage.DislikeLandmarkRequest
-	9,  // 15: landmark.storage.StorageService.GetLikes:input_type -> landmark.storage.GetLikesRequest
-	11, // 16: landmark.storage.StorageService.ViewLandmark:input_type -> landmark.storage.ViewLandmarkRequest
-	30, // 17: landmark.storage.StorageService.GetFavouriteLandmarks:input_type -> landmark.storage.GetFavouriteLandmarksRequest
-	32, // 18: landmark.storage.StorageService.GetLikesAmount:input_type -> landmark.storage.GetLikesAmountRequest
-	74, // 19: landmark.storage.StorageService.GetLandmarksFiltered:input_type -> landmark.storage.GetLandmarksFilteredRequest
-	76, // 20: landmark.storage.StorageService.UpdateLandmarkScore:input_type -> landmark.storage.UpdateLandmarkScoreRequest
-	78, // 21: landmark.storage.StorageService.GetRecentFriendsFavourites:input_type -> landmark.storage.GetRecentFriendsFavouritesRequest
-	85, // 22: landmark.storage.StorageService.SetLandmarkScore:input_type -> landmark.storage.SetLandmarkScoreRequest
-	89, // 23: landmark.storage.StorageService.NotInterested:input_type -> landmark.storage.NotInterestedRequest
-	93, // 24: landmark.storage.StorageService.DeleteLandmark:input_type -> landmark.storage.DeleteLandmarkRequest
-	13, // 25: landmark.storage.StorageService.RecommendLandmarks:input_type -> landmark.storage.RecommendLandmarksRequest
-	15, // 26: landmark.storage.StorageService.GetRandomFeed:input_type -> landmark.storage.GetRandomFeedRequest
-	17, // 27: landmark.storage.StorageService.AddUser:input_type -> landmark.storage.AddUserRequest
-	19, // 28: landmark.storage.StorageService.CreateComment:input_type -> landmark.storage.CreateCommentRequest
-	21, // 29: landmark.storage.StorageService.DeleteComment:input_type -> landmark.storage.DeleteCommentRequest
-	23, // 30: landmark.storage.StorageService.EditComment:input_type -> landmark.storage.EditCommentRequest
-	26, // 31: landmark.storage.StorageService.GetComments:input_type -> landmark.storage.GetCommentsRequest
-	28, // 32: landmark.storage.StorageService.GetProfileComments:input_type -> landmark.storage.GetProfileCommentsRequest
-	49, // 33: landmark.storage.StorageService.CountReviews:input_type -> landmark.storage.CountReviewsRequest
-	81, // 34: landmark.storage.StorageService.IsReviewedBy:input_type -> landmark.storage.IsReviewedRequest
-	83, // 35: landmark.storage.StorageService.GetReview:input_type -> landmark.storage.GetReviewRequest
-	39, // 36: landmark.storage.StorageService.AddFriend:input_type -> landmark.storage.AddFriendRequest
-	41, // 37: landmark.storage.StorageService.DeleteFriend:input_type -> landmark.storage.DeleteFriendRequest
-	43, // 38: landmark.storage.StorageService.GetFriends:input_type -> landmark.storage.GetFriendsRequest
-	45, // 39: landmark.storage.StorageService.CountFriends:input_type -> landmark.storage.CountFriendsRequest
-	47, // 40: landmark.storage.StorageService.IsFriend:input_type -> landmark.storage.IsFriendRequest
-	59, // 41: landmark.storage.StorageService.AddLandmarkTag:input_type -> landmark.storage.AddLandmarkTagRequest
-	61, // 42: landmark.storage.StorageService.RemoveLandmarkTag:input_type -> landmark.storage.RemoveLandmarkTagRequest
-	51, // 43: landmark.storage.StorageService.CreateTag:input_type -> landmark.storage.CreateTagRequest
-	68, // 44: landmark.storage.StorageService.SetUserTag:input_type -> landmark.storage.SetUserTagRequest
-	70, // 45: landmark.storage.StorageService.DeleteUserTag:input_type -> landmark.storage.DeleteUserTagRequest
-	34, // 46: landmark.storage.StorageService.GetUserTags:input_type -> landmark.storage.GetUserTagsRequest
-	63, // 47: landmark.storage.StorageService.GetLandmarkTags:input_type -> landmark.storage.GetLandmarkTagsRequest
-	53, // 48: landmark.storage.StorageService.ConnectTags:input_type -> landmark.storage.ConnectTagsRequest
-	55, // 49: landmark.storage.StorageService.DisconnectTags:input_type -> landmark.storage.DisconnectTagsRequest
-	57, // 50: landmark.storage.StorageService.DeleteTag:input_type -> landmark.storage.DeleteTagRequest
-	65, // 51: landmark.storage.StorageService.GetConnectedTags:input_type -> landmark.storage.GetConnectedTagsRequest
-	91, // 52: landmark.storage.StorageService.ChangeUserTags:input_type -> landmark.storage.ChangeUserTagsRequest
-	2,  // 53: landmark.storage.StorageService.GetLandmark:output_type -> landmark.storage.GetLandmarkResponse
-	73, // 54: landmark.storage.StorageService.GetLandmarksByTag:output_type -> landmark.storage.GetLandmarksByTagResponse
-	4,  // 55: landmark.storage.StorageService.AddLandmark:output_type -> landmark.storage.AddLandmarkResponse
-	6,  // 56: landmark.storage.StorageService.LikeLandmark:output_type -> landmark.storage.LikeLandmarkResponse
-	8,  // 57: landmark.storage.StorageService.DislikeLandmark:output_type -> landmark.storage.DislikeLandmarkResponse
-	10, // 58: landmark.storage.StorageService.GetLikes:output_type -> landmark.storage.GetLikesResponse
-	12, // 59: landmark.storage.StorageService.ViewLandmark:output_type -> landmark.storage.ViewLandmarkResponse
-	31, // 60: landmark.storage.StorageService.GetFavouriteLandmarks:output_type -> landmark.storage.GetFavouriteLandmarksResponse
-	33, // 61: landmark.storage.StorageService.GetLikesAmount:output_type -> landmark.storage.GetLikesAmountResponse
-	75, // 62: landmark.storage.StorageService.GetLandmarksFiltered:output_type -> landmark.storage.GetLandmarksFilteredResponse
-	77, // 63: landmark.storage.StorageService.UpdateLandmarkScore:output_type -> landmark.storage.UpdateLandmarkScoreResponse
-	80, // 64: landmark.storage.StorageService.GetRecentFriendsFavourites:output_type -> landmark.storage.GetRecentFriendsFavouritesResponse
-	86, // 65: landmark.storage.StorageService.SetLandmarkScore:output_type -> landmark.storage.SetLandmarkScoreResponse
-	90, // 66: landmark.storage.StorageService.NotInterested:output_type -> landmark.storage.NotInterestedResponse
-	94, // 67: landmark.storage.StorageService.DeleteLandmark:output_type -> landmark.storage.DeleteLandmarkResponse
-	14, // 68: landmark.storage.StorageService.RecommendLandmarks:output_type -> landmark.storage.RecommendLandmarksResponse
-	16, // 69: landmark.storage.StorageService.GetRandomFeed:output_type -> landmark.storage.GetRandomFeedResponse
-	18, // 70: landmark.storage.StorageService.AddUser:output_type -> landmark.storage.AddUserResponse
-	20, // 71: landmark.storage.StorageService.CreateComment:output_type -> landmark.storage.CreateCommentResponse
-	22, // 72: landmark.storage.StorageService.DeleteComment:output_type -> landmark.storage.DeleteCommentResponse
-	24, // 73: landmark.storage.StorageService.EditComment:output_type -> landmark.storage.EditCommentResponse
-	27, // 74: landmark.storage.StorageService.GetComments:output_type -> landmark.storage.GetCommentsResponse
-	29, // 75: landmark.storage.StorageService.GetProfileComments:output_type -> landmark.storage.GetProfileCommentsResponse
-	50, // 76: landmark.storage.StorageService.CountReviews:output_type -> landmark.storage.CountReviewsResponse
-	82, // 77: landmark.storage.StorageService.IsReviewedBy:output_type -> landmark.storage.IsReviewedResponse
-	84, // 78: landmark.storage.StorageService.GetReview:output_type -> landmark.storage.GetReviewResponse
-	40, // 79: landmark.storage.StorageService.AddFriend:output_type -> landmark.storage.AddFriendResponse
-	42, // 80: landmark.storage.StorageService.DeleteFriend:output_type -> landmark.storage.DeleteFriendResponse
-	44, // 81: landmark.storage.StorageService.GetFriends:output_type -> landmark.storage.GetFriendsResponse
-	46, // 82: landmark.storage.StorageService.CountFriends:output_type -> landmark.storage.CountFriendsResponse
-	48, // 83: landmark.storage.StorageService.IsFriend:output_type -> landmark.storage.IsFriendResponse
-	60, // 84: landmark.storage.StorageService.AddLandmarkTag:output_type -> landmark.storage.AddLandmarkTagResponse
-	62, // 85: landmark.storage.StorageService.RemoveLandmarkTag:output_type -> landmark.storage.RemoveLandmarkTagResponse
-	52, // 86: landmark.storage.StorageService.CreateTag:output_type -> landmark.storage.CreateTagResponse
-	69, // 87: landmark.storage.StorageService.SetUserTag:output_type -> landmark.storage.SetUserTagResponse
-	71, // 88: landmark.storage.StorageService.DeleteUserTag:output_type -> landmark.storage.DeleteUserTagResponse
-	35, // 89: landmark.storage.StorageService.GetUserTags:output_type -> landmark.storage.GetUserTagsResponse
-	64, // 90: landmark.storage.StorageService.GetLandmarkTags:output_type -> landmark.storage.GetLandmarkTagsResponse
-	54, // 91: landmark.storage.StorageService.ConnectTags:output_type -> landmark.storage.ConnectTagsResponse
-	56, // 92: landmark.storage.StorageService.DisconnectTags:output_type -> landmark.storage.DisconnectTagsResponse
-	58, // 93: landmark.storage.StorageService.DeleteTag:output_type -> landmark.storage.DeleteTagResponse
-	67, // 94: landmark.storage.StorageService.GetConnectedTags:output_type -> landmark.storage.GetConnectedTagsResponse
-	92, // 95: landmark.storage.StorageService.ChangeUserTags:output_type -> landmark.storage.ChangeUserTagsResponse
-	53, // [53:96] is the sub-list for method output_type
-	10, // [10:53] is the sub-list for method input_type
-	10, // [10:10] is the sub-list for extension type_name
-	10, // [10:10] is the sub-list for extension extendee
-	0,  // [0:10] is the sub-list for field type_name
+	0,  // 10: landmark.storage.SetLandmarkCoordsRequest.coords:type_name -> landmark.storage.Coordinates
+	1,  // 11: landmark.storage.StorageService.GetLandmark:input_type -> landmark.storage.GetLandmarkRequest
+	72, // 12: landmark.storage.StorageService.GetLandmarksByTag:input_type -> landmark.storage.GetLandmarksByTagRequest
+	3,  // 13: landmark.storage.StorageService.AddLandmark:input_type -> landmark.storage.AddLandmarkRequest
+	5,  // 14: landmark.storage.StorageService.LikeLandmark:input_type -> landmark.storage.LikeLandmarkRequest
+	7,  // 15: landmark.storage.StorageService.DislikeLandmark:input_type -> landmark.storage.DislikeLandmarkRequest
+	9,  // 16: landmark.storage.StorageService.GetLikes:input_type -> landmark.storage.GetLikesRequest
+	11, // 17: landmark.storage.StorageService.ViewLandmark:input_type -> landmark.storage.ViewLandmarkRequest
+	30, // 18: landmark.storage.StorageService.GetFavouriteLandmarks:input_type -> landmark.storage.GetFavouriteLandmarksRequest
+	32, // 19: landmark.storage.StorageService.GetLikesAmount:input_type -> landmark.storage.GetLikesAmountRequest
+	74, // 20: landmark.storage.StorageService.GetLandmarksFiltered:input_type -> landmark.storage.GetLandmarksFilteredRequest
+	76, // 21: landmark.storage.StorageService.UpdateLandmarkScore:input_type -> landmark.storage.UpdateLandmarkScoreRequest
+	78, // 22: landmark.storage.StorageService.GetRecentFriendsFavourites:input_type -> landmark.storage.GetRecentFriendsFavouritesRequest
+	85, // 23: landmark.storage.StorageService.SetLandmarkScore:input_type -> landmark.storage.SetLandmarkScoreRequest
+	89, // 24: landmark.storage.StorageService.NotInterested:input_type -> landmark.storage.NotInterestedRequest
+	93, // 25: landmark.storage.StorageService.DeleteLandmark:input_type -> landmark.storage.DeleteLandmarkRequest
+	95, // 26: landmark.storage.StorageService.SetLandmarkCoords:input_type -> landmark.storage.SetLandmarkCoordsRequest
+	13, // 27: landmark.storage.StorageService.RecommendLandmarks:input_type -> landmark.storage.RecommendLandmarksRequest
+	15, // 28: landmark.storage.StorageService.GetRandomFeed:input_type -> landmark.storage.GetRandomFeedRequest
+	17, // 29: landmark.storage.StorageService.AddUser:input_type -> landmark.storage.AddUserRequest
+	19, // 30: landmark.storage.StorageService.CreateComment:input_type -> landmark.storage.CreateCommentRequest
+	21, // 31: landmark.storage.StorageService.DeleteComment:input_type -> landmark.storage.DeleteCommentRequest
+	23, // 32: landmark.storage.StorageService.EditComment:input_type -> landmark.storage.EditCommentRequest
+	26, // 33: landmark.storage.StorageService.GetComments:input_type -> landmark.storage.GetCommentsRequest
+	28, // 34: landmark.storage.StorageService.GetProfileComments:input_type -> landmark.storage.GetProfileCommentsRequest
+	49, // 35: landmark.storage.StorageService.CountReviews:input_type -> landmark.storage.CountReviewsRequest
+	81, // 36: landmark.storage.StorageService.IsReviewedBy:input_type -> landmark.storage.IsReviewedRequest
+	83, // 37: landmark.storage.StorageService.GetReview:input_type -> landmark.storage.GetReviewRequest
+	39, // 38: landmark.storage.StorageService.AddFriend:input_type -> landmark.storage.AddFriendRequest
+	41, // 39: landmark.storage.StorageService.DeleteFriend:input_type -> landmark.storage.DeleteFriendRequest
+	43, // 40: landmark.storage.StorageService.GetFriends:input_type -> landmark.storage.GetFriendsRequest
+	45, // 41: landmark.storage.StorageService.CountFriends:input_type -> landmark.storage.CountFriendsRequest
+	47, // 42: landmark.storage.StorageService.IsFriend:input_type -> landmark.storage.IsFriendRequest
+	59, // 43: landmark.storage.StorageService.AddLandmarkTag:input_type -> landmark.storage.AddLandmarkTagRequest
+	61, // 44: landmark.storage.StorageService.RemoveLandmarkTag:input_type -> landmark.storage.RemoveLandmarkTagRequest
+	51, // 45: landmark.storage.StorageService.CreateTag:input_type -> landmark.storage.CreateTagRequest
+	68, // 46: landmark.storage.StorageService.SetUserTag:input_type -> landmark.storage.SetUserTagRequest
+	70, // 47: landmark.storage.StorageService.DeleteUserTag:input_type -> landmark.storage.DeleteUserTagRequest
+	34, // 48: landmark.storage.StorageService.GetUserTags:input_type -> landmark.storage.GetUserTagsRequest
+	63, // 49: landmark.storage.StorageService.GetLandmarkTags:input_type -> landmark.storage.GetLandmarkTagsRequest
+	53, // 50: landmark.storage.StorageService.ConnectTags:input_type -> landmark.storage.ConnectTagsRequest
+	55, // 51: landmark.storage.StorageService.DisconnectTags:input_type -> landmark.storage.DisconnectTagsRequest
+	57, // 52: landmark.storage.StorageService.DeleteTag:input_type -> landmark.storage.DeleteTagRequest
+	65, // 53: landmark.storage.StorageService.GetConnectedTags:input_type -> landmark.storage.GetConnectedTagsRequest
+	91, // 54: landmark.storage.StorageService.ChangeUserTags:input_type -> landmark.storage.ChangeUserTagsRequest
+	2,  // 55: landmark.storage.StorageService.GetLandmark:output_type -> landmark.storage.GetLandmarkResponse
+	73, // 56: landmark.storage.StorageService.GetLandmarksByTag:output_type -> landmark.storage.GetLandmarksByTagResponse
+	4,  // 57: landmark.storage.StorageService.AddLandmark:output_type -> landmark.storage.AddLandmarkResponse
+	6,  // 58: landmark.storage.StorageService.LikeLandmark:output_type -> landmark.storage.LikeLandmarkResponse
+	8,  // 59: landmark.storage.StorageService.DislikeLandmark:output_type -> landmark.storage.DislikeLandmarkResponse
+	10, // 60: landmark.storage.StorageService.GetLikes:output_type -> landmark.storage.GetLikesResponse
+	12, // 61: landmark.storage.StorageService.ViewLandmark:output_type -> landmark.storage.ViewLandmarkResponse
+	31, // 62: landmark.storage.StorageService.GetFavouriteLandmarks:output_type -> landmark.storage.GetFavouriteLandmarksResponse
+	33, // 63: landmark.storage.StorageService.GetLikesAmount:output_type -> landmark.storage.GetLikesAmountResponse
+	75, // 64: landmark.storage.StorageService.GetLandmarksFiltered:output_type -> landmark.storage.GetLandmarksFilteredResponse
+	77, // 65: landmark.storage.StorageService.UpdateLandmarkScore:output_type -> landmark.storage.UpdateLandmarkScoreResponse
+	80, // 66: landmark.storage.StorageService.GetRecentFriendsFavourites:output_type -> landmark.storage.GetRecentFriendsFavouritesResponse
+	86, // 67: landmark.storage.StorageService.SetLandmarkScore:output_type -> landmark.storage.SetLandmarkScoreResponse
+	90, // 68: landmark.storage.StorageService.NotInterested:output_type -> landmark.storage.NotInterestedResponse
+	94, // 69: landmark.storage.StorageService.DeleteLandmark:output_type -> landmark.storage.DeleteLandmarkResponse
+	96, // 70: landmark.storage.StorageService.SetLandmarkCoords:output_type -> landmark.storage.SetLandmarkCoordsResponse
+	14, // 71: landmark.storage.StorageService.RecommendLandmarks:output_type -> landmark.storage.RecommendLandmarksResponse
+	16, // 72: landmark.storage.StorageService.GetRandomFeed:output_type -> landmark.storage.GetRandomFeedResponse
+	18, // 73: landmark.storage.StorageService.AddUser:output_type -> landmark.storage.AddUserResponse
+	20, // 74: landmark.storage.StorageService.CreateComment:output_type -> landmark.storage.CreateCommentResponse
+	22, // 75: landmark.storage.StorageService.DeleteComment:output_type -> landmark.storage.DeleteCommentResponse
+	24, // 76: landmark.storage.StorageService.EditComment:output_type -> landmark.storage.EditCommentResponse
+	27, // 77: landmark.storage.StorageService.GetComments:output_type -> landmark.storage.GetCommentsResponse
+	29, // 78: landmark.storage.StorageService.GetProfileComments:output_type -> landmark.storage.GetProfileCommentsResponse
+	50, // 79: landmark.storage.StorageService.CountReviews:output_type -> landmark.storage.CountReviewsResponse
+	82, // 80: landmark.storage.StorageService.IsReviewedBy:output_type -> landmark.storage.IsReviewedResponse
+	84, // 81: landmark.storage.StorageService.GetReview:output_type -> landmark.storage.GetReviewResponse
+	40, // 82: landmark.storage.StorageService.AddFriend:output_type -> landmark.storage.AddFriendResponse
+	42, // 83: landmark.storage.StorageService.DeleteFriend:output_type -> landmark.storage.DeleteFriendResponse
+	44, // 84: landmark.storage.StorageService.GetFriends:output_type -> landmark.storage.GetFriendsResponse
+	46, // 85: landmark.storage.StorageService.CountFriends:output_type -> landmark.storage.CountFriendsResponse
+	48, // 86: landmark.storage.StorageService.IsFriend:output_type -> landmark.storage.IsFriendResponse
+	60, // 87: landmark.storage.StorageService.AddLandmarkTag:output_type -> landmark.storage.AddLandmarkTagResponse
+	62, // 88: landmark.storage.StorageService.RemoveLandmarkTag:output_type -> landmark.storage.RemoveLandmarkTagResponse
+	52, // 89: landmark.storage.StorageService.CreateTag:output_type -> landmark.storage.CreateTagResponse
+	69, // 90: landmark.storage.StorageService.SetUserTag:output_type -> landmark.storage.SetUserTagResponse
+	71, // 91: landmark.storage.StorageService.DeleteUserTag:output_type -> landmark.storage.DeleteUserTagResponse
+	35, // 92: landmark.storage.StorageService.GetUserTags:output_type -> landmark.storage.GetUserTagsResponse
+	64, // 93: landmark.storage.StorageService.GetLandmarkTags:output_type -> landmark.storage.GetLandmarkTagsResponse
+	54, // 94: landmark.storage.StorageService.ConnectTags:output_type -> landmark.storage.ConnectTagsResponse
+	56, // 95: landmark.storage.StorageService.DisconnectTags:output_type -> landmark.storage.DisconnectTagsResponse
+	58, // 96: landmark.storage.StorageService.DeleteTag:output_type -> landmark.storage.DeleteTagResponse
+	67, // 97: landmark.storage.StorageService.GetConnectedTags:output_type -> landmark.storage.GetConnectedTagsResponse
+	92, // 98: landmark.storage.StorageService.ChangeUserTags:output_type -> landmark.storage.ChangeUserTagsResponse
+	55, // [55:99] is the sub-list for method output_type
+	11, // [11:55] is the sub-list for method input_type
+	11, // [11:11] is the sub-list for extension type_name
+	11, // [11:11] is the sub-list for extension extendee
+	0,  // [0:11] is the sub-list for field type_name
 }
 
 func init() { file_storage_proto_init() }
@@ -6821,6 +6935,30 @@ func file_storage_proto_init() {
 				return nil
 			}
 		}
+		file_storage_proto_msgTypes[95].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SetLandmarkCoordsRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_storage_proto_msgTypes[96].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SetLandmarkCoordsResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -6828,7 +6966,7 @@ func file_storage_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_storage_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   95,
+			NumMessages:   97,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
