@@ -186,18 +186,18 @@ func (c *Client) GetFeed(ctx context.Context, userId string, amount int) ([]stri
 	return res.LandmarkIds, nil
 }
 
-func (c *Client) GetFavouriteLandmarks(ctx context.Context, userId string, limit, offset int, northeast, southeast Coordinates) ([]uuid.UUID, error) {
+func (c *Client) GetFavouriteLandmarks(ctx context.Context, userId string, limit, offset int, northEast, southWest Coordinates) ([]uuid.UUID, error) {
 	res, err := c.Storage.Client.GetFavouriteLandmarks(ctx, &storage.GetFavouriteLandmarksRequest{
 		UserId: userId,
 		Limit:  int32(limit),
 		Offset: int32(offset),
 		Northeast: &storage.Coordinates{
-			Longitude: float32(northeast.Longitude),
-			Latitude:  float32(northeast.Latitude),
+			Longitude: float32(northEast.Longitude),
+			Latitude:  float32(northEast.Latitude),
 		},
 		Southeast: &storage.Coordinates{
-			Longitude: float32(southeast.Longitude),
-			Latitude:  float32(southeast.Latitude),
+			Longitude: float32(southWest.Longitude),
+			Latitude:  float32(southWest.Latitude),
 		},
 	})
 	if err != nil {
@@ -387,19 +387,19 @@ func (c *Client) GetLandmarksByTag(ctx context.Context, tagId string, limit, off
 	return res.Ids, nil
 }
 
-func (c *Client) GetLandmarksFiltered(ctx context.Context, include, exclude []string, limit, offset int, northeast, southeast Coordinates) ([]string, error) {
+func (c *Client) GetLandmarksFiltered(ctx context.Context, include, exclude []string, limit, offset int, northEast, southWest Coordinates) ([]string, error) {
 	res, err := c.Storage.Client.GetLandmarksFiltered(ctx, &storage.GetLandmarksFilteredRequest{
 		Include: include,
 		Exclude: exclude,
 		Offset:  int32(offset),
 		Limit:   int32(limit),
 		Northeast: &storage.Coordinates{
-			Longitude: float32(northeast.Longitude),
-			Latitude:  float32(northeast.Latitude),
+			Longitude: float32(northEast.Longitude),
+			Latitude:  float32(northEast.Latitude),
 		},
 		Southeast: &storage.Coordinates{
-			Longitude: float32(northeast.Longitude),
-			Latitude:  float32(northeast.Latitude),
+			Longitude: float32(southWest.Longitude),
+			Latitude:  float32(southWest.Latitude),
 		},
 	})
 	if err != nil {
