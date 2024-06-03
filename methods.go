@@ -467,3 +467,14 @@ func (c *Client) ChangeUserTags(ctx context.Context, userId string, tags []strin
 	})
 	return err
 }
+
+func (c *Client) SetLandmarkCoords(ctx context.Context, landmarkId string, coords Coordinates) error {
+	_, err := c.Storage.Client.SetLandmarkCoords(ctx, &storage.SetLandmarkCoordsRequest{
+		LandmarkId: landmarkId,
+		Coords: &storage.Coordinates{
+			Longitude: float32(coords.Longitude),
+			Latitude:  float32(coords.Latitude),
+		},
+	})
+	return err
+}
