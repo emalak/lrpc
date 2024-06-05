@@ -299,6 +299,8 @@ message GetLandmarksByTagRequest{
   string tagId = 1;
   int32 limit = 2;
   int32 offset = 3;
+  Coordinates northeast = 4;
+  Coordinates southeast = 5;
 }
 message GetLandmarksByTagResponse{
   repeated string ids = 1;
