@@ -375,9 +375,17 @@ func (c *Client) IsFriend(ctx context.Context, user1, user2 string) (bool, error
 	return res.IsFriend, err
 }
 
-func (c *Client) GetLandmarksByTag(ctx context.Context, tagId string, limit, offset int) ([]string, error) {
+func (c *Client) GetLandmarksByTag(ctx context.Context, northEast, southWest Coordinates, tagId string, limit, offset int) ([]string, error) {
 	res, err := c.Storage.Client.GetLandmarksByTag(ctx, &storage.GetLandmarksByTagRequest{
-		TagId:  tagId,
+		TagId: tagId,
+		Northeast: &storage.Coordinates{
+			Longitude: float32(northEast.Longitude),
+			Latitude:  float32(northEast.Latitude),
+		},
+		Southeast: &storage.Coordinates{
+			Longitude: float32(southWest.Longitude),
+			Latitude:  float32(southWest.Latitude),
+		},
 		Limit:  int32(limit),
 		Offset: int32(offset),
 	})
