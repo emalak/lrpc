@@ -177,10 +177,12 @@ func (c *Client) GetProfileComments(ctx context.Context, userId string, limit, o
 	return comments, nil
 }
 
-func (c *Client) GetFeed(ctx context.Context, userId string, amount int) ([]string, error) {
+func (c *Client) GetFeed(ctx context.Context, userId string, latitude, longitude float64, amount int) ([]string, error) {
 	res, err := c.Feed.Client.GetFeed(ctx, &feed.GetFeedRequest{
-		UserId: userId,
-		Amount: int32(amount),
+		UserId:    userId,
+		Amount:    int32(amount),
+		Latitude:  float32(latitude),
+		Longitude: float32(longitude),
 	})
 	if err != nil {
 		return nil, err
@@ -478,9 +480,11 @@ func (c *Client) NotInterested(ctx context.Context, userId, landmarkId string) e
 	return err
 }
 
-func (c *Client) ResetFeed(ctx context.Context, userId string) error {
+func (c *Client) ResetFeed(ctx context.Context, userId string, latitude, longitude float64) error {
 	_, err := c.Feed.Client.ResetFeed(ctx, &feed.ResetFeedRequest{
-		UserId: userId,
+		UserId:    userId,
+		Latitude:  float32(latitude),
+		Longitude: float32(longitude),
 	})
 	return err
 }
