@@ -57,6 +57,8 @@ message ViewLandmarkResponse{
 message RecommendLandmarksRequest{
   string userId = 1;
   int64 amount = 2;
+  float latitude = 3;
+  float longitude = 4;
 }
 message RecommendLandmarksResponse{
   repeated string ids = 1;

@@ -82,10 +82,12 @@ func (c *Client) ViewLandmark(ctx context.Context, userId, landmarkId string) er
 	return err
 }
 
-func (c *Client) RecommendLandmarks(ctx context.Context, userId string, amount int) ([]string, error) {
+func (c *Client) RecommendLandmarks(ctx context.Context, userId string, latitude, longitude float64, amount int) ([]string, error) {
 	res, err := c.Storage.Client.RecommendLandmarks(ctx, &storage.RecommendLandmarksRequest{
-		UserId: userId,
-		Amount: int64(amount),
+		UserId:    userId,
+		Amount:    int64(amount),
+		Latitude:  float32(latitude),
+		Longitude: float32(longitude),
 	})
 	if err != nil {
 		return nil, err
