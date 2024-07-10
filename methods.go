@@ -513,10 +513,12 @@ func (c *Client) SetLandmarkCoords(ctx context.Context, landmarkId string, coord
 	return err
 }
 
-func (c *Client) TestGetFeed(ctx context.Context, userId string, amount int) ([]string, error) {
+func (c *Client) TestGetFeed(ctx context.Context, userId string, latitude, longitude float32, amount int) ([]string, error) {
 	res, err := c.Storage.Client.TestGetRecommended(ctx, &storage.TestGetFeedRequest{
-		UserId: userId,
-		Amount: int32(amount),
+		UserId:    userId,
+		Amount:    int32(amount),
+		Latitude:  latitude,
+		Longitude: longitude,
 	})
 	if err != nil {
 		return nil, err

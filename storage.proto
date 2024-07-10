@@ -406,6 +406,8 @@ message SetLandmarkCoordsResponse{
 message TestGetFeedRequest{
   string userId = 1;
   int32 amount = 2;
+  float latitude = 3;
+  float longitude = 4;
 }
 message TestGetFeedResponse{
   repeated string feed = 1;
