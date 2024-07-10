@@ -403,6 +403,14 @@ message SetLandmarkCoordsResponse{
 
 }
 
+message TestGetFeedRequest{
+  string userId = 1;
+  int32 amount = 2;
+}
+message TestGetFeedResponse{
+  repeated string feed = 1;
+}
+
 service StorageService{
   // Landmark
   rpc GetLandmark(GetLandmarkRequest) returns (GetLandmarkResponse) {}
@@ -459,4 +467,6 @@ service StorageService{
   rpc GetConnectedTags(GetConnectedTagsRequest) returns (GetConnectedTagsResponse) {}
   rpc ChangeUserTags(ChangeUserTagsRequest) returns (ChangeUserTagsResponse) {}
 
+  // Dev queries
+  rpc TestGetRecommended(TestGetFeedRequest) returns (TestGetFeedResponse) {}
 }
