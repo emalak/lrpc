@@ -413,6 +413,15 @@ message TestGetFeedResponse{
   repeated string feed = 1;
 }
 
+message SetNodeNameRequest{
+  string id = 1;
+  string name = 2;
+}
+message SetNodeNameResponse{
+
+}
+
+
 service StorageService{
   // Landmark
   rpc GetLandmark(GetLandmarkRequest) returns (GetLandmarkResponse) {}
@@ -471,4 +480,5 @@ service StorageService{
 
   // Dev queries
   rpc TestGetRecommended(TestGetFeedRequest) returns (TestGetFeedResponse) {}
+  rpc SetNodeName(SetNodeNameRequest) returns (SetNodeNameResponse) {}
 }

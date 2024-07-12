@@ -525,3 +525,11 @@ func (c *Client) TestGetFeed(ctx context.Context, userId string, latitude, longi
 	}
 	return res.Feed, nil
 }
+
+func (c *Client) SetNodeName(ctx context.Context, id string, name string) error {
+	_, err := c.Storage.Client.SetNodeName(ctx, &storage.SetNodeNameRequest{
+		Id:   id,
+		Name: name,
+	})
+	return err
+}
