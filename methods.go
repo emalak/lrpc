@@ -533,3 +533,11 @@ func (c *Client) SetNodeName(ctx context.Context, id string, name string) error 
 	})
 	return err
 }
+
+func (c *Client) GetSimilarPlaces(ctx context.Context, ids []string) ([]string, error) {
+	res, err := c.Storage.Client.GetSimilarPlaces(ctx, &storage.GetSimilarPlacesRequest{Ids: ids})
+	if err != nil {
+		return nil, err
+	}
+	return res.Ids, nil
+}

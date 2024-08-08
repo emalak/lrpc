@@ -421,6 +421,12 @@ message SetNodeNameResponse{
 
 }
 
+message GetSimilarPlacesRequest{
+  repeated string ids = 1;
+}
+message GetSimilarPlacesResponse{
+  repeated string ids = 1;
+}
 
 service StorageService{
   // Landmark
@@ -444,6 +450,7 @@ service StorageService{
   // User feed
   rpc RecommendLandmarks(RecommendLandmarksRequest) returns (RecommendLandmarksResponse) {}
   rpc GetRandomFeed(GetRandomFeedRequest) returns (GetRandomFeedResponse) {}
+  rpc GetSimilarPlaces(GetSimilarPlacesRequest) returns (GetSimilarPlacesResponse) {}
 
   rpc AddUser(AddUserRequest) returns (AddUserResponse) {}
 
