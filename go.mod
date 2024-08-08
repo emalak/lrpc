@@ -1,4 +1,4 @@
-module github.com/oppositemc/lrpc
+module github.com/emalak/lrpc
 
 go 1.21.5
 
