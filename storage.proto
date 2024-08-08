@@ -436,6 +436,9 @@ message TagIdScore{
   string tagId = 1;
   float score = 2;
 }
+message GetLandmarkTagsWithScoreResponse{
+  repeated TagIdScore tags = 1;
+}
 
 service StorageService{
   // Landmark
@@ -497,5 +500,5 @@ service StorageService{
   // Dev queries
   rpc TestGetRecommended(TestGetFeedRequest) returns (TestGetFeedResponse) {}
   rpc SetNodeName(SetNodeNameRequest) returns (SetNodeNameResponse) {}
-  rpc GetLandmarkTagsWithScore(GetLandmarkTagsWithScoreRequest) returns (TagIdScore){}
+  rpc GetLandmarkTagsWithScore(GetLandmarkTagsWithScoreRequest) returns (GetLandmarkTagsWithScoreResponse){}
 }

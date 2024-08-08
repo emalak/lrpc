@@ -75,7 +75,7 @@ type StorageServiceClient interface {
 	// Dev queries
 	TestGetRecommended(ctx context.Context, in *TestGetFeedRequest, opts ...grpc.CallOption) (*TestGetFeedResponse, error)
 	SetNodeName(ctx context.Context, in *SetNodeNameRequest, opts ...grpc.CallOption) (*SetNodeNameResponse, error)
-	GetLandmarkTagsWithScore(ctx context.Context, in *GetLandmarkTagsWithScoreRequest, opts ...grpc.CallOption) (*TagIdScore, error)
+	GetLandmarkTagsWithScore(ctx context.Context, in *GetLandmarkTagsWithScoreRequest, opts ...grpc.CallOption) (*GetLandmarkTagsWithScoreResponse, error)
 }
 
 type storageServiceClient struct {
@@ -509,8 +509,8 @@ func (c *storageServiceClient) SetNodeName(ctx context.Context, in *SetNodeNameR
 	return out, nil
 }
 
-func (c *storageServiceClient) GetLandmarkTagsWithScore(ctx context.Context, in *GetLandmarkTagsWithScoreRequest, opts ...grpc.CallOption) (*TagIdScore, error) {
-	out := new(TagIdScore)
+func (c *storageServiceClient) GetLandmarkTagsWithScore(ctx context.Context, in *GetLandmarkTagsWithScoreRequest, opts ...grpc.CallOption) (*GetLandmarkTagsWithScoreResponse, error) {
+	out := new(GetLandmarkTagsWithScoreResponse)
 	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/GetLandmarkTagsWithScore", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -575,7 +575,7 @@ type StorageServiceServer interface {
 	// Dev queries
 	TestGetRecommended(context.Context, *TestGetFeedRequest) (*TestGetFeedResponse, error)
 	SetNodeName(context.Context, *SetNodeNameRequest) (*SetNodeNameResponse, error)
-	GetLandmarkTagsWithScore(context.Context, *GetLandmarkTagsWithScoreRequest) (*TagIdScore, error)
+	GetLandmarkTagsWithScore(context.Context, *GetLandmarkTagsWithScoreRequest) (*GetLandmarkTagsWithScoreResponse, error)
 	mustEmbedUnimplementedStorageServiceServer()
 }
 
@@ -724,7 +724,7 @@ func (UnimplementedStorageServiceServer) TestGetRecommended(context.Context, *Te
 func (UnimplementedStorageServiceServer) SetNodeName(context.Context, *SetNodeNameRequest) (*SetNodeNameResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetNodeName not implemented")
 }
-func (UnimplementedStorageServiceServer) GetLandmarkTagsWithScore(context.Context, *GetLandmarkTagsWithScoreRequest) (*TagIdScore, error) {
+func (UnimplementedStorageServiceServer) GetLandmarkTagsWithScore(context.Context, *GetLandmarkTagsWithScoreRequest) (*GetLandmarkTagsWithScoreResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLandmarkTagsWithScore not implemented")
 }
 func (UnimplementedStorageServiceServer) mustEmbedUnimplementedStorageServiceServer() {}

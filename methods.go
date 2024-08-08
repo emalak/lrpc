@@ -545,13 +545,18 @@ func (c *Client) GetSimilarPlaces(ctx context.Context, id string, count int) ([]
 	return res.Ids, nil
 }
 
-func (c *Client) GetLandmarkTagsWithScore(ctx context.Context, id string) (TagWithScore, error) {
+func (c *Client) GetLandmarkTagsWithScore(ctx context.Context, id string) ([]TagWithScore, error) {
 	res, err := c.Storage.Client.GetLandmarkTagsWithScore(ctx, &storage.GetLandmarkTagsWithScoreRequest{Id: id})
 	if err != nil {
-		return TagWithScore{}, err
+		return nil, err
 	}
-	return TagWithScore{
-		Id:    res.TagId,
-		Score: float64(res.Score),
-	}, nil
+	tags := make([]TagWithScore, len(res.Tag))
+	for i, v := range res.Tag {
+		tag := TagWithScore{
+			Id:    v.TagId,
+			Score: float64(v.Score),
+		}
+		tags[i] = tag
+	}
+	return tags, nil
 }
