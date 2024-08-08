@@ -534,10 +534,9 @@ func (c *Client) SetNodeName(ctx context.Context, id string, name string) error 
 	return err
 }
 
-func (c *Client) GetSimilarPlaces(ctx context.Context, id string, count int) ([]string, error) {
+func (c *Client) GetSimilarPlaces(ctx context.Context, ids []string) ([]string, error) {
 	res, err := c.Storage.Client.GetSimilarPlaces(ctx, &storage.GetSimilarPlacesRequest{
-		Id:    id,
-		Count: int32(count),
+		Ids: ids,
 	})
 	if err != nil {
 		return nil, err
@@ -550,8 +549,8 @@ func (c *Client) GetLandmarkTagsWithScore(ctx context.Context, id string) ([]Tag
 	if err != nil {
 		return nil, err
 	}
-	tags := make([]TagWithScore, len(res.Tag))
-	for i, v := range res.Tag {
+	tags := make([]TagWithScore, len(res.Tags))
+	for i, v := range res.Tags {
 		tag := TagWithScore{
 			Id:    v.TagId,
 			Score: float64(v.Score),

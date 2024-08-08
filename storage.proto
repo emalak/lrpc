@@ -422,8 +422,7 @@ message SetNodeNameResponse{
 }
 
 message GetSimilarPlacesRequest{
-  string id = 1;
-  int32 count = 2;
+  repeated string ids = 1;
 }
 message GetSimilarPlacesResponse{
   repeated string ids = 1;
