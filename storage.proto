@@ -422,10 +422,10 @@ message SetNodeNameResponse{
 }
 
 message GetSimilarPlacesRequest{
-  repeated string ids = 1;
+  string id = 1;
 }
 message GetSimilarPlacesResponse{
-  repeated string ids = 1;
+  string id = 1;
 }
 
 service StorageService{
