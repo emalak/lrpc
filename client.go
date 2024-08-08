@@ -2,8 +2,8 @@ package lrpc
 
 import (
 	"context"
-	feed "github.com/oppositemc/lrpc/rpc/feed"
-	storage "github.com/oppositemc/lrpc/rpc/storage"
+	feed "github.com/emalak/lrpc/rpc/feed"
+	storage "github.com/emalak/lrpc/rpc/storage"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
