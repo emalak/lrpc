@@ -57,6 +57,8 @@ message ViewLandmarkResponse{
 message RecommendLandmarksRequest{
   string userId = 1;
   int64 amount = 2;
+  float latitude = 3;
+  float longitude = 4;
 }
 message RecommendLandmarksResponse{
   repeated string ids = 1;
@@ -299,6 +301,8 @@ message GetLandmarksByTagRequest{
   string tagId = 1;
   int32 limit = 2;
   int32 offset = 3;
+  Coordinates northeast = 4;
+  Coordinates southeast = 5;
 }
 message GetLandmarksByTagResponse{
   repeated string ids = 1;
@@ -399,6 +403,31 @@ message SetLandmarkCoordsResponse{
 
 }
 
+message TestGetFeedRequest{
+  string userId = 1;
+  int32 amount = 2;
+  float latitude = 3;
+  float longitude = 4;
+}
+message TestGetFeedResponse{
+  repeated string feed = 1;
+}
+
+message SetNodeNameRequest{
+  string id = 1;
+  string name = 2;
+}
+message SetNodeNameResponse{
+
+}
+
+message GetSimilarPlacesRequest{
+  repeated string ids = 1;
+}
+message GetSimilarPlacesResponse{
+  repeated string ids = 1;
+}
+
 service StorageService{
   // Landmark
   rpc GetLandmark(GetLandmarkRequest) returns (GetLandmarkResponse) {}
@@ -421,6 +450,7 @@ service StorageService{
   // User feed
   rpc RecommendLandmarks(RecommendLandmarksRequest) returns (RecommendLandmarksResponse) {}
   rpc GetRandomFeed(GetRandomFeedRequest) returns (GetRandomFeedResponse) {}
+  rpc GetSimilarPlaces(GetSimilarPlacesRequest) returns (GetSimilarPlacesResponse) {}
 
   rpc AddUser(AddUserRequest) returns (AddUserResponse) {}
 
@@ -455,4 +485,7 @@ service StorageService{
   rpc GetConnectedTags(GetConnectedTagsRequest) returns (GetConnectedTagsResponse) {}
   rpc ChangeUserTags(ChangeUserTagsRequest) returns (ChangeUserTagsResponse) {}
 
+  // Dev queries
+  rpc TestGetRecommended(TestGetFeedRequest) returns (TestGetFeedResponse) {}
+  rpc SetNodeName(SetNodeNameRequest) returns (SetNodeNameResponse) {}
 }

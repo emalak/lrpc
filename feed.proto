@@ -5,6 +5,8 @@ option go_package = "./landmark_feed";
 message GetFeedRequest {
   string userId = 1;
   int32 amount = 2;
+  float latitude = 3;
+  float longitude = 4;
 }
 
 message GetFeedResponse {
@@ -15,6 +17,8 @@ message GetFeedResponse {
 
 message ResetFeedRequest{
   string userId = 1;
+  float latitude = 2;
+  float longitude = 3;
 }
 message ResetFeedResponse{
 

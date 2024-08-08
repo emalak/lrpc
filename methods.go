@@ -82,10 +82,12 @@ func (c *Client) ViewLandmark(ctx context.Context, userId, landmarkId string) er
 	return err
 }
 
-func (c *Client) RecommendLandmarks(ctx context.Context, userId string, amount int) ([]string, error) {
+func (c *Client) RecommendLandmarks(ctx context.Context, userId string, latitude, longitude float64, amount int) ([]string, error) {
 	res, err := c.Storage.Client.RecommendLandmarks(ctx, &storage.RecommendLandmarksRequest{
-		UserId: userId,
-		Amount: int64(amount),
+		UserId:    userId,
+		Amount:    int64(amount),
+		Latitude:  float32(latitude),
+		Longitude: float32(longitude),
 	})
 	if err != nil {
 		return nil, err
@@ -175,10 +177,12 @@ func (c *Client) GetProfileComments(ctx context.Context, userId string, limit, o
 	return comments, nil
 }
 
-func (c *Client) GetFeed(ctx context.Context, userId string, amount int) ([]string, error) {
+func (c *Client) GetFeed(ctx context.Context, userId string, latitude, longitude float64, amount int) ([]string, error) {
 	res, err := c.Feed.Client.GetFeed(ctx, &feed.GetFeedRequest{
-		UserId: userId,
-		Amount: int32(amount),
+		UserId:    userId,
+		Amount:    int32(amount),
+		Latitude:  float32(latitude),
+		Longitude: float32(longitude),
 	})
 	if err != nil {
 		return nil, err
@@ -375,9 +379,17 @@ func (c *Client) IsFriend(ctx context.Context, user1, user2 string) (bool, error
 	return res.IsFriend, err
 }
 
-func (c *Client) GetLandmarksByTag(ctx context.Context, tagId string, limit, offset int) ([]string, error) {
+func (c *Client) GetLandmarksByTag(ctx context.Context, northEast, southWest Coordinates, tagId string, limit, offset int) ([]string, error) {
 	res, err := c.Storage.Client.GetLandmarksByTag(ctx, &storage.GetLandmarksByTagRequest{
-		TagId:  tagId,
+		TagId: tagId,
+		Northeast: &storage.Coordinates{
+			Longitude: float32(northEast.Longitude),
+			Latitude:  float32(northEast.Latitude),
+		},
+		Southeast: &storage.Coordinates{
+			Longitude: float32(southWest.Longitude),
+			Latitude:  float32(southWest.Latitude),
+		},
 		Limit:  int32(limit),
 		Offset: int32(offset),
 	})
@@ -468,9 +480,11 @@ func (c *Client) NotInterested(ctx context.Context, userId, landmarkId string) e
 	return err
 }
 
-func (c *Client) ResetFeed(ctx context.Context, userId string) error {
+func (c *Client) ResetFeed(ctx context.Context, userId string, latitude, longitude float64) error {
 	_, err := c.Feed.Client.ResetFeed(ctx, &feed.ResetFeedRequest{
-		UserId: userId,
+		UserId:    userId,
+		Latitude:  float32(latitude),
+		Longitude: float32(longitude),
 	})
 	return err
 }
@@ -497,4 +511,33 @@ func (c *Client) SetLandmarkCoords(ctx context.Context, landmarkId string, coord
 		},
 	})
 	return err
+}
+
+func (c *Client) TestGetFeed(ctx context.Context, userId string, latitude, longitude float32, amount int) ([]string, error) {
+	res, err := c.Storage.Client.TestGetRecommended(ctx, &storage.TestGetFeedRequest{
+		UserId:    userId,
+		Amount:    int32(amount),
+		Latitude:  latitude,
+		Longitude: longitude,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return res.Feed, nil
+}
+
+func (c *Client) SetNodeName(ctx context.Context, id string, name string) error {
+	_, err := c.Storage.Client.SetNodeName(ctx, &storage.SetNodeNameRequest{
+		Id:   id,
+		Name: name,
+	})
+	return err
+}
+
+func (c *Client) GetSimilarPlaces(ctx context.Context, ids []string) ([]string, error) {
+	res, err := c.Storage.Client.GetSimilarPlaces(ctx, &storage.GetSimilarPlacesRequest{Ids: ids})
+	if err != nil {
+		return nil, err
+	}
+	return res.Ids, nil
 }
