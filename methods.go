@@ -2,9 +2,9 @@ package lrpc
 
 import (
 	"context"
+	feed "github.com/emalak/lrpc/rpc/feed"
+	storage "github.com/emalak/lrpc/rpc/storage"
 	"github.com/google/uuid"
-	feed "github.com/oppositemc/lrpc/rpc/feed"
-	storage "github.com/oppositemc/lrpc/rpc/storage"
 )
 
 type gateway interface {
