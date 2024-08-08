@@ -75,6 +75,7 @@ type StorageServiceClient interface {
 	// Dev queries
 	TestGetRecommended(ctx context.Context, in *TestGetFeedRequest, opts ...grpc.CallOption) (*TestGetFeedResponse, error)
 	SetNodeName(ctx context.Context, in *SetNodeNameRequest, opts ...grpc.CallOption) (*SetNodeNameResponse, error)
+	GetLandmarkTagsWithScore(ctx context.Context, in *GetLandmarkTagsWithScoreRequest, opts ...grpc.CallOption) (*TagIdScore, error)
 }
 
 type storageServiceClient struct {
@@ -508,6 +509,15 @@ func (c *storageServiceClient) SetNodeName(ctx context.Context, in *SetNodeNameR
 	return out, nil
 }
 
+func (c *storageServiceClient) GetLandmarkTagsWithScore(ctx context.Context, in *GetLandmarkTagsWithScoreRequest, opts ...grpc.CallOption) (*TagIdScore, error) {
+	out := new(TagIdScore)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/GetLandmarkTagsWithScore", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // StorageServiceServer is the server API for StorageService service.
 // All implementations must embed UnimplementedStorageServiceServer
 // for forward compatibility
@@ -565,6 +575,7 @@ type StorageServiceServer interface {
 	// Dev queries
 	TestGetRecommended(context.Context, *TestGetFeedRequest) (*TestGetFeedResponse, error)
 	SetNodeName(context.Context, *SetNodeNameRequest) (*SetNodeNameResponse, error)
+	GetLandmarkTagsWithScore(context.Context, *GetLandmarkTagsWithScoreRequest) (*TagIdScore, error)
 	mustEmbedUnimplementedStorageServiceServer()
 }
 
@@ -712,6 +723,9 @@ func (UnimplementedStorageServiceServer) TestGetRecommended(context.Context, *Te
 }
 func (UnimplementedStorageServiceServer) SetNodeName(context.Context, *SetNodeNameRequest) (*SetNodeNameResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetNodeName not implemented")
+}
+func (UnimplementedStorageServiceServer) GetLandmarkTagsWithScore(context.Context, *GetLandmarkTagsWithScoreRequest) (*TagIdScore, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLandmarkTagsWithScore not implemented")
 }
 func (UnimplementedStorageServiceServer) mustEmbedUnimplementedStorageServiceServer() {}
 
@@ -1572,6 +1586,24 @@ func _StorageService_SetNodeName_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _StorageService_GetLandmarkTagsWithScore_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetLandmarkTagsWithScoreRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageServiceServer).GetLandmarkTagsWithScore(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.storage.StorageService/GetLandmarkTagsWithScore",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageServiceServer).GetLandmarkTagsWithScore(ctx, req.(*GetLandmarkTagsWithScoreRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // StorageService_ServiceDesc is the grpc.ServiceDesc for StorageService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1766,6 +1798,10 @@ var StorageService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetNodeName",
 			Handler:    _StorageService_SetNodeName_Handler,
+		},
+		{
+			MethodName: "GetLandmarkTagsWithScore",
+			Handler:    _StorageService_GetLandmarkTagsWithScore_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

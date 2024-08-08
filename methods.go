@@ -534,10 +534,24 @@ func (c *Client) SetNodeName(ctx context.Context, id string, name string) error 
 	return err
 }
 
-func (c *Client) GetSimilarPlaces(ctx context.Context, ids []string) ([]string, error) {
-	res, err := c.Storage.Client.GetSimilarPlaces(ctx, &storage.GetSimilarPlacesRequest{Ids: ids})
+func (c *Client) GetSimilarPlaces(ctx context.Context, id string, count int) ([]string, error) {
+	res, err := c.Storage.Client.GetSimilarPlaces(ctx, &storage.GetSimilarPlacesRequest{
+		Id:    id,
+		Count: int32(count),
+	})
 	if err != nil {
 		return nil, err
 	}
 	return res.Ids, nil
+}
+
+func (c *Client) GetLandmarkTagsWithScore(ctx context.Context, id string) (TagWithScore, error) {
+	res, err := c.Storage.Client.GetLandmarkTagsWithScore(ctx, &storage.GetLandmarkTagsWithScoreRequest{Id: id})
+	if err != nil {
+		return TagWithScore{}, err
+	}
+	return TagWithScore{
+		Id:    res.TagId,
+		Score: float64(res.Score),
+	}, nil
 }

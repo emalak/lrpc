@@ -423,9 +423,18 @@ message SetNodeNameResponse{
 
 message GetSimilarPlacesRequest{
   string id = 1;
+  int32 count = 2;
 }
 message GetSimilarPlacesResponse{
+  repeated string ids = 1;
+}
+
+message GetLandmarkTagsWithScoreRequest{
   string id = 1;
+}
+message TagIdScore{
+  string tagId = 1;
+  float score = 2;
 }
 
 service StorageService{
@@ -488,4 +497,5 @@ service StorageService{
   // Dev queries
   rpc TestGetRecommended(TestGetFeedRequest) returns (TestGetFeedResponse) {}
   rpc SetNodeName(SetNodeNameRequest) returns (SetNodeNameResponse) {}
+  rpc GetLandmarkTagsWithScore(GetLandmarkTagsWithScoreRequest) returns (TagIdScore){}
 }
