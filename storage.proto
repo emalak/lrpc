@@ -423,6 +423,8 @@ message SetNodeNameResponse{
 
 message GetSimilarPlacesRequest{
   repeated string ids = 1;
+  int32 offset = 2;
+  int32 limit = 3;
 }
 message GetSimilarPlacesResponse{
   repeated string ids = 1;
