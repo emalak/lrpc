@@ -562,7 +562,7 @@ func (c *Client) GetLandmarkTagsWithScore(ctx context.Context, id string) ([]Tag
 	return tags, nil
 }
 
-func (c *Client) GetActivity(ctx context.Context, activity string, northEast, southWest Coordinates, limit, offset int) (*LandmarkItem, error) {
+func (c *Client) GetActivity(ctx context.Context, activity string, northEast, southWest Coordinates, limit, offset int) ([]*LandmarkItem, error) {
 	res, err := c.Storage.Client.GetActivity(ctx, &storage.GetActivityRequest{
 		Activity: activity,
 		Northeast: &storage.Coordinates{
@@ -579,11 +579,18 @@ func (c *Client) GetActivity(ctx context.Context, activity string, northEast, so
 	if err != nil {
 		return nil, err
 	}
-	return &LandmarkItem{
-		Id:        res.Id,
-		Score:     float64(res.Score),
-		Latitude:  float64(res.Latitude),
-		Longitude: float64(res.Longitude),
-		Tags:      res.Tags,
-	}, nil
+	if len(res.Items) == 0 {
+		return nil, nil
+	}
+	items := make([]*LandmarkItem, len(res.Items))
+	for i, v := range res.Items {
+		items[i] = &LandmarkItem{
+			Id:        v.Id,
+			Score:     float64(v.Score),
+			Latitude:  float64(v.Latitude),
+			Longitude: float64(v.Longitude),
+			Tags:      v.Tags,
+		}
+	}
+	return items, nil
 }

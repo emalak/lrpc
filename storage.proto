@@ -448,12 +448,15 @@ message GetActivityRequest{
   int32 limit = 4;
   int32 offset = 5;
 }
-message GetActivityResponse{
+message LandmarkItem {
   string id = 1;
   float score = 2;
   float latitude = 3;
   float longitude = 4;
   repeated string tags = 5;
+}
+message GetActivityResponse{
+  repeated LandmarkItem items = 1;
 }
 
 service StorageService{
