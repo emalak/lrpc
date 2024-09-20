@@ -441,6 +441,21 @@ message GetLandmarkTagsWithScoreResponse{
   repeated TagIdScore tags = 1;
 }
 
+message GetActivityRequest{
+  string activity = 1;
+  Coordinates northeast = 2;
+  Coordinates southeast = 3;
+  int32 limit = 4;
+  int32 offset = 5;
+}
+message GetActivityResponse{
+  string id = 1;
+  float score = 2;
+  float latitude = 3;
+  float longitude = 4;
+  repeated string tags = 5;
+}
+
 service StorageService{
   // Landmark
   rpc GetLandmark(GetLandmarkRequest) returns (GetLandmarkResponse) {}
@@ -459,6 +474,7 @@ service StorageService{
   rpc NotInterested(NotInterestedRequest) returns (NotInterestedResponse) {}
   rpc DeleteLandmark(DeleteLandmarkRequest) returns (DeleteLandmarkResponse) {}
   rpc SetLandmarkCoords(SetLandmarkCoordsRequest) returns (SetLandmarkCoordsResponse) {}
+  rpc GetActivity(GetActivityRequest) returns (GetActivityResponse) {}
 
   // User feed
   rpc RecommendLandmarks(RecommendLandmarksRequest) returns (RecommendLandmarksResponse) {}

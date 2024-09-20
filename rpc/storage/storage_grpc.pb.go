@@ -39,6 +39,7 @@ type StorageServiceClient interface {
 	NotInterested(ctx context.Context, in *NotInterestedRequest, opts ...grpc.CallOption) (*NotInterestedResponse, error)
 	DeleteLandmark(ctx context.Context, in *DeleteLandmarkRequest, opts ...grpc.CallOption) (*DeleteLandmarkResponse, error)
 	SetLandmarkCoords(ctx context.Context, in *SetLandmarkCoordsRequest, opts ...grpc.CallOption) (*SetLandmarkCoordsResponse, error)
+	GetActivity(ctx context.Context, in *GetActivityRequest, opts ...grpc.CallOption) (*GetActivityResponse, error)
 	// User feed
 	RecommendLandmarks(ctx context.Context, in *RecommendLandmarksRequest, opts ...grpc.CallOption) (*RecommendLandmarksResponse, error)
 	GetRandomFeed(ctx context.Context, in *GetRandomFeedRequest, opts ...grpc.CallOption) (*GetRandomFeedResponse, error)
@@ -224,6 +225,15 @@ func (c *storageServiceClient) DeleteLandmark(ctx context.Context, in *DeleteLan
 func (c *storageServiceClient) SetLandmarkCoords(ctx context.Context, in *SetLandmarkCoordsRequest, opts ...grpc.CallOption) (*SetLandmarkCoordsResponse, error) {
 	out := new(SetLandmarkCoordsResponse)
 	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/SetLandmarkCoords", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageServiceClient) GetActivity(ctx context.Context, in *GetActivityRequest, opts ...grpc.CallOption) (*GetActivityResponse, error) {
+	out := new(GetActivityResponse)
+	err := c.cc.Invoke(ctx, "/landmark.storage.StorageService/GetActivity", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -539,6 +549,7 @@ type StorageServiceServer interface {
 	NotInterested(context.Context, *NotInterestedRequest) (*NotInterestedResponse, error)
 	DeleteLandmark(context.Context, *DeleteLandmarkRequest) (*DeleteLandmarkResponse, error)
 	SetLandmarkCoords(context.Context, *SetLandmarkCoordsRequest) (*SetLandmarkCoordsResponse, error)
+	GetActivity(context.Context, *GetActivityRequest) (*GetActivityResponse, error)
 	// User feed
 	RecommendLandmarks(context.Context, *RecommendLandmarksRequest) (*RecommendLandmarksResponse, error)
 	GetRandomFeed(context.Context, *GetRandomFeedRequest) (*GetRandomFeedResponse, error)
@@ -630,6 +641,9 @@ func (UnimplementedStorageServiceServer) DeleteLandmark(context.Context, *Delete
 }
 func (UnimplementedStorageServiceServer) SetLandmarkCoords(context.Context, *SetLandmarkCoordsRequest) (*SetLandmarkCoordsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetLandmarkCoords not implemented")
+}
+func (UnimplementedStorageServiceServer) GetActivity(context.Context, *GetActivityRequest) (*GetActivityResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetActivity not implemented")
 }
 func (UnimplementedStorageServiceServer) RecommendLandmarks(context.Context, *RecommendLandmarksRequest) (*RecommendLandmarksResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RecommendLandmarks not implemented")
@@ -1024,6 +1038,24 @@ func _StorageService_SetLandmarkCoords_Handler(srv interface{}, ctx context.Cont
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(StorageServiceServer).SetLandmarkCoords(ctx, req.(*SetLandmarkCoordsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageService_GetActivity_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetActivityRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageServiceServer).GetActivity(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/landmark.storage.StorageService/GetActivity",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageServiceServer).GetActivity(ctx, req.(*GetActivityRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1674,6 +1706,10 @@ var StorageService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetLandmarkCoords",
 			Handler:    _StorageService_SetLandmarkCoords_Handler,
+		},
+		{
+			MethodName: "GetActivity",
+			Handler:    _StorageService_GetActivity_Handler,
 		},
 		{
 			MethodName: "RecommendLandmarks",

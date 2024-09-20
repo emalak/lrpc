@@ -66,3 +66,11 @@ type TagWithScore struct {
 	Id    string
 	Score float64
 }
+
+type LandmarkItem struct {
+	Id        string
+	Score     float64
+	Latitude  float64
+	Longitude float64
+	Tags      []string
+}
