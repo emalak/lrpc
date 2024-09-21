@@ -562,7 +562,7 @@ func (c *Client) GetLandmarkTagsWithScore(ctx context.Context, id string) ([]Tag
 	return tags, nil
 }
 
-func (c *Client) GetActivity(ctx context.Context, activity string, northEast, southWest Coordinates, limit, offset int) ([]*LandmarkItem, error) {
+func (c *Client) GetActivity(ctx context.Context, activity string, include, exclude []string, northEast, southWest Coordinates, limit, offset int) ([]*LandmarkItem, error) {
 	res, err := c.Storage.Client.GetActivity(ctx, &storage.GetActivityRequest{
 		Activity: activity,
 		Northeast: &storage.Coordinates{
@@ -573,8 +573,10 @@ func (c *Client) GetActivity(ctx context.Context, activity string, northEast, so
 			Longitude: float32(southWest.Longitude),
 			Latitude:  float32(southWest.Latitude),
 		},
-		Limit:  int32(limit),
-		Offset: int32(offset),
+		Limit:   int32(limit),
+		Offset:  int32(offset),
+		Include: include,
+		Exclude: exclude,
 	})
 	if err != nil {
 		return nil, err

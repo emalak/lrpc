@@ -447,6 +447,8 @@ message GetActivityRequest{
   Coordinates southeast = 3;
   int32 limit = 4;
   int32 offset = 5;
+  repeated string include = 6;
+  repeated string exclude = 7;
 }
 message LandmarkItem {
   string id = 1;
